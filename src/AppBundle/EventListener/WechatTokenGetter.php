@@ -33,6 +33,7 @@ class WechatTokenGetter
         }
 
         if ($controller[0] instanceof WechatTokenGetterInterface) {
+            $this->wechatLogin($event);
             $session = $event->getRequest()->getSession();
             $redis = new Client();
             $wechat_token = json_decode($redis->get('wechat_token'));
@@ -85,5 +86,14 @@ class WechatTokenGetter
             $signature = sha1($string1);
             $session->set('signature', $signature);
         }
+    }
+
+    public function wechatLogin(FilterControllerEvent $event)
+    {
+        $session = $event->getRequest()->getSession();
+        if ( !$session->has('wechat_openid') ) {
+            http_redirect('https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
+        }
+
     }
 }
