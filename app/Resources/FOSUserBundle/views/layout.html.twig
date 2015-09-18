@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head lang="zh">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="#ffffff" name="msapplication-TileColor">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>注册</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <style>
+        body {margin: 0; padding: 0;}
+        .header {
+            position: relative;
+            z-index: 8888;
+            height: 44px;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAABYCAYAAADfoya1AAAAaklEQVQoU6XMtxEAMQwDQar/YuW94QeIn0ONsg0OMMzMRERGg3MO4kfsvfGjwVoL8RXmnFhpMMZALKD3jkaD1hpiAbVWNBqUUhALyDmj0SClhFhAjBGNBiEExBp47xFfwTmH1SOstfj5xwfGIVbdjXfsVAAAAABJRU5ErkJggg==) repeat-x #efefef;
+            background-size: 100% 44px;
+            border-bottom: 1px solid #bfbfbf;
+            border-width: 0 0 1px;
+            -webkit-border-image: url(data:image/gif;base64,R0lGODlhBAAEAIABAL+/v////yH/C1hNUCBEYXRhWE1QPD94cGFja…kYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAEALAAAAAAEAAQAAAIFhBGpeVAAOw==) 2 0 stretch;
+            -o-border-image: url(data:image/gif;base64,R0lGODlhBAAEAIABAL+/v////yH/C1hNUCBEYXRhWE1QPD94cGFja…kYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAEALAAAAAAEAAQAAAIFhBGpeVAAOw==) 2 0 round;
+            border-image: url(data:image/gif;base64,R0lGODlhBAAEAIABAL+/v////yH/C1hNUCBEYXRhWE1QPD94cGFja…kYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAEALAAAAAAEAAQAAAIFhBGpeVAAOw==) 2 0 round;
+            font-family: PingHei,"Lucida Grande","Lucida Sans Unicode",STHeiti,Helvetica,Arial,Verdana,sans-serif;
+            color: #252525;
+            font-size: 16px;
+            min-width: 320px;
+        }
+        .header a {
+            position: absolute;
+            width: 40px;
+            height: 44px;
+        }
+        .header span {
+            display: block;
+            width: 20px;
+            height: 20px;
+            margin: 12px 0 0 10px;
+            text-indent: -100px;
+            overflow: hidden;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAByklEQVQ4T6XUP2jUUBwH8O83ja1/uuiiQnEUqg6KIkhBEDqUu6EgVFwEd8HNxHsvkeDdS3I5cLiCiyBYOom0greJozgqgoO4OSiOgoJ4d/nJA0+KpJcY3xp+H355v+/7ETVOv9+f+/rtx0NCTgTKP7OT4L96URTNu3v2b4KyClAHyotrg1F075A7O3wC4BKIG0HLv/93Q5U7NMYcFbpPAZynyDWtb28W/V0lME3TY6OcAwCLAqyFyrdw4SkF293uIsd4BuAIBata+y+m3ftU8G6SnHXEsdg+B05DqVuvyoa4K9hJ04vIbWf8TmFDa+9NGWa/F4LtOGsQsgXio4zYDEPvQxWsEDQmvSrkBsG3kGFTa/2lKlYIdpJsDSI2Eu8oIwt+/i/QFreTbIUi2wA+yRiNMPTfV0V3HUocZ0s5xE54mDNfudNqva6CTo2NMdlpYT4AOO+ATaW8l2VoabDjOD6ec2YAwcLvYD+vHexJYdTtLrhj2Kd3SoArofK3aj+9SaEx5nBOd5vABQDXA+U/qr0cJoVJkhwcCx8DXBbhzVB767XX16Sw1+sd+DnMNwS4DDAMlNepvWD/3GkUzc7M7X3giHNSK+/cTvAXRfucFfVvv+UAAAAASUVORK5CYII=) no-repeat;
+            background-size: 20px 20px;
+        }
+        a, button, input {
+            outline: 0;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .header h2 {
+            height: 44px;
+            line-height: 44px;
+            font-weight: 400;
+            font-size: 16px;
+            text-align: center;
+            margin:0;padding:0;
+        }
+        .main {padding: 15px;}
+        input[type=text], input[type=number], input[type=password] {
+            width: 100%;
+            height: 44px;
+            line-height: normal;
+            padding: 0;
+            border: 1px solid #d7d7d7;
+            border-radius: 3px;
+            background: #fff;
+            font-family: '\5fae\8f6f\96c5\9ed1';
+            font-size: 16px;
+            color: #252525;
+            -webkit-appearance: none;
+            margin-top: 10px;
+            padding-left: 10px;
+        }
+        button[type=submit] {
+            display: inline-block;
+            width: 100%;
+            height: 40px;
+            border-radius: 3px;
+            background: #f25454;
+            text-decoration: none;
+            line-height: 39px;
+            text-align: center;
+            font-size: 17px;
+            color: #fff;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <a href="javascript:;" class="new-a-back" onclick="history.go(-1);"><span></span></a>
+    <h2>XX注册</h2>
+</div>
+<div class="common-wrapper">
+    <div>
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+</div>
+</body>
+</html>

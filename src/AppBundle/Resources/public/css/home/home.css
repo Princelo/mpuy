@@ -1,0 +1,153 @@
+.home-header {margin-bottom: 10px;}
+.home-header-bg {position: relative;}
+.home-header-bg {background: #169ada; width: 100%; height: 70px; font-size: 70px;}
+.home-header-bg .username {font-size: 0.3em; line-height: 70px; color: #fff; text-align: right;
+    padding-right: 110px;}
+.home-header-bg .username a {color:#fff;
+    text-decoration: none;}
+.home-header .avatar img{width: 79px; height: 79px; border: 2px solid #fff;}
+.home-header .avatar {width: 83px; height: 83px; border: 1px solid #d4d4d4; position: absolute; right: 10px;
+    top: 10px;}
+.home-header .tips-block {height: 32px; width: 100%; }
+.home-header .tips { text-align: right; padding-right: 110px; line-height: 32px; font-size: 10px; color: #616161;}
+.goods-list .avatar {height: 65px; width: 85px;
+    float:left;
+}
+.goods-list .avatar img{width: 65px; height: 65px; margin: 0 auto;
+    display: block;
+}
+.goods-list .goods-details {
+    /*width: -moz-calc(100% - 85px);
+    width: -webkit-calc(100% - 85px);
+    width: calc(100% - 85px);*/
+    float:left; width: 250px;}
+.goods-list .likes {width: 225px;}
+.goods-list .goods-details .title a{color: #556891;
+    text-decoration:none; font-size: 16px; line-height: 16px;}
+.goods-list .goods-details i.level{
+    background: url(//img.alicdn.com/tps/i1/TB19TgIHpXXXXbRXVXX_AQW0XXX-529-200.png);
+    background-image: -webkit-image-set(url(//img.alicdn.com/tps/i1/TB19TgIHpXXXXbRXVXX_AQW0XXX-529-200.png) 1x,url(//img.alicdn.com/tps/i4/TB1zBENHpXXXXbUXXXXM6a0UXXX-1058-400.png) 2x);
+    background-image: -moz-image-set(url(//img.alicdn.com/tps/i1/TB19TgIHpXXXXbRXVXX_AQW0XXX-529-200.png) 1x,url(//img.alicdn.com/tps/i4/TB1zBENHpXXXXbUXXXXM6a0UXXX-1058-400.png) 2x);
+    background-image: -ms-image-set(url(//img.alicdn.com/tps/i1/TB19TgIHpXXXXbRXVXX_AQW0XXX-529-200.png) 1x,url(//img.alicdn.com/tps/i4/TB1zBENHpXXXXbUXXXXM6a0UXXX-1058-400.png) 2x);
+    background-image: -o-image-set(url(//img.alicdn.com/tps/i1/TB19TgIHpXXXXbRXVXX_AQW0XXX-529-200.png) 1x,url(//img.alicdn.com/tps/i4/TB1zBENHpXXXXbUXXXXM6a0UXXX-1058-400.png) 2x);
+    background-repeat: no-repeat;
+    background-position: 0 -40px;
+    width: 14px;
+    height: 14px;
+    margin-top: 3px;
+    margin-right: 3px;
+    float:left;
+}
+.goods-list .goods-details .details {font-size: 14px; color: #505050;}
+.my-gallery figure{width: 75px; float:left; margin: 2px; height: 75px;}
+.my-gallery figure img {width: 75px; height: 75px;}
+@media (max-device-width: 768px) {
+    .my-gallery figure{width: 80px; float:left; margin: 2px; height: 80px;}
+    .my-gallery figure img {width: 80px; height: 80px;}
+    .goods-list .goods-details { width: 448px;}
+    .goods-list .likes { width: 423px;}
+}
+@media (max-device-width: 640px) {
+    .my-gallery figure{width: 85px; float:left; margin: 2px; height: 85px;}
+    .my-gallery figure img {width: 85px; height: 85px;}
+    .goods-list .goods-details { width: 320px;}
+    .goods-list .likes { width: 295px;}
+}
+@media (max-device-width: 540px) {
+    /**Android 4 inch*/
+    .my-gallery figure{width: 80px; float:left; margin: 2px; height: 80px;}
+    .my-gallery figure img {width: 80px; height: 80px;}
+    .goods-list .goods-details { width: 260px;}
+    .goods-list .likes { width: 235px;}
+}
+@media (max-device-width: 480px) {
+    /*blackberry classic*/
+    /*iPhone 6/6 Plus*/
+    .my-gallery figure{width: 80px; float:left; margin: 2px; height: 80px;}
+    .my-gallery figure img {width: 80px; height: 80px;}
+    .goods-list .goods-details { width: 250px;}
+    .goods-list .likes { width: 225px;}
+}
+@media (max-device-width: 320px) {
+    /*IPhone portrait and smaller. You can probably stop on 320px*/
+    /*iPhone 4s/5/5s*/
+    .my-gallery figure{width: 65px; float:left; margin: 2px; height: 65px;}
+    .my-gallery figure img {width: 65px; height: 65px;}
+    .goods-list .goods-details { width: 210px;}
+    .goods-list .likes { width: 185px;}
+}
+.likes {float:left;}
+.likes .title {font-size: 14px; color: #505050;}
+.likes img{width: 25px; height: 25px; float:left; margin: 2px;}
+.icon {
+    background: url(//gtms02.alicdn.com/tps/i2/TB1hQfYIVXXXXb3aXXXoj7wNVXX-400-340.png) no-repeat;
+    background-image: -webkit-image-set(url(//gtms02.alicdn.com/tps/i2/TB1hQfYIVXXXXb3aXXXoj7wNVXX-400-340.png) 1x,url(//gtms03.alicdn.com/tps/i3/TB12WPTIVXXXXbjapXXVpeZ_VXX-800-680.png) 2x);
+    background-image: -moz-image-set(url(//gtms02.alicdn.com/tps/i2/TB1hQfYIVXXXXb3aXXXoj7wNVXX-400-340.png) 1x,url(//gtms03.alicdn.com/tps/i3/TB12WPTIVXXXXbjapXXVpeZ_VXX-800-680.png) 2x);
+    background-image: -ms-image-set(url(//gtms02.alicdn.com/tps/i2/TB1hQfYIVXXXXb3aXXXoj7wNVXX-400-340.png) 1x,url(//gtms03.alicdn.com/tps/i3/TB12WPTIVXXXXbjapXXVpeZ_VXX-800-680.png) 2x);
+    background-image: -o-image-set(url(//gtms02.alicdn.com/tps/i2/TB1hQfYIVXXXXb3aXXXoj7wNVXX-400-340.png) 1x,url(//gtms03.alicdn.com/tps/i3/TB12WPTIVXXXXbjapXXVpeZ_VXX-800-680.png) 2x);
+    width: 16px; height: 16px; display: inline-block; float:left; margin-right: 3px;
+}
+.icon.ensure { background-position: -280px -80px;}
+.icon-text {width: 32px; height:16px; line-height: 16px; color: #fff; padding:0 2px; font-style: normal; font-size: 12px; display:inline-block;
+    float:left; margin-right: 3px; text-align:center;
+}
+.icon-text.blue {background: #00a0e9}
+.icon-text.orange {background: #ff4400}
+.attr {margin-top: 5px;}
+.attr .date{float:left; font-size: 12px; color:#a3a3a3}
+.attr .attr_left {float:left;}
+.attr .attr_right {float: right; margin-left:10px;}
+.attr .attr_right span {color:#a3a3a3; font-size: 12px; float:left; margin-right:3px;}
+.likes {    padding: 12px; background: #f6f6f6; margin-top: 5px;}
+.goods-list .goods-details {
+    width: -moz-calc(100% - 100px);
+    width: -webkit-calc(100% - 100px);
+    width: calc(100% - 100px);
+}
+.goods-list .likes {
+    width: -moz-calc(100% - 25px);
+    width: -webkit-calc(100% - 25px);
+    width: calc(100% - 25px);
+}
+.countdown-block {float:left;
+    width: 100%;
+}
+.countdown-block .running-tip {background: #770018; color: #fff; padding: 2px 8px; float: left;}
+.countdown-block .countdown-tip {float:right; text-align: right; padding-right: 10px;}
+.countdown {color:#770018; font-size: 16px;}
+.countdown span{color: #505050; font-size: 12px;}
+.goods-list .action-block {float:left; width: 100%; padding-left: 85px; margin-left: -85px; position:relative; margin-top: 10px;}
+.goods-list .action-block .update {left: 40px;; position:absolute;
+    text-decoration: none; color: #007aff; line-height: 26px; padding-top: 4px;
+}
+.goods-list .action-block .bid-btn {width: 100%; background: #06bc07;
+    color: #fff; font-size: 18px; display:inline-block; text-align: center; border-radius: 2px;
+    line-height: 26px; padding-top: 4px; padding-bottom: 4px;
+}
+.goods-list .action-block .action-info {margin-top: 3px; font-size: 12px; color: #616161; margin-bottom: 3px;}
+.goods-list .action-block .action-info .start-price {
+    float: left; width: 49%; text-align: center;
+}
+.goods-list .action-block .action-info .splitter {
+    float: left; width: 2%; text-align: center;
+}
+.goods-list .action-block .action-info .step-price {
+    float: left; width: 49%; text-align: center;
+}
+.goods-list .bid-list {background: #f0f1f2; margin-top: 5px;}
+.goods-list .bid-list {float: left; width: 100%;}
+.goods-list .bid-list img.avatar {width: 56px; height: 56px; border-radius: 3px; max-width: 28%; border: 2px solid #f0f1f2;}
+.goods-list .bid-list li {width: 98%; height: 60px; float:left;
+    padding: 1%; border-bottom: 1px solid #ccc;
+}
+.goods-list .bid-list .bid-info {width: 35%; float:left; padding-left: 5px; position: relative; height: 60px;}
+.goods-list .bid-list .bid-info a {text-decoration: none; color: #556891; display: block; font-size: 12px; position: absolute; top: 3px;}
+.goods-list .bid-list .bid-info label {color: #770018; font-weight: bold; position: absolute; bottom: 3px;}
+.goods-list .bid-list .bid-order-info {float: right; width: 30%; position: relative; height: 60px;}
+.goods-list .bid-list .order-info { width: 50px; height: 26px; display: block; float:right; line-height: 26px; text-align: center;
+    margin-top: 5px;
+}
+.goods-list .bid-list .bid-order-info .datetime {float: right;  font-size: 12px; position: absolute; bottom: 3px; right: 5px;
+}
+.goods-list .bid-list .leading {color: #ee4417; border: 3px solid #ee4417; border-radius: 3px;}
+.goods-list .bid-list .dumped-out {color: #444; border: 3px solid #444; border-radius: 3px;}
