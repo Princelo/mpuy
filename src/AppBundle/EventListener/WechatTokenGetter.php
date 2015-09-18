@@ -5,6 +5,7 @@ use AppBundle\Controller\WechatTokenGetterInterface;
 use AppBundle\Entity\Constants;
 use Doctrine\Common\Cache\PredisCache;
 use Predis\Client;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -94,7 +95,8 @@ class WechatTokenGetter
         if ( !$session->has('wechat_openid') ) {
             $redirectUri = $event->getRequest()->getSchemeAndHttpHost();
             $redirectUri .= '/wechat_login';
-            header('Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri='.$redirectUri.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
+            $loginUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri='.$redirectUri.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
+            return new RedirectResponse($loginUri);
         }
 
     }
