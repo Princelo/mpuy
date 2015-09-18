@@ -70,6 +70,7 @@ class AccountController extends BaseController
         $jsonOutput = json_decode($serverOutput);
         $openid = $jsonOutput->openid;
         $accessToken = $jsonOutput->access_token;
+        $accessToken = $request->getSession()->get('wechat_token');
         $getContentUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$accessToken.'&openid='.$openid.'&lang=zh_CN';
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,$getContentUrl);
