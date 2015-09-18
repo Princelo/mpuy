@@ -68,6 +68,8 @@ class AccountController extends BaseController
         $serverOutput = curl_exec ($ch);
         curl_close ($ch);
         $jsonOutput = json_decode($serverOutput);
+        echo "<pre>";
+        print_r($jsonOutput);
         $openid = $jsonOutput->openid;
         $accessToken = $jsonOutput->access_token;
         $accessToken = $request->getSession()->get('wechat_token');
