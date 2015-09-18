@@ -34,7 +34,6 @@ class WechatTokenGetter
         }
 
         if ($controller[0] instanceof WechatTokenGetterInterface) {
-            $this->wechatLogin($event);
             $session = $event->getRequest()->getSession();
             $redis = new Client();
             $wechat_token = json_decode($redis->get('wechat_token'));
@@ -86,6 +85,7 @@ class WechatTokenGetter
                 ."&timestamp=".$session->get('wechat_timestamp')."&url=".$url;
             $signature = sha1($string1);
             $session->set('signature', $signature);
+            $this->wechatLogin($event);
         }
     }
 
@@ -96,7 +96,9 @@ class WechatTokenGetter
             $redirectUri = $event->getRequest()->getSchemeAndHttpHost();
             $redirectUri .= '/wechat_login';
             $loginUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri='.$redirectUri.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-            return new RedirectResponse($loginUri);
+            $event->setController(function() use ($loginUri) {
+                return new RedirectResponse($loginUri);
+            });
         }
 
     }
