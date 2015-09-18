@@ -51,6 +51,10 @@ class AccountController extends BaseController
     }
 
 
+    /**
+     * @param Request $request
+     * @Route("/wechat_login", name="wechat_login")
+     */
     public function wechatLoginAction(Request $request)
     {
         $code = $request->get('code');
