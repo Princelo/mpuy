@@ -68,11 +68,11 @@ class AccountController extends BaseController
         $serverOutput = curl_exec ($ch);
         curl_close ($ch);
         $jsonOutput = json_decode($serverOutput);
-        $openid = $jsonOutput['openid'];
-        $accessToken = $jsonOutput['access_token'];
+        $openid = $jsonOutput->openid;
+        $accessToken = $jsonOutput->access_token;
         $getContentUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$accessToken.'&openid='.$openid.'&lang=zh_CN';
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$getTokenUrl);
+        curl_setopt($ch, CURLOPT_URL,$getContentUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $serverOutput = curl_exec ($ch);
         curl_close ($ch);
