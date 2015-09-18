@@ -37,7 +37,7 @@ class WechatTokenGetter
             $redis = new Client();
             $wechat_token = json_decode($redis->get('wechat_token'));
             $now = new \DateTime();
-            if ( intval($wechat_token->timestamp) + 7000 < intval($now->getTimestamp()) ) {
+            if ( !isset($wechat_token->timestamp) || (intval($wechat_token->timestamp) + 7000 < intval($now->getTimestamp())) ) {
                 $api_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".Constants::APP_ID."&secret=".Constants::APP_SECRET;
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL,$api_url);
