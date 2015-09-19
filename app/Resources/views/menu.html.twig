@@ -76,7 +76,7 @@
 
     var uploadImage = function (localId, num, count) {
         delCookie('current-upload-img'+num);
-        $('.upload-info').html('正在上传...1/7');
+        $('.upload-info').html('正在上传...1/'+count);
         $('.upload-info').show();
         wx.uploadImage({
             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
@@ -93,6 +93,9 @@
                     alert('upload complete');
                 } else {
                     $('.upload-info').html('正在上传...' + (n+1).toString() + '/' + count.toString() + '');
+                }
+                for (var i = 1; i <= count; i++) {
+                    alert(getcookie('current-upload-img' + i))
                 }
 
                 var serverId = res.serverId; // 返回图片的服务器端ID
