@@ -3,13 +3,13 @@
 {% block body %}
     <div class="home-header">
         <div class="home-header-bg">
-            <div class="username"><a href="{{ path('register') }}">立即注册</a></div>
+            <div class="username">{{ nickname }}</div>
         </div>
         <div class="tips-block">
-            <div class="tips">您好，游客！注册帐号立即参与拍卖</div>
+            <div class="tips">XXX，展示已订阅的卖家拍品</div>
         </div>
         <div class="avatar">
-            <img src="{{ asset('bundles/app/images/male_180.png') }}" />
+            <img src="{{ avatar }}" />
         </div>
     </div>
     <div class="goods-list">

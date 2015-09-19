@@ -141,17 +141,17 @@ class User extends BaseUser
     protected $mobile;
 
     /**
-     * @ORM\Column(name="city_id", type="integer", options={"default" = 0})
+     * @ORM\Column(name="city", type="string")
      */
-    protected $cityId = 0;
+    protected $city = '';
 
     /**
-     * @ORM\Column(name="province_id", type="integer", options={"default" = 0})
+     * @ORM\Column(name="province", type="string")
      */
-    protected $provinceId = 0;
+    protected $province = '';
 
     /**
-     * @ORM\Column(name="district_id", type="integer", options={"default" = 0})
+     * @ORM\Column(name="district_id", type="integer")
      */
     protected $districtId = 0;
 
@@ -161,19 +161,34 @@ class User extends BaseUser
     protected $address;
 
     /**
-     * @ORM\Column(name="create_time", type="datetime", length=255)
+     * @ORM\Column(name="create_time", type="datetime")
      */
     protected $createTime;
 
     /**
-     * @ORM\Column(name="update_time", type="datetime", length=255)
+     * @ORM\Column(name="update_time", type="datetime")
      */
     protected $updateTime;
 
     /**
-     * @ORM\Column(name="login_time", type="datetime", length=255)
+     * @ORM\Column(name="login_time", type="datetime")
      */
     protected $loginTime;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $country;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $avatar;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $gender;
 
     public function __construct()
     {
@@ -792,49 +807,49 @@ class User extends BaseUser
     }
 
     /**
-     * Set cityId
+     * Set city
      *
-     * @param integer $cityId
+     * @param string $city
      * @return User
      */
-    public function setCityId($cityId)
+    public function setCity($city)
     {
-        $this->cityId = $cityId;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get cityId
+     * Get city
      *
-     * @return integer
+     * @return string
      */
-    public function getCityId()
+    public function getCity()
     {
-        return $this->cityId;
+        return $this->city;
     }
 
     /**
-     * Set provinceId
+     * Set province
      *
-     * @param integer $provinceId
+     * @param string $province
      * @return User
      */
-    public function setProvinceId($provinceId)
+    public function setProvince($province)
     {
-        $this->provinceId = $provinceId;
+        $this->province = $province;
 
         return $this;
     }
 
     /**
-     * Get provinceId
+     * Get province
      *
-     * @return integer
+     * @return string
      */
-    public function getProvinceId()
+    public function getProvince()
     {
-        return $this->provinceId;
+        return $this->province;
     }
 
     /**
@@ -952,5 +967,74 @@ class User extends BaseUser
     public function getLoginTime()
     {
         return $this->loginTime;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     * @return User
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param integer $gender
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return integer 
+     */
+    public function getGender()
+    {
+        return $this->gender;
     }
 }

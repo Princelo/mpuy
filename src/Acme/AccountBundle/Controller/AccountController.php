@@ -1,11 +1,15 @@
 <?php
 namespace Acme\AccountBundle\Controller;
 
+use Acme\AccountBundle\Entity\User;
 use AppBundle\Entity\Constants;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class AccountController extends BaseController
 {
@@ -54,10 +58,14 @@ class AccountController extends BaseController
     /**
      * @param Request $request
      * @Route("/wechat_login", name="wechat_login")
+     * @return RedirectResponse
      */
     public function wechatLoginAction(Request $request)
     {
         $code = $request->get('code');
+        if ($code == null) {
+            return $this->redirectToRoute('homepage');
+        }
         $appId = Constants::APP_ID;
         $secret = Constants::APP_SECRET;
         $getTokenUrl = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.$appId.'&secret='.$secret.'&code='
@@ -68,8 +76,9 @@ class AccountController extends BaseController
         $serverOutput = curl_exec ($ch);
         curl_close ($ch);
         $jsonOutput = json_decode($serverOutput);
-        echo "<pre>";
-        print_r($jsonOutput);
+        if (!isset($jsonOutput->openid)) {
+            return $this->redirectToRoute('homepage');
+        }
         $openid = $jsonOutput->openid;
         $accessToken = $jsonOutput->access_token;
         //$accessToken = $request->getSession()->get('wechat_token');
@@ -80,7 +89,35 @@ class AccountController extends BaseController
         $serverOutput = curl_exec ($ch);
         curl_close ($ch);
         $jsonOutput = json_decode($serverOutput);
-        echo "<pre>";
-        print_r($jsonOutput);exit;
+        if (!isset($jsonOutput->openid)) {
+            return $this->redirectToRoute('homepage');
+        }
+        $newUser = new User();
+        $newUser->setWechatOpenId($jsonOutput->openid);
+        $newUser->setNickname($jsonOutput->nickname);
+        $newUser->setGender($jsonOutput->sex);
+        $newUser->setCity($jsonOutput->city);
+        $newUser->setProvince($jsonOutput->province);
+        $newUser->setCountry($jsonOutput->country);
+        $newUser->setAvatar($jsonOutput->headimgurl);
+        $newUser->setPassword('no password');
+        $newUser->setUsername($jsonOutput->openid);
+        $newUser->setEmail($jsonOutput->openid.'@ct-life.cn');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newUser);
+        $em->flush();
+        $repo  = $em->getRepository("AcmeAccountBundle:User"); //Entity Repository
+        $user = $repo->loadUserByWechatOpenId($jsonOutput->openid);
+        if (!$user) {
+            throw new UsernameNotFoundException("User not found");
+        } else {
+            $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
+            $this->get("security.context")->setToken($token); //now the user is logged in
+
+            //now dispatch the login event
+            $event = new InteractiveLoginEvent($request, $token);
+            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+            return $this->redirectToRoute('homepage');
+        }
     }
 }

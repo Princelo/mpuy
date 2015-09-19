@@ -30,7 +30,7 @@ class UserProvider extends FOSProvider {
         ));
 
         if (!$user) {
-            $user = $this->findUserBy(array(
+            /*$user = $this->findUserBy(array(
                 'email'=>$username,
             ));
             if (!$user) {
@@ -39,7 +39,8 @@ class UserProvider extends FOSProvider {
                 ));
             } else {
                 throw new Exception(sprintf('User "%s" does not exist.', $username));
-            }
+            }*/
+            throw new Exception(sprintf('User "%s" does not exist.', $username));
         }
 
         return $user;

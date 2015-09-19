@@ -37,6 +37,24 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $user;
     }
 
+    public function loadUserByWechatOpenId($openid)
+    {
+        $user = $this->createQueryBuilder('u')
+            ->where('u.wechatOpenId = :openid')
+            ->setParameter('openid', $openid)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $user) {
+            $message = sprintf(
+                'Unable to find an active admin AppBundle:User object identified by "an openid".'
+            );
+            throw new UsernameNotFoundException($message);
+        }
+
+        return $user;
+    }
+
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);

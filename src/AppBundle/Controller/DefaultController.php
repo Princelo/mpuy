@@ -14,8 +14,13 @@ class DefaultController extends Controller implements WechatTokenGetterInterface
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
+        $user = $this->getUser();
+        $avatar = $user->getAvatar();
+        $nickname = $user->getNickName();
         return $this->render('default/index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'avatar' => $avatar,
+            'nickname' => $nickname
         ));
     }
 }
