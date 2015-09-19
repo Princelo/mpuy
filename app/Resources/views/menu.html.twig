@@ -21,7 +21,7 @@
         background: #000;
         color: #fff;
         line-height: 80px;
-        font-size: 2em;
+        font-size: 1.2em;
         font-weight: bold;
         text-align: center;
         position: fixed;
@@ -75,12 +75,24 @@
     }
 
     var uploadImage = function (localId, num, count) {
+        delCookie('current-upload-img'+num);
         $('.upload-info').html('正在上传...' + num + '/' + count.toString() + '');
         $('.upload-info').show();
         wx.uploadImage({
             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
             isShowProgressTips: 0, // 默认为1，显示进度提示
             success: function (res) {
+                addcookie('current-upload-img'+num, localId);
+                addcookie(localId, res.serverId);
+                var n = 0;
+                for (var i = 1; i <= count; i++) {
+                    if(getcookie('current-upload-img' + i) != '')
+                        n ++;
+                }
+                if ( n === count) {
+                    alert('upload complete');
+                }
+
                 var serverId = res.serverId; // 返回图片的服务器端ID
             }
         });
