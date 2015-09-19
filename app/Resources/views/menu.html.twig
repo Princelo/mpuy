@@ -8,12 +8,16 @@
         width:100%;
         transition: top .5s;
         position:fixed;
-        height: 100px;
+        height: 50px;
         bottom: 0px;
     }
 </style>
 <!-- /Menu-->
-<div id="soulnavbar">Bottom bar</div>
+<div id="soulnavbar">
+    <a href="{{ path('homepage') }}" id="bar-home">首页</a>
+    <a href="javascript:void(0);" id="bar-publish" onclick="chooseImage()">发布</a>
+    <a href="javascript:void(0);" id="bar-profile">我的</a>
+</div>
 <!-- /Menu -->
 <script>
     var lastScrollTop = 0, delta = 5;
@@ -25,12 +29,32 @@
 
         if (st > lastScrollTop){
             // downscroll code
-            $("#soulnavbar").slideUp()
+            $("#soulnavbar").slideUp("fast")
         } else {
             // upscroll code
-            $("#soulnavbar").slideDown();
+            $("#soulnavbar").slideDown("fast");
 
         }
         lastScrollTop = st;
     });
+</script>
+<script>
+    var chooseImage = function () {
+        wx.chooseImage({
+            count: 9, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                wx.uploadImage({
+                    localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var serverId = res.serverId; // 返回图片的服务器端ID
+                        alert(serverId);
+                    }
+                });
+            }
+        });
+    }
 </script>
