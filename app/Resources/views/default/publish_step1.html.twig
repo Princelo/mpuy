@@ -92,6 +92,8 @@
 <script>
     var n = 1;
     for(var i = 1; i <= 9; i++) {
+        alert(getcookie('current-upload-img'+1));
+        alert(getcookie(getcookie('current-upload-img'+1)));
         if(getcookie('current-upload-img'+i) != '') {
             $('.img-list').html($('.img-list').html() + '<div class="img-item"><i></i><img src="'
                     +getcookie('current-upload-img'+i)
