@@ -86,7 +86,7 @@
             isShowProgressTips: 1, // 默认为1，显示进度提示
             success: function (res) {
                 addcookie('current-upload-img'+n, localIds[n - 1]);
-                addcookie(localIds[n - 1], res.serverId);
+                addcookie('server-img'+n, res.serverId);
                 if (n < count)
                     uploadImage(localIds, n+1);
                 else {
