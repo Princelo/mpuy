@@ -91,8 +91,7 @@ class WechatTokenGetter
 
     public function wechatLogin(FilterControllerEvent $event)
     {
-        $session = $event->getRequest()->getSession();
-        if ( !$session->has('wechat_openid') ) {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $redirectUri = $event->getRequest()->getSchemeAndHttpHost();
             $redirectUri .= '/wechat_login';
             $appId = Constants::APP_ID;
