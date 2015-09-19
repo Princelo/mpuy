@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class PublishController extends Controller
+class PublishController extends Controller implements WechatTokenGetterInterface
 {
     /**
      * @Route("/publish/step1", name="publish_step1")
