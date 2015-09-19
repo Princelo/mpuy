@@ -76,7 +76,7 @@
 
     var uploadImage = function (localId, num, count) {
         delCookie('current-upload-img'+num);
-        $('.upload-info').html('正在上传...' + num + '/' + count.toString() + '');
+        $('.upload-info').html('正在上传...');
         $('.upload-info').show();
         wx.uploadImage({
             localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
