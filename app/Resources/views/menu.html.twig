@@ -76,7 +76,7 @@
 
     var uploadImage = function (localIds, n) {
         var count = localIds.length;
-        for (var i = n; i <= count; i++) {
+        for (var i = n; i <= 9; i++) {
             delCookie('current-upload-img' + i);
         }
         $('.upload-info').html('正在上传...'+n+'/'+count);
@@ -92,6 +92,7 @@
                 else {
                     $('.upload-info').hide();
                     alert('upload complete');
+                    window.location.href = '{{ path('publish_step1') }}';
                 }
                 var serverId = res.serverId; // 返回图片的服务器端ID
             }

@@ -1,0 +1,97 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <title>Publish</title>
+    <link rel="stylesheet" href="epuy-style.css">
+    <script>
+        function addcookie(name,value,expireHours){
+            var cookieString=name+"="+encodeURIComponent(value)+"; path=/"+";domain=.{{ app.request.getHttpHost() }}";
+            if(expireHours>0){
+                var date=new Date();
+                date.setTime(date.getTime+expireHours*3600*1000);
+                cookieString=cookieString+"; expire="+date.toGMTString();
+            }
+            document.cookie=cookieString;
+        }
+
+        function getcookie(name){
+            var strcookie=document.cookie;
+            var arrcookie=strcookie.split("; ");
+            for(var i=0;i<arrcookie.length;i++){
+                var arr=arrcookie[i].split("=");
+                if(arr[0]==name)return arr[1];
+            }
+            return "";
+        }
+
+        function delCookie(name){//删除cookie
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval=getcookie(name);
+            if(cval!=null) document.cookie= name + "="+cval+"; path=/;expires="+exp.toGMTString()+";domain=.{{ app.request.getHttpHost() }}";
+        }
+    </script>
+</head>
+<body style="
+    background: #f1e1f1;
+">
+<div class="control-header" style="
+    height: 35px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid #aaa;
+    background: #fff;
+">
+    <a href="javascript:void(0);" style="
+    font-size: 1em;
+    text-decoration: none;
+    color: #616161;
+    line-height: 35px;
+    float: left;
+    padding-left: 8px;
+">存为草稿</a>
+    <a href="javascript:void(0);" style="
+    color: #2a8;
+    font-size: bold;
+    font-weight: bold;
+    text-decoration: none;
+    float: right;
+    line-height: 35px;
+    padding-right: 8px;
+">下一步</a>
+</div>
+<div class="publish-content" style="
+    margin-top: 45px;
+">
+        <textarea placeholder="我的拍品描述..." style="
+    border: none;
+    resize: none;
+    width: 100%;
+    height: 200px;
+    font-size: 1em;
+    padding: 10px;
+    box-sizing: border-box;
+"></textarea>
+    <div class="img-list">
+
+    </div>
+</div>
+<script>
+    var n = 1;
+    for(var i = 1; i <= 9; i++) {
+        if(getcookie('current-upload-img'+i) != '') {
+            $('.img-list').html($('.img-list').html() + '<div class="img-item"><i></i><img src="'
+                    +getcookie('current-upload-img'+i)
+                    +'" /></div>');
+            $('#.img-input'+i).val(getcookie(getcookie('current-upload-img'+i)));
+            n ++;
+        }
+    }
+</script>
+
+
+</body></html>
