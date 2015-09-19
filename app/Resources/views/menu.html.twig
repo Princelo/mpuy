@@ -1,100 +1,102 @@
 <style>
-    #header-nav{
+    #bottombar {
+        box-sizing: border-box;
         position: fixed;
-        bottom: -50px;
-        display: block;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
         width: 100%;
-        background: black;
-        -webkit-transition:-webkit-transform 0.7s .3s ease;
-        -moz-transition:   -moz-transform 0.7s .3s ease;
-        -ms-transition:    -ms-transform 0.7s .3s ease;
-        transition:        transform 0.7s .3s ease;
-        -webkit-backface-visibility: hidden;
-        -webkit-transform: translate3d(0px, 0px, 0px);
-
-    }
-    #header-nav.hide-nav-bar{
-        -webkit-transform: translate(0, -100%);
-        -moz-transform: translate(0, -100%);
-        -ms-transform: translate(0, -100%);
-        transform: translate(0, -100%);
-        -webkit-backface-visibility: hidden;
+        padding: 10px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
     }
 </style>
 <!-- /Menu-->
-<div id="header-nav">
-    <div class="container">
-        <!-- H1 for SEO -->
-        <div class="brand">
-            <a href="/"><h1>Ghostlab</h1></a>
-        </div>
-        <!-- Small screen menu button -->
-        <a href="#menu" class="menu-link">
-            <span class="bar1"></span>
-            <span class="bar2"></span>
-            <span class="bar3"></span>
-        </a>
-        <!-- /Small screen menu button -->
-
-        <!-- Menu Items -->
-        <nav id="menu" role="navigation">
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <!-- /Menu Items -->
-    </div>
-</div>
+<div id="bottombar">Bottom bar</div>
 <!-- /Menu -->
 <script>
-    $(document).ready(function() {
-        $('html').on('DOMMouseScroll mousewheel', function (e) {
-            if(e.originalEvent.detail > 0 || e.originalEvent.wheelDelta < 0) { //alternative options for wheelData: wheelDeltaX & wheelDeltaY
-                //scroll down
-                console.log('Down');
-                $( "#header-nav" ).addClass( "hide-nav-bar" );
-            } else {
-                //scroll up
-                console.log('Up');
-                $( "#header-nav" ).removeClass( "hide-nav-bar" );
+    /* scroll-up-bar v0.3.0 (https://github.com/eduardomb/scroll-up-bar) */ ! function(a) {
+        "use strict";
+        var b;
+        a.scrollupbar = function(c, d) {
+            function e() {
+                return h.scrollTop() <= c.offset().bottom
             }
-            //prevent page fom scrolling
-            //return false;
-        });
 
-        // On click show menu on small screen
-
-        $('body').addClass('js');
-        var $menu = $('#menu'),
-                $menulink = $('.menu-link');
-
-        $menulink.click(function() {
-            $menulink.toggleClass('active');
-            $menu.toggleClass('active');
-            return false;
-        });
-
-        var toggled = 0;
-
-        $('.menu-link').click(function(){
-            if(toggled == 0){
-                $('.bar3').stop().transition({rotate: "45", "margin-top": "13px"});
-                $('.bar2').stop().transition({opacity: "0"}, "fast");
-                $('.bar1').stop().transition({rotate: "-45", "margin-top": "13px"});
-                toggled++;
-                console.log("toggled down")
+            function f() {
+                return h.scrollTop() < c.offset().bottom + c.outerHeight()
             }
-            else{
+            d = a.extend({
+                enterViewport: a.noop,
+                fullyEnterViewport: a.noop,
+                exitViewport: a.noop,
+                partiallyExitViewport: a.noop
+            }, d);
+            var g, h = a(window),
+                    i = a(document),
+                    j = "fixed" == c.css("position") ? 0 : c.offset().bottom,
+                    k = h.scrollTop(),
+                    l = c.position().bottom,
+                    m = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+            return a.scrollupbar.isInViewport = f(), a.scrollupbar.isFullyInViewport = e(), m ? (h.on("touchstart.scrollupbar", function() {
+                k = h.scrollTop()
+            }), h.on("touchend.scrollupbar", function() {
+                var b = h.scrollTop();
+                k > b || b - c.outerHeight() < j ? j >= b ? (c.css({
+                    position: "absolute",
+                    bottom: l
+                }), c.show(function() {
+                    a.scrollupbar.isInViewport = !0, a.scrollupbar.isFullyInViewport = !0, d.enterViewport(), d.fullyEnterViewport()
+                })) : (c.css({
+                    position: "fixed",
+                    bottom: 0
+                }), a.scrollupbar.isInViewport = !0, d.enterViewport(), c.slideDown(function() {
+                    a.scrollupbar.isFullyInViewport = !0, d.fullyEnterViewport()
+                })) : b > k && (a.scrollupbar.isFullyInViewport = !1, d.partiallyExitViewport(), c.slideUp(function() {
+                    a.scrollupbar.isInViewport = !1, d.exitViewport()
+                })), k = b
+            })) : h.on("scroll.scrollupbar", function() {
+                var b = h.scrollTop(),
+                        m = c.outerHeight();
+                0 > b || b > i.height() - h.height() || (g && clearTimeout(g), k > b ? (!a.scrollupbar.isInViewport && k - m >= j && (c.css("bottom", k - m), a.scrollupbar.isInViewport = !0, d.enterViewport()), e() && (c.css(b >= j ? {
+                    position: "fixed",
+                    bottom: 0
+                } : {
+                    position: "absolute",
+                    bottom: l
+                }), a.scrollupbar.isFullyInViewport || (a.scrollupbar.isFullyInViewport = !0, d.fullyEnterViewport())), g = setTimeout(function() {
+                    e() || (c.css({
+                        position: "fixed",
+                        bottom: c.offset().bottom - b
+                    }), c.animate({
+                        bottom: 0
+                    }, 100, function() {
+                        a.scrollupbar.isFullyInViewport = !0, d.fullyEnterViewport()
+                    }))
+                }, 400)) : b > k && (a.scrollupbar.isFullyInViewport && (c.css({
+                    position: "absolute",
+                    bottom: k > j ? k : l
+                }), e() || (a.scrollupbar.isFullyInViewport = !1, d.partiallyExitViewport())), a.scrollupbar.isInViewport && !f() && (a.scrollupbar.isInViewport = !1, d.exitViewport()), g = setTimeout(function() {
+                    f() && b - m >= j && c.animate({
+                        bottom: b - m
+                    }, 100, function() {
+                        a.scrollupbar.isInViewport = !1, d.exitViewport()
+                    })
+                }, 400)), k = b)
+            }), b = function() {
+                h.off(".scrollupbar"), c.css({
+                    position: "absolute",
+                    bottom: l
+                })
+            }, c
+        }, a.scrollupbar.destroy = function() {
+            return b ? b() : void 0
+        }, a.fn.scrollupbar = function(b) {
+            return a.scrollupbar(this, b)
+        }
+    }(jQuery);
 
-                $('.bar3').stop().transition({rotate: "+=135", "margin-top": "3px"});
-                $('.bar2').transition({opacity: "1"}, "fast");
-                $('.bar1').stop().transition({rotate: "-=135", "margin-top": "23px"});
-                toggled--;
-                console.log("Togged Up")
-            }
-        });
-    });
+    $('#bottombar').scrollupbar();
+
 </script>
