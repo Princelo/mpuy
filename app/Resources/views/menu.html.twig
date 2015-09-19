@@ -85,14 +85,14 @@
             localId: localIds[n - 1], // 需要上传的图片的本地ID，由chooseImage接口获得
             isShowProgressTips: 1, // 默认为1，显示进度提示
             success: function (res) {
-                alert('n:'+n);
-                alert('count:'+count);
-                addcookie('current-upload-img'+n, localId);
-                addcookie(localId, res.serverId);
+                addcookie('current-upload-img'+n, localIds[n - 1]);
+                addcookie(localIds[n - 1], res.serverId);
                 if (n < count)
                     uploadImage(localIds, n+1);
-                else
+                else {
+                    $('.upload-info').hide();
                     alert('upload complete');
+                }
                 var serverId = res.serverId; // 返回图片的服务器端ID
             }
         });
