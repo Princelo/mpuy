@@ -123,7 +123,7 @@ class AccountController extends BaseController
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @Route('/resetting', name="resetting")
+     * @Route("/resetting", name="resetting")
      */
     public function resettingAction(Request $request)
     {
@@ -132,7 +132,7 @@ class AccountController extends BaseController
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @Route('/logout', name="logout")
+     * @Route("/logout", name="logout")
      */
     public function logoutAction(Request $request)
     {
@@ -141,7 +141,7 @@ class AccountController extends BaseController
     /**
      * @param Request $request
      * @return RedirectResponse
-     * @Route('/login', name="login")
+     * @Route("/login", name="login")
      */
     public function loginAction(Request $request)
     {
