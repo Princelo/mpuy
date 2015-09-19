@@ -11,6 +11,20 @@
         height: 50px;
         bottom: 0px;
     }
+    .upload-info{
+        display:none;
+        height: 80px;
+        width: 200px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background: #000;
+        color: #fff;
+        line-height: 80px;
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+    }
 </style>
 <!-- /Menu-->
 <div id="soulnavbar">
@@ -48,18 +62,23 @@
                 var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                 alert(typeof localIds);
                 for (var i = 0; i < localIds.length; i++) {
-                    alert(localIds[i].substring(20));
-                    alert(localIds[i]);
-                    wx.uploadImage({
-                        localId: localIds[i].substring(20), // 需要上传的图片的本地ID，由chooseImage接口获得
-                        isShowProgressTips: 1, // 默认为1，显示进度提示
-                        success: function (res) {
-                            var serverId = res.serverId; // 返回图片的服务器端ID
-                            alert(serverId);
-                        }
-                    });
+                    uploadImage(localIds[i].substring(20), i + 1, localIds.length);
                 }
             }
         });
     }
+
+    var uploadImage = function (localId, num, count) {
+        $('upload-info').html('正在上传...' + num + '' + count);
+        $('.upload-info').show()
+        wx.uploadImage({
+            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                var serverId = res.serverId; // 返回图片的服务器端ID
+                alert(serverId);
+            }
+        });
+    }
 </script>
+<div class="upload-info"></div>
