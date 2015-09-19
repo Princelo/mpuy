@@ -68,7 +68,7 @@
                 var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                 alert(typeof localIds);
                 for (var i = 0; i < localIds.length; i++) {
-                    uploadImage(localIds[i].substring(20), i + 1, localIds.length);
+                    uploadImage(localIds[i], i + 1, localIds.length);
                 }
             }
         });
