@@ -136,19 +136,19 @@ class User extends BaseUser
     protected $wechatOpenId;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     protected $mobile;
 
     /**
-     * @ORM\Column(name="city", type="string")
+     * @ORM\Column(name="city", type="string", nullable=true)
      */
-    protected $city = '';
+    protected $city;
 
     /**
-     * @ORM\Column(name="province", type="string")
+     * @ORM\Column(name="province", type="string", nullable=true)
      */
-    protected $province = '';
+    protected $province;
 
     /**
      * @ORM\Column(name="district_id", type="integer")
