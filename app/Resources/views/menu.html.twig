@@ -67,37 +67,27 @@
             success: function (res) {
                 var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                 alert(typeof localIds);
-                for (var i = 0; i < localIds.length; i++) {
-                    uploadImage(localIds[i], i + 1, localIds.length);
-                }
+                //for (var i = 0; i < localIds.length; i++) {
+                    uploadImage(localIds, 1);
+                //}
             }
         });
     }
 
-    var uploadImage = function (localId, num, count) {
-        delCookie('current-upload-img'+num);
-        $('.upload-info').html('正在上传...1/'+count);
+    var uploadImage = function (localIds, n) {
+        var count = localIds.length;
+        for (var i = n; i <= count; i++) {
+            delCookie('current-upload-img' + i);
+        }
+        $('.upload-info').html('正在上传...'+n+'/'+count);
         $('.upload-info').show();
         wx.uploadImage({
-            localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
-            isShowProgressTips: 0, // 默认为1，显示进度提示
+            localId: localIds[n], // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
             success: function (res) {
-                addcookie('current-upload-img'+num, localId);
+                addcookie('current-upload-img'+n, localId);
                 addcookie(localId, res.serverId);
-                var n = 0;
-                for (var i = 1; i <= count; i++) {
-                    if(getcookie('current-upload-img' + i) != '')
-                        n ++;
-                }
-                if ( n === count) {
-                    alert('upload complete');
-                } else {
-                    $('.upload-info').html('正在上传...' + (n+1).toString() + '/' + count.toString() + '');
-                }
-                for (var i = 1; i <= count; i++) {
-                    alert(getcookie('current-upload-img' + i))
-                }
-
+                uploadImage(localIds, n+1)
                 var serverId = res.serverId; // 返回图片的服务器端ID
             }
         });
