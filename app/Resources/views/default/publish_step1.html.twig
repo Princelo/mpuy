@@ -36,7 +36,7 @@
     </script>
 </head>
 <body style="
-    background: #f1e1f1;
+    background: #f1e1f1; padding:0;
 ">
 <div class="control-header" style="
     height: 35px;
@@ -79,6 +79,15 @@
     <div class="img-list">
 
     </div>
+    <input type="hidden" id="img-input1">
+    <input type="hidden" id="img-input2">
+    <input type="hidden" id="img-input3">
+    <input type="hidden" id="img-input4">
+    <input type="hidden" id="img-input5">
+    <input type="hidden" id="img-input6">
+    <input type="hidden" id="img-input7">
+    <input type="hidden" id="img-input8">
+    <input type="hidden" id="img-input9">
 </div>
 <script>
     var n = 1;
@@ -87,7 +96,7 @@
             $('.img-list').html($('.img-list').html() + '<div class="img-item"><i></i><img src="'
                     +getcookie('current-upload-img'+i)
                     +'" /></div>');
-            $('#.img-input'+i).val(getcookie(getcookie('current-upload-img'+i)));
+            $('#img-input'+i).val(getcookie(getcookie('current-upload-img'+i)));
             n ++;
         }
     }
