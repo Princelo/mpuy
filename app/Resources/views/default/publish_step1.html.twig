@@ -6,6 +6,7 @@
     <meta content="telephone=no" name="format-detection">
     <title>Publish</title>
     <link rel="stylesheet" href="epuy-style.css">
+    <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
     <script>
         function addcookie(name,value,expireHours){
             var cookieString=name+"="+encodeURIComponent(value)+"; path=/"+";domain=.{{ app.request.getHttpHost() }}";
@@ -95,7 +96,7 @@
         alert(getcookie('current-upload-img'+i));
         alert(getcookie('server-img'+i));
         if(getcookie('current-upload-img'+i) != '') {
-            $('.img-list').html($('.img-list').html() + '<div class="img-item"><i></i><img src="' +getcookie('current-upload-img'+i) +'" /></div>');
+            $('.img-list').html($('.img-list').html() + '<div class="img-item"><i></i><img src="' +decodeURIComponent(getcookie('current-upload-img'+i)) +'"></div>');
             $('#img-input'+i).val(getcookie('server-img'+i));
             n ++;
         }
