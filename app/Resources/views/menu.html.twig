@@ -89,6 +89,7 @@
                     if(getcookie('current-upload-img' + i) != '')
                         n ++;
                 }
+                $('.upload-info').html('正在上传...' + (n+1).toString() + '/' + count.toString() + '');
                 if ( n === count) {
                     alert('upload complete');
                 }
