@@ -45,12 +45,12 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (null === $user) {
+        /*if (null === $user) {
             $message = sprintf(
                 'Unable to find an active admin AppBundle:User object identified by "an openid".'
             );
             throw new UsernameNotFoundException($message);
-        }
+        }*/
 
         return $user;
     }

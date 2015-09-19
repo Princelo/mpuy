@@ -92,24 +92,23 @@ class AccountController extends BaseController
         if (!isset($jsonOutput->openid)) {
             return $this->redirectToRoute('homepage');
         }
-        $newUser = new User();
-        $newUser->setWechatOpenId($jsonOutput->openid);
-        $newUser->setNickname($jsonOutput->nickname);
-        $newUser->setGender($jsonOutput->sex);
-        $newUser->setCity($jsonOutput->city);
-        $newUser->setProvince($jsonOutput->province);
-        $newUser->setCountry($jsonOutput->country);
-        $newUser->setAvatar($jsonOutput->headimgurl);
-        $newUser->setPassword('no password');
-        $newUser->setUsername($jsonOutput->openid);
-        $newUser->setEmail($jsonOutput->openid.'@ct-life.cn');
         $em = $this->getDoctrine()->getManager();
-        $em->persist($newUser);
-        $em->flush();
         $repo  = $em->getRepository("AcmeAccountBundle:User"); //Entity Repository
         $user = $repo->loadUserByWechatOpenId($jsonOutput->openid);
         if (!$user) {
-            throw new UsernameNotFoundException("User not found");
+            $newUser = new User();
+            $newUser->setWechatOpenId($jsonOutput->openid);
+            $newUser->setNickname($jsonOutput->nickname);
+            $newUser->setGender($jsonOutput->sex);
+            $newUser->setCity($jsonOutput->city);
+            $newUser->setProvince($jsonOutput->province);
+            $newUser->setCountry($jsonOutput->country);
+            $newUser->setAvatar($jsonOutput->headimgurl);
+            $newUser->setPassword('no password');
+            $newUser->setUsername($jsonOutput->openid);
+            $newUser->setEmail($jsonOutput->openid.'@ct-life.cn');
+            $em->persist($newUser);
+            $em->flush();
         } else {
             $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
             $this->get("security.context")->setToken($token); //now the user is logged in
