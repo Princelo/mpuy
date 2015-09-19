@@ -87,7 +87,10 @@
             success: function (res) {
                 addcookie('current-upload-img'+n, localId);
                 addcookie(localId, res.serverId);
-                uploadImage(localIds, n+1)
+                if (n < count)
+                    uploadImage(localIds, n+1)
+                else
+                    alert('upload complete');
                 var serverId = res.serverId; // 返回图片的服务器端ID
             }
         });
