@@ -31,12 +31,12 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     public function publishStep1SubmitAction(Request $request)
     {
         $product = new Product();
-        $product->setName($request->query('name'));
-        $product->setIntro($request->query('description'));
+        $product->setName($request->request->get('name'));
+        $product->setIntro($request->request->get('description'));
         $product->setUser($this->getUser());
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
-        foreach ($request->query('images') as $k => $v) {
+        foreach ($request->request->get('images') as $k => $v) {
             $image = new Image();
             $image->setProduct($product);
             $image->setLocalId($v['localId']);
@@ -86,11 +86,11 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     public function publishStep2SubmitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Product')->find($request->query('product_id'));
+        $product = $em->getRepository('AppBundle:Product')->find($request->request->get('product_id'));
         if ($product->getUser() != $this->getUser()) {
             throw new PessimisticLockException(
                 sprintf(
-                    'Product find by Id "%s" is not the current user\'s.', $request->query('product_id')
+                    'Product find by Id "%s" is not the current user\'s.', $request->request->get('product_id')
                 )
             );
         }

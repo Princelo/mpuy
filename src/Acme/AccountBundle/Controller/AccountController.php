@@ -63,7 +63,7 @@ class AccountController extends BaseController
      */
     public function wechatLoginAction(Request $request)
     {
-        $code = $request->get('code');
+        $code = $request->query->get('code');
         if ($code == null) {
             return $this->redirectToRoute('homepage');
         }
