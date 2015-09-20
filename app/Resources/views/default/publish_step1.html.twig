@@ -103,7 +103,7 @@
     var n = 1;
     for(var i = 1; i <= 9; i++) {
         if(getcookie('current-upload-img'+i) != '') {
-            $('.img-list').html($('.img-list').html() + '<div class="img-item" id="img-item'+i+'"><i onclick=\"($(\'#img-item'+i+'\').hide();)></i><img src="' +decodeURIComponent(getcookie('current-upload-img'+i)) +'"></div>');
+            $('.img-list').html($('.img-list').html() + '<div class="img-item" id="img-item'+i+'"><i onclick=\"($(\'#img-item'+i+'\').hide();)\"></i><img src="' +decodeURIComponent(getcookie('current-upload-img'+i)) +'"></div>');
             $('#img-input'+i).val(getcookie('server-img'+i));
             n ++;
         }
