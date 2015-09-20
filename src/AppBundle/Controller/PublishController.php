@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Constants;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\NoResultException;
@@ -39,12 +40,24 @@ class PublishController extends Controller implements WechatTokenGetterInterface
             $image = new Image();
             $image->setProduct($product);
             $image->setLocalId($v['localId']);
-            $image->setServerId($v['localId']);
+            $image->setServerId($v['serverId']);
             $em->persist($image);
+            $this->saveWechatImageAsync($v['serverId'], $image->getId(), $request->getSession()->get('wechat_token'));
         }
         $em->flush();
         $productId = $product->getId();
         return $this->redirectToRoute('publish_step2', ['product_id' => $productId]);
+    }
+
+    public function saveWechatImageAsync($serverId, $imageId, $accessToken)
+    {
+        $cmd = "curl -I -G \"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId."\"";
+        $root_dir = realpath($this->container->getParameter('kernel.root_dir').'/..');
+        $cmd .= " > ".$root_dir."/web/attachments/wechat_img/".$serverId;
+        //no log
+        //$cmd .= " > /dev/null 2>&1 &";
+        exec($cmd, $output, $exit);
+        return $exit == 0;
     }
 
     /**

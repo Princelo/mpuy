@@ -54,8 +54,8 @@
     line-height: 35px;
     float: left;
     padding-left: 8px;
-">存为草稿</a>
-    <a href="javascript:void(0);" onclick="$('#form').submit()" style="
+"></a>
+    <a href="javascript:void(0);" id="next-btn" onclick="" style="
     color: #2a8;
     font-weight: bold;
     text-decoration: none;
@@ -67,8 +67,8 @@
 <div class="publish-content" style="
     margin-top: 45px;
 ">
-    <form action="{{ path('publish_step1_submit') }}" type="post">
-        <input name="name" placeholder="拍品名称" style="width: 100px; box-sizing: border-box; padding-left: 10px;font-size: 1em; height: 20px; line-height: 20px; border: none;" />
+    <form action="{{ path('publish_step1_submit') }}" method="post" id="form">
+        <input name="name" placeholder="拍品名称" style="width: 100px; box-sizing: border-box; padding-left: 10px;font-size: 1em; height: 20px; line-height: 20px; border: none; diplay:block" />
         <textarea name="description" placeholder="我的拍品描述..." style="
     border: none;
     resize: none;
@@ -85,29 +85,43 @@
             .img-item i {position: absolute; top:0; right: 0; width: 16px; height: 16px; display: block;
                 border-radius: 8px; border: 1px solid #fff; background: #000;
             }
+            .img-item {margin-left: 10px;}
         </style>
         <div class="img-list">
         </div>
-        <input type="hidden" id="img-input1" name="img-input1">
-        <input type="hidden" id="img-input2" name="img-input2">
-        <input type="hidden" id="img-input3" name="img-input3">
-        <input type="hidden" id="img-input4" name="img-input4">
-        <input type="hidden" id="img-input5" name="img-input5">
-        <input type="hidden" id="img-input6" name="img-input6">
-        <input type="hidden" id="img-input7" name="img-input7">
-        <input type="hidden" id="img-input8" name="img-input8">
-        <input type="hidden" id="img-input9" name="img-input9">
+        <input type="hidden" id="server-img-input1" name="images[0]['serverId']">
+        <input type="hidden" id="server-img-input2" name="images[1]['serverId']">
+        <input type="hidden" id="server-img-input3" name="images[2]['serverId']">
+        <input type="hidden" id="server-img-input4" name="images[3]['serverId']">
+        <input type="hidden" id="server-img-input5" name="images[4]['serverId']">
+        <input type="hidden" id="server-img-input6" name="images[5]['serverId']">
+        <input type="hidden" id="server-img-input7" name="images[6]['serverId']">
+        <input type="hidden" id="server-img-input8" name="images[7]['serverId']">
+        <input type="hidden" id="server-img-input9" name="images[8]['serverId']">
+        <input type="hidden" id="local-img-input1" name="images[0]['localId']">
+        <input type="hidden" id="local-img-input2" name="images[1]['localId']">
+        <input type="hidden" id="local-img-input3" name="images[2]['localId']">
+        <input type="hidden" id="local-img-input4" name="images[3]['localId']">
+        <input type="hidden" id="local-img-input5" name="images[4]['localId']">
+        <input type="hidden" id="local-img-input6" name="images[5]['localId']">
+        <input type="hidden" id="local-img-input7" name="images[6]['localId']">
+        <input type="hidden" id="local-img-input8" name="images[7]['localId']">
+        <input type="hidden" id="local-img-input9" name="images[8]['localId']">
     </form>
 </div>
 <script>
     var n = 1;
     for(var i = 1; i <= 9; i++) {
         if(getcookie('current-upload-img'+i) != '') {
-            $('.img-list').html($('.img-list').html() + '<div class="img-item" id="img-item'+i+'"><i onclick=\"($(\'#img-item'+i+'\').hide();)\"></i><img src="' +decodeURIComponent(getcookie('current-upload-img'+i)) +'"></div>');
-            $('#img-input'+i).val(getcookie('server-img'+i));
+            $('#server-img-input'+i).val(getcookie('server-img'+i));
+            $('#local-img-input'+i).val(getcookie('current-upload-img'+i));
+            $('.img-list').html($('.img-list').html() + '<div class="img-item" id="img-item'+i+'"><img src="' +decodeURIComponent(getcookie('current-upload-img'+i)) +'"></div>');
             n ++;
         }
     }
+    $('#next-btn').live('click', function (){
+        $('#form').submit();
+    });
 </script>
 
 
