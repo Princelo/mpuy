@@ -22,6 +22,14 @@ class Product
     private $id;
 
     /**
+     * @var \Acme\AccountBundle\Entity\User
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="products")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
@@ -31,14 +39,14 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="img_cover", type="string", length=255)
+     * @ORM\Column(name="img_cover", type="string", length=255, nullable=true)
      */
     private $imgCover;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_free_postage", type="boolean")
+     * @ORM\Column(name="is_free_postage", type="boolean", nullable=true)
      */
     private $isFreePostage;
 
@@ -52,58 +60,63 @@ class Product
     /**
      * @var integer
      *
-     * @ORM\Column(name="category", type="integer")
+     * @ORM\Column(name="category", type="integer", nullable=true)
      */
     private $category;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expire_time", type="datetime")
+     * @ORM\Column(name="expire_time", type="datetime", nullable=true)
      */
     private $expireTime;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="start_price", type="float")
+     * @ORM\Column(name="start_price", type="float", nullable=true)
      */
     private $startPrice;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="step_price", type="float")
+     * @ORM\Column(name="step_price", type="float", nullable=true)
      */
     private $stepPrice;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="reference_price", type="float")
+     * @ORM\Column(name="reference_price", type="float", nullable=true)
      */
     private $referencePrice;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="fixed_price", type="float")
+     * @ORM\Column(name="fixed_price", type="float", nullable=true)
      */
     private $fixedPrice;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="bid_price", type="float")
+     * @ORM\Column(name="bid_price", type="float", nullable=true)
      */
     private $bidPrice;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="top_price", type="float")
+     * @ORM\Column(name="top_price", type="float", nullable=true)
      */
     private $topPrice;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="product")
+     */
+    protected $images;
 
 
     /**
@@ -390,5 +403,68 @@ class Product
     public function getTopPrice()
     {
         return $this->topPrice;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add images
+     *
+     * @param \AppBundle\Entity\Image $images
+     * @return Product
+     */
+    public function addImage(\AppBundle\Entity\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \AppBundle\Entity\Image $images
+     */
+    public function removeImage(\AppBundle\Entity\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     * @return Product
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

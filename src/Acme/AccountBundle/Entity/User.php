@@ -23,7 +23,10 @@ class User extends BaseUser
      */
     protected $id;
 
-    protected $isActive;
+    /**
+     * @ORM\Column(name="is_active", type="boolean", options={"default" = false})
+     */
+    protected $isActive = false;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true, nullable=true)
@@ -189,6 +192,12 @@ class User extends BaseUser
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $gender;
+
+    /**
+     * @var \AppBundle\Entity\Product
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Product", mappedBy="user")
+     */
+    protected $products;
 
     public function __construct()
     {
@@ -1036,5 +1045,38 @@ class User extends BaseUser
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Add products
+     *
+     * @param \Acme\AccountBundle\Entity\Product $products
+     * @return User
+     */
+    public function addProduct(\Acme\AccountBundle\Entity\Product $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \Acme\AccountBundle\Entity\Product $products
+     */
+    public function removeProduct(\Acme\AccountBundle\Entity\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

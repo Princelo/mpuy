@@ -78,6 +78,7 @@
         var count = localIds.length;
         for (var i = n; i <= 9; i++) {
             delCookie('current-upload-img' + i);
+            delCookie('server-img' + i);
         }
         $('.upload-info').html('正在上传...'+n+'/'+count);
         $('.upload-info').show();
