@@ -30,11 +30,13 @@ class PublishController extends Controller implements WechatTokenGetterInterface
      */
     public function publishStep1SubmitAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $product = new Product();
         $product->setName($request->request->get('name'));
         $product->setIntro($request->request->get('description'));
-        $product->setUser($this->getUser());
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
+        $product->setUser($user);
         $em->persist($product);
         foreach ($request->request->get('images') as $k => $v) {
             $image = new Image();
@@ -66,8 +68,10 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     public function publishStep2Action(Request $request, $product_id)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
         if ($em->getRepository('AppBundle:Product')->find($product_id)->getUser() !=
-            $this->getUser()) {
+            $user) {
             throw new PessimisticLockException(
                 sprintf(
                     'Product find by Id "%s" is not the current user\'s.', $product_id
@@ -86,8 +90,10 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     public function publishStep2SubmitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
         $product = $em->getRepository('AppBundle:Product')->find($request->request->get('product_id'));
-        if ($product->getUser() != $this->getUser()) {
+        if ($product->getUser() != $user) {
             throw new PessimisticLockException(
                 sprintf(
                     'Product find by Id "%s" is not the current user\'s.', $request->request->get('product_id')
