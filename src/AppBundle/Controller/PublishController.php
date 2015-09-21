@@ -35,7 +35,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setName($request->request->get('name'));
         $product->setIntro($request->request->get('description'));
         $user = $this->getUser()->getId();
-        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $product->setUser($user);
         $em->persist($product);
         foreach ($request->request->get('images') as $k => $v) {
@@ -69,7 +69,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser()->getId();
-        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         if ($em->getRepository('AppBundle:Product')->find($product_id)->getUser() !=
             $user) {
             throw new PessimisticLockException(
@@ -91,7 +91,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser()->getId();
-        $user = $em->getRepository('Acme\AccountBundle:User')->find($user);
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $product = $em->getRepository('AppBundle:Product')->find($request->request->get('product_id'));
         if ($product->getUser() != $user) {
             throw new PessimisticLockException(
@@ -100,17 +100,17 @@ class PublishController extends Controller implements WechatTokenGetterInterface
                 )
             );
         }
-        $product->setCategory($request->query('category'));
-        $product->setExpireTime($request->query('expire_time'));
-        $product->setFixedPrice($request->query('fixed_price'));
-        $product->setIsFreePostage($request->query('is_free_postage'));
-        $product->setReferencePrice($request->query('reference_price'));
-        $product->setStartPrice($request->query('start_price'));
-        $product->setStepPrice($request->query('step_price'));
+        $product->setCategory($request->request->get('category'));
+        $product->setExpireTime($request->request->get('expire_time'));
+        $product->setFixedPrice($request->request->get('fixed_price'));
+        $product->setIsFreePostage($request->request->get('is_free_postage'));
+        $product->setReferencePrice($request->request->get('reference_price'));
+        $product->setStartPrice($request->request->get('start_price'));
+        $product->setStepPrice($request->request->get('step_price'));
         $em->persist($product);
         $em->flush();
         return new Response('pushlish complete');
-        return $this->redirectToRoute('product_view', ['product_id' => $request->query('product_id')]);
+        return $this->redirectToRoute('product_view', ['product_id' => $request->request->get('product_id')]);
     }
 
 }
