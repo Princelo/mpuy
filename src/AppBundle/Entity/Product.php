@@ -448,10 +448,10 @@ class Product
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param \Acme\AccountBundle\Entity\User $user
      * @return Product
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(\Acme\AccountBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -461,7 +461,7 @@ class Product
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User 
+     * @return \Acme\AccountBundle\Entity\User
      */
     public function getUser()
     {
