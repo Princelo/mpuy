@@ -38,6 +38,8 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $product->setUser($user);
         $em->persist($product);
+        echo "<pre>";
+        print_r($request->request->get('images'));exit;
         foreach ($request->request->get('images') as $k => $v) {
             $image = new Image();
             $image->setProduct($product);
