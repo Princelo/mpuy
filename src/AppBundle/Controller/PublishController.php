@@ -39,8 +39,8 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setUser($user);
         $em->persist($product);
         echo "<pre>";
-        print_r($request->request->get('images'));exit;
         foreach ($request->request->get('images') as $k => $v) {
+            print_r($v);exit;
             $image = new Image();
             $image->setProduct($product);
             $image->setLocalId($v['localId']);
