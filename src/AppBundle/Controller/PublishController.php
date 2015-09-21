@@ -55,9 +55,9 @@ class PublishController extends Controller implements WechatTokenGetterInterface
 
     public function saveWechatImageAsync($serverId, $imageId, $accessToken)
     {
-        $cmd = "curl -I -G \"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId."\"";
+        $cmd = "wget \"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId."\"";
         $root_dir = realpath($this->container->getParameter('kernel.root_dir').'/..');
-        $cmd .= " > ".$root_dir."/web/attachments/wechat_img/".$serverId;
+        $cmd .= " -O ".$root_dir."/web/attachments/wechat_img/".$serverId;
         //no log
         //$cmd .= " > /dev/null 2>&1 &";
         exec($cmd, $output, $exit);
