@@ -20,6 +20,9 @@ class AppKernel extends Kernel
             new Acme\AccountBundle\AcmeAccountBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
+            new JMS\JobQueueBundle\JMSJobQueueBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\AopBundle\JMSAopBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

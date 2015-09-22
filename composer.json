@@ -22,7 +22,9 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "predis/predis": "^1.0",
-        "snc/redis-bundle": "1.1.x-dev"
+        "snc/redis-bundle": "1.1.x-dev",
+        "jms/job-queue-bundle": "dev-master",
+        "pagerfanta/pagerfanta": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

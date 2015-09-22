@@ -7,6 +7,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\PessimisticLockException;
+use JMS\JobQueueBundle\Entity\Job;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,13 +56,11 @@ class PublishController extends Controller implements WechatTokenGetterInterface
 
     public function saveWechatImageAsync($serverId, $imageId, $accessToken)
     {
-        $cmd = "wget \"http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId."\"";
-        $root_dir = realpath($this->container->getParameter('kernel.root_dir').'/..');
-        $cmd .= " -O ".$root_dir."/web/attachments/wechat_img/".$serverId;
-        //no log
-        //$cmd .= " > /dev/null 2>&1 &";
-        exec($cmd, $output, $exit);
-        return $exit == 0;
+        $base_dir = realpath($this->container->getParameter('kernel.root_dir').'/..');
+        $job = new Job('jms_job_queue_runner:command', [$serverId, $imageId, $accessToken, $base_dir]);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($job);
+        $em->flush();
     }
 
     /**
