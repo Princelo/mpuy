@@ -5,6 +5,8 @@
  * Date: 9/22/15
  * Time: 11:33
  */
+namespace AppBundle\Command;
+
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
