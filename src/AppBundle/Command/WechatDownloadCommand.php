@@ -18,7 +18,7 @@ class WechatDownloadCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('demo:wechat-downloader')
+            ->setName('jms_job_queue_runner:run')
             ->setDescription('Download Images from Wechat Server')
         ;
     }
