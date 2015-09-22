@@ -20,14 +20,35 @@ class WechatDownloadCommand extends ContainerAwareCommand
         $this
             ->setName('jms_job_queue_runner:command')
             ->setDescription('Download Images from Wechat Server')
+            ->addArgument(
+                'serverid',
+                InputArgument::OPTIONAL,
+                'Who do you want to greet?'
+            )
+            ->addArgument(
+                'imageid',
+                InputArgument::OPTIONAL,
+                'Who do you want to greet?'
+            )
+            ->addArgument(
+                'accesstoken',
+                InputArgument::OPTIONAL,
+                'Who do you want to greet?'
+            )
+            ->addArgument(
+                'basedir',
+                InputArgument::OPTIONAL,
+                'Who do you want to greet?'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $argv = $input->getArguments();
-        $serverId = $argv[0];
-        $accessToken = $argv[2];
-        file_put_contents($argv[3]."/web/attachments/wechat_img", fopen("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId, 'r'));
+        $serverId = $input->getArgument('serverid');
+        $accessToken = $input->getArgument('accesstoken');
+        $basedir = $input->getArgument('basedir');
+        $imageId = $input->getArgument('imageid');
+        file_put_contents($basedir."/web/attachments/wechat_img/".$imageId, fopen("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId, 'r'));
     }
 }
