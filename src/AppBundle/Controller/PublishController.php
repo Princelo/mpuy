@@ -40,11 +40,11 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setUser($user);
         $em->persist($product);
         foreach ($request->request->get('images') as $k => $v) {
-            if (isset($v['localId']) && isset($v['serverId'])) {
+            if (isset($v["['localId']") && isset($v["['serverId']"])) {
                 $image = new Image();
                 $image->setProduct($product);
-                $image->setLocalId($v['localId']);
-                $image->setServerId($v['serverId']);
+                $image->setLocalId($v["['localId']"]);
+                $image->setServerId($v["['serverId']"]);
                 $em->persist($image);
                 $this->saveWechatImageAsync($v['serverId'], $image->getId(), $request->getSession()->get('wechat_token'));
             }
