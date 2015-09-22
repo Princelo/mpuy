@@ -51,14 +51,14 @@ class Image
     /**
      * @var string
      *
-     * @ORM\Column(name="origin", type="string", length=255)
+     * @ORM\Column(name="origin", type="string", length=255, nullable=true)
      */
     private $origin;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="thumb", type="string", length=255)
+     * @ORM\Column(name="thumb", type="string", length=255, nullable=true)
      */
     private $thumb;
 
