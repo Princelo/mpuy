@@ -39,12 +39,13 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $product->setUser($user);
         $em->persist($product);
-        foreach ($request->request->get('images') as $k => $v) {
-            if (isset($v["['localId']"]) && isset($v["['serverId']"])) {
+        $localIds = $request->request->get('localId');
+        foreach ($request->request->get('serverId') as $k => $v) {
+            if (isset($v) && $v != '') {
                 $image = new Image();
                 $image->setProduct($product);
-                $image->setLocalId($v["['localId']"]);
-                $image->setServerId($v["['serverId']"]);
+                $image->setLocalId($localIds[$k]);
+                $image->setServerId($v);
                 $em->persist($image);
                 $this->saveWechatImageAsync($v['serverId'], $image->getId(), $request->getSession()->get('wechat_token'));
             }
