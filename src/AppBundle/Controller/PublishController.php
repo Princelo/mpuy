@@ -52,7 +52,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         }
         $em->flush();
         $productId = $product->getId();
-        //return $this->redirectToRoute('publish_step2', ['product_id' => $productId]);
+        return $this->redirectToRoute('publish_step2', ['product_id' => $productId]);
     }
 
     public function saveWechatImageAsync($serverId, $imageId, $accessToken)
