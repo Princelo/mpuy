@@ -27,7 +27,6 @@ class WechatDownloadCommand extends ContainerAwareCommand
     {
         $argv = $input->getArguments();
         $url = $argv[0];
-        $imageId = $argv[1];
-        file_put_contents("/mnt/html/mpuy/web/attachments/wechat_img", fopen($url, 'r'));
+        file_put_contents("/mnt/html/mpuy/web/attachments/wechat_img/".uniqid(), fopen($url, 'r'));
     }
 }
