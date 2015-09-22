@@ -47,7 +47,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
                 $image->setLocalId($localIds[$k]);
                 $image->setServerId($v);
                 $em->persist($image);
-                $this->saveWechatImageAsync($v['serverId'], $image->getId(), $request->getSession()->get('wechat_token'));
+                $this->saveWechatImageAsync($v, $image->getId(), $request->getSession()->get('wechat_token'));
             }
         }
         $em->flush();
