@@ -26,8 +26,8 @@ class WechatDownloadCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $argv = $input->getArguments();
-        $serverId = $argv[0];
-        $accessToken = $argv[1];
-        file_put_contents($argv[2]."/web/attachments/wechat_img", fopen("http://file.api.weixin.qq.com/cgi-bin/media/get?access_token=".$accessToken."&media_id=".$serverId, 'r'));
+        $url = $argv[0];
+        $imageId = $argv[1];
+        file_put_contents("/mnt/html/mpuy/web/attachments/wechat_img", fopen($url, 'r'));
     }
 }
