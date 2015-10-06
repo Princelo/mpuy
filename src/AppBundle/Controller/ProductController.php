@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends Controller implements WechatTokenGetterInterface
 {
     /**
-     * @Route('/product/view/{product_id}', name="product_view")
+     * @Route("/product/view/{product_id}", name="product_view")
      * @param $product_id
      * @param Request $request
      * @return Response
