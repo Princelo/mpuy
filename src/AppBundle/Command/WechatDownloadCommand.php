@@ -22,23 +22,19 @@ class WechatDownloadCommand extends ContainerAwareCommand
             ->setDescription('Download Images from Wechat Server')
             ->addArgument(
                 'serverid',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                InputArgument::REQUIRED
             )
             ->addArgument(
                 'imageid',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                InputArgument::REQUIRED
             )
             ->addArgument(
                 'accesstoken',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                InputArgument::REQUIRED
             )
             ->addArgument(
                 'basedir',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?'
+                InputArgument::REQUIRED
             )
         ;
     }

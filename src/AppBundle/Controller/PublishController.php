@@ -102,8 +102,13 @@ class PublishController extends Controller implements WechatTokenGetterInterface
                 )
             );
         }
+        $expire_time = new \DateTime();
+        list($hour, $minute) = explode($request->request->get('expire_time'), ':');
+        $expire_time->set($hour, $minute);
+        list($year, $month, $day) = explode($request->request->get('expire_date'), '-');
+        $expire_time->setDate($year, $month, $day);
         $product->setCategory($request->request->get('category'));
-        $product->setExpireTime($request->request->get('expire_time'));
+        $product->setExpireTime($expire_time);
         $product->setFixedPrice($request->request->get('fixed_price'));
         $product->setIsFreePostage($request->request->get('is_free_postage'));
         $product->setReferencePrice($request->request->get('reference_price'));
@@ -111,7 +116,6 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setStepPrice($request->request->get('step_price'));
         $em->persist($product);
         $em->flush();
-        return new Response('pushlish complete');
         return $this->redirectToRoute('product_view', ['product_id' => $request->request->get('product_id')]);
     }
 
