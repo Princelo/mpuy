@@ -51,6 +51,13 @@ class Product
     private $isFreePostage;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_returnable", type="boolean", nullable=true)
+     */
+    protected $isReturnable;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="intro", type="text")
@@ -70,6 +77,13 @@ class Product
      * @ORM\Column(name="expire_time", type="datetime", nullable=true)
      */
     private $expireTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="create_time", type="datetime", nullable=true)
+     */
+    private $createTime;
 
     /**
      * @var float
@@ -410,6 +424,7 @@ class Product
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->createTime = new \DateTime();
     }
 
     /**

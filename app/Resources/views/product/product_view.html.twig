@@ -1,0 +1,258 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="home-header">
+        <div class="home-header-bg">
+            <div class="username">{{ nickname }}</div>
+        </div>
+        <div class="tips-block">
+            <div class="tips">我的商品详情</div>
+        </div>
+        <div class="avatar">
+            <img src="{{ avatar }}" />
+        </div>
+    </div>
+    <div class="goods-list">
+        <div class="goods-item">
+            <div class="avatar">
+                <img src="{{ p.user.avatar }}" />
+            </div>
+            <div class="goods-details" style="">
+                <div class="title"><i class="level"></i><a href="javascript:void(0);">{{ p.user.nickname }}</a></div>
+                <div class="details">
+                    {{ p.description }}
+                </div>
+                <div class="img-list">
+                    <div class="my-gallery" itemscope itemtype="">
+                        {% for img in images %}
+                        <figure itemprop="associatedMedia" itemscope itemtype="">
+                            <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action(0)">
+                                <img src="/attachments/wechat_img/{{ img }}" itemprop="thumbnail" alt="" />
+                            </a>
+                            <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
+                        </figure>
+                        {% endfor %}
+
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="attr">
+                    <div class="attr_left">
+                        {% if p.isReturnable == true %}<i class="icon-text blue">包退</i>{% endif %}
+                        {% if p.isFreePostage == true %}<i class="icon-text orange">包邮</i>{% endif %}
+                        <i class="icon ensure"></i>
+                        <label class="date">{{ p.createTime|date('m月d日') }}</label>
+                    </div>
+                    <!--<div class="attr_right">
+                        <span>15</span><i class="icon like"></i>
+                    </div>-->
+                </div>
+                <div style="clear:both;"></div>
+                <!--<div class="likes">
+                    <div class="title">TA们收藏了此拍品:</div>
+                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDJDqrLXUCZpmFvcMCpOt8JzopzicLMIGslEJoswiaWSCHtPiaUxca5ibSG7kQwxNvcvbI90Rbria9arKl0AYJjevq83U/0" />
+                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDKzmnY9MAQom4QiahpkKs3W4fFVrfx8ExfN0twcUUVPtI1stOvB8RmHibLgTujO2BclJQBPXZuLlJWZGMJusFeRIn/0" />
+                    <div style="clear:both;"></div>
+                </div>-->
+                <div style="clear:both; height:10px;"></div>
+                <div class="countdown-block">
+                    <div class="running-tip">距离结束:</div>
+                    <div class="countdown-tip"><label class="countdown" id="countdown"></label></div>
+                </div>
+                <!--<div class="action-block">
+                    <a class="update" href="javascript:void(0);">更新</a>
+                    <a class="bid-btn" onclick="chooseImage()">出价</a>
+                    <div class="action-info">
+                        <div class="start-price"><span>起</span><label>￥118元</label></div>
+                        <span class="splitter">|</span>
+                        <div class="step-price"><span>加</span><label>￥10元</label></div>
+                    </div>
+                </div>-->
+                <!--<div class="bid-list">
+                    <ul>
+                        <li>
+                            <img class="avatar" src="epuy_images/avatar1.png" />
+                            <div class="bid-info">
+                                <a href="javascript:void(0);">云</a>
+                                <label>￥228元</label>
+                            </div>
+                            <div class="bid-order-info">
+                                <div class="order-info leading">领先</div>
+                                <div style="clear:both;"></div>
+                                <div class="datetime">09-03 14:57</div>
+                            </div>
+                        </li>
+                        <li>
+                            <img class="avatar" src="epuy_images/avatar2.png" />
+                            <div class="bid-info">
+                                <a href="javascript:void(0);">ˇ坚果墙♛</a>
+                                <label>￥198元</label>
+                            </div>
+                            <div class="bid-order-info">
+                                <div class="order-info dumped-out">出局</div>
+                                <div style="clear:both;"></div>
+                                <div class="datetime">09-03 12:46</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {% stylesheets '@AppBundle/Resources/public/css/home/*' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/app/PhotoSwipe/default-skin/default-skin.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/PhotoSwipe/photoswipe.css') }}" />
+{% endblock %}
+{% block javascripts %}
+    {% javascripts '@AppBundle/Resources/public/PhotoSwipe/*.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
+    <script>
+        var photoswipe_action = function(i) {
+            var pswpElement = document.querySelectorAll('.pswp')[0];
+
+            // build items array
+            var items = [
+                {
+                    src: 'epuy_images/1.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/2.jpg',
+                    w: 900,
+                    h: 1200
+                },
+                {
+                    src: 'epuy_images/3.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/4.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/5.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/6.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/7.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/8.jpg',
+                    w: 600,
+                    h: 400
+                },
+                {
+                    src: 'epuy_images/9.jpg',
+                    w: 600,
+                    h: 400
+                },
+            ];
+
+            // define options (if needed)
+            var options = {
+                // optionName: 'option value'
+                // for example:
+                shareEl: false,
+                zoomEl: true,
+                index: i // start at first slide
+            };
+
+            // Initializes and opens PhotoSwipe
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+            return false;
+        }
+        var clock1 = document.getElementById('countdown')
+                , targetDate = 1442100980*1000;
+
+        clock1.innerHTML = countdown(targetDate).toString();
+        setInterval(function(){
+            clock1.innerHTML = countdown(targetDate).toString();
+        }, 1000);
+        alert(window.innerWidth + " " + window.innerHeight);
+    </script>
+    {% include 'menu.html.twig' %}
+{% endblock %}

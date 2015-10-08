@@ -19,8 +19,11 @@ class ProductController extends Controller implements WechatTokenGetterInterface
     {
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository('AppBundle:Product')->find($product_id);
+        $images = $em->getRepository('AppBundle:Image')->findBy(['product' => $product]);
         return $this->render('product/product_view.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'p' => $product,
+            'images' => $images
         ));
     }
 }

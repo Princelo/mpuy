@@ -116,7 +116,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setStepPrice($request->request->get('step_price'));
         $em->persist($product);
         $em->flush();
-        return $this->redirectToRoute('product_view', ['product_id' => $request->request->get('product_id')]);
+        return $this->redirectToRoute('product_view', ['product_id' => $product->getId()]);
     }
 
 }
