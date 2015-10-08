@@ -27,7 +27,7 @@
                         {% for img in images %}
                         <figure itemprop="associatedMedia" itemscope itemtype="">
                             <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action(0)">
-                                <img src="/attachments/wechat_img/{{ img }}" itemprop="thumbnail" alt="" />
+                                <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
                             </a>
                             <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
                         </figure>
