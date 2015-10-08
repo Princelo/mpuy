@@ -82,7 +82,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         }
         // replace this example code with whatever you need
         return $this->render('default/publish_step2.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'product_id' => $product_id
         ));
     }
 
@@ -110,6 +110,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $product->setCategory($request->request->get('category'));
         $product->setExpireTime($expire_time);
         $product->setFixedPrice($request->request->get('fixed_price'));
+        $product->setIsReturnable($request->request->get('is_returnalbe'));
         $product->setIsFreePostage($request->request->get('is_free_postage'));
         $product->setReferencePrice($request->request->get('reference_price'));
         $product->setStartPrice($request->request->get('start_price'));
