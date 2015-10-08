@@ -41,7 +41,7 @@ class WechatDownloadCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $serverId = escapeshellarg($input->getArgument('serverid'));
+        $serverId = $input->getArgument('serverid');
         $accessToken = $input->getArgument('accesstoken');
         $basedir = $input->getArgument('basedir');
         $imageId = $input->getArgument('imageid');
