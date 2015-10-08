@@ -87,7 +87,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     }
 
     /**
-     * @Route("/publish/step2/submit", name="publish_step2_submit")
+     * @Route("/publish/step2_submit", name="publish_step2_submit")
      */
     public function publishStep2SubmitAction(Request $request)
     {
