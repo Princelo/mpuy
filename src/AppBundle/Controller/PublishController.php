@@ -67,7 +67,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
     /**
      * @Route("/publish/step2/{product_id}", name="publish_step2")
      */
-    public function publishStep2Action(Request $request, $product_id)
+    public function publishStep2Action($product_id, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser()->getId();
