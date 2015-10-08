@@ -91,6 +91,8 @@ class PublishController extends Controller implements WechatTokenGetterInterface
      */
     public function publishStep2SubmitAction(Request $request)
     {
+        echo "<pre>";
+        print_r($_POST);exit;
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser()->getId();
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
