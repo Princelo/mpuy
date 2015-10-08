@@ -104,7 +104,7 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         }
         $expire_time = new \DateTime();
         list($hour, $minute) = explode(':', $request->request->get('expire_time'));
-        $expire_time->set($hour, $minute);
+        $expire_time->setTime($hour, $minute);
         list($year, $month, $day) = explode('-', $request->request->get('expire_date'));
         $expire_time->setDate($year, $month, $day);
         $product->setCategory($request->request->get('category'));
