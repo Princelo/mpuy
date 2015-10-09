@@ -113,7 +113,7 @@ snc_redis:
 liip_imagine:
     resolvers:
        default:
-          web_path: /attachments/wechat_img
+          web_path: ~
 
     filter_sets:
         cache: ~
