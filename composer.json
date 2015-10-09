@@ -23,7 +23,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "predis/predis": "^1.0",
         "snc/redis-bundle": "1.1.x-dev",
-        "jms/job-queue-bundle": "dev-master",
+        "jms/job-queue-bundle": "1.0.*",
         "pagerfanta/pagerfanta": "1.0.*",
         "liip/imagine-bundle": "^1.3"
     },
