@@ -482,4 +482,50 @@ class Product
     {
         return $this->user;
     }
+
+    /**
+     * Set isReturnable
+     *
+     * @param boolean $isReturnable
+     * @return Product
+     */
+    public function setIsReturnable($isReturnable)
+    {
+        $this->isReturnable = $isReturnable;
+
+        return $this;
+    }
+
+    /**
+     * Get isReturnable
+     *
+     * @return boolean 
+     */
+    public function getIsReturnable()
+    {
+        return $this->isReturnable;
+    }
+
+    /**
+     * Set createTime
+     *
+     * @param \DateTime $createTime
+     * @return Product
+     */
+    public function setCreateTime($createTime)
+    {
+        $this->createTime = $createTime;
+
+        return $this;
+    }
+
+    /**
+     * Get createTime
+     *
+     * @return \DateTime 
+     */
+    public function getCreateTime()
+    {
+        return $this->createTime;
+    }
 }
