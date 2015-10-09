@@ -1,0 +1,58 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="epuy-style.css">
+    <link rel="stylesheet" href="epuy-user.css">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-mobile/jquery.mobile-1.4.5.min.css') }}" />
+    <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
+    <script src="{{ asset('bundles/app/js/jquery.mobile-1.4.5.min.js') }}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#mypanel').panel();
+            $('.panel-left-btn').live('click', function() {
+                $('#mypanel').panel('open');
+            });
+        });
+    </script>
+</head>
+<body>
+<div data-role="panel" id="mypanel"  data-position="left" data-display="push">
+    <!-- panel content goes here -->
+    <a href="#my-header" data-rel="close">Close panel</a>
+</div><!-- /panel -->
+<div data-role="page">
+
+    <div class="user-home-header">
+        <a href="#" class="panel-left-btn"></a>
+        <a href="javascript:void(0);" class="panel-right-btn"> </a>
+        <span class="panel-right-btn-text">
+            钱包: {{ user.deposit }}元
+        </span>
+        <div class="avatar-info">
+            <img src="{{ user.avatar }}" />
+            {{ user.nickname }}
+        </div>
+        <div class="link-list">
+            <a href="javascript:void(0);">{{ user.followCount }}<br />关注</a>
+            <span class="splitter"></span>
+            <a href="javascript:void(0);">{{ user.fansCount }}<br />粉丝</a>
+            <span class="splitter"></span>
+            <a href="javascript:void(0);">{{ user.boughtCount }}<br />买入</a>
+            <span class="splitter"></span>
+            <a href="javascript:void(0);">{{ user.soldCount }}<br />卖出</a>
+        </div>
+    </div>
+    <div class="user-home-control">
+        <a href="javascript:void(0);" class="i-submit actived">我发布的</a>
+        <a href="javascript:void(0);" class="i-like">我喜欢的</a>
+    </div>
+</div>
+</body>
+</html>
