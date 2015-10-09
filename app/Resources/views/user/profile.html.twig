@@ -8,7 +8,9 @@
     <meta content="telephone=no" name="format-detection">
     <title>HomePage</title>
     {% stylesheets '@AppBundle/Resources/public/css/*' filter='cssrewrite' %}
+    {% endstylesheets %}
     {% stylesheets '@AppBundle/Resources/public/css/user/*' filter='cssrewrite' %}
+    {% endstylesheets %}
     <link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-mobile/jquery.mobile-1.4.5.min.css') }}" />
     <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
     <script src="{{ asset('bundles/app/js/jquery.mobile-1.4.5.min.js') }}"></script>
