@@ -6,7 +6,7 @@
             <div class="username">{{ nickname }}</div>
         </div>
         <div class="tips-block">
-            <div class="tips">我的商品详情</div>
+            <div class="tips">{% if isOwn == true %}我的{% else %}{{ p.name }} {% endif %}商品详情</div>
         </div>
         <div class="avatar">
             <img src="{{ avatar }}" />
@@ -59,15 +59,15 @@
                     <div class="running-tip">距离结束:</div>
                     <div class="countdown-tip"><label class="countdown" id="countdown"></label></div>
                 </div>
-                <!--<div class="action-block">
-                    <a class="update" href="javascript:void(0);">更新</a>
-                    <a class="bid-btn" onclick="chooseImage()">出价</a>
+                <div class="action-block">
+                    <!--<a class="update" href="javascript:void(0);">更新</a>-->
+                    <a class="bid-btn" onclick="">更新</a>
                     <div class="action-info">
-                        <div class="start-price"><span>起</span><label>￥118元</label></div>
+                        <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
                         <span class="splitter">|</span>
-                        <div class="step-price"><span>加</span><label>￥10元</label></div>
+                        <div class="step-price"><span>加</span><label>￥{{ p.stepPrice }}元</label></div>
                     </div>
-                </div>-->
+                </div>
                 <!--<div class="bid-list">
                     <ul>
                         <li>
@@ -246,7 +246,7 @@
             return false;
         }
         var clock1 = document.getElementById('countdown')
-                , targetDate = 1442100980*1000;
+                , targetDate = {{ p.expireTime|date('U') }}*1000;
 
         clock1.innerHTML = countdown(targetDate).toString();
         setInterval(function(){

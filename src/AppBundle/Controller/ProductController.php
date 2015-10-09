@@ -23,12 +23,16 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
         $avatar = $user->getAvatar();
         $nickname = $user->getNickName();
+        $user = $this->getUser()->getId();
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
+        $isOwn = $product->getUser() == $user;
         return $this->render('product/product_view.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'p' => $product,
             'images' => $images,
             'avatar' => $avatar,
             'nickname' => $nickname,
+            'isOwn' => $isOwn,
         ));
     }
 }
