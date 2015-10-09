@@ -58,6 +58,7 @@
             <li>
                 <div class="img">
                     {% set imgSrc = '/attachments/wechat_img'+p.imgCover.id %}
+                    {{ imgSrc | imagine_filter('thumb100') }}
                     <img src="{{ imgSrc | imagine_filter('thumb100') }}" />
                     <span>{{ p.name }}</span>
                 </div>
