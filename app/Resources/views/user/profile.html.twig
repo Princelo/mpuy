@@ -56,16 +56,8 @@
         <ul>
             {% for p in products %}
             <li>
-                1{{ 'web/attachments/wechat_img/109.jpg' | imagine_filter('thumb100') }}
-                2{{ '/attachments/wechat_img/109.jpg' | imagine_filter('thumb100') }}
-                3{{ 'attachments/wechat_img/109.jpg' | imagine_filter('thumb100') }}
-                4{{ '/web/attachments/wechat_img/109.jpg' | imagine_filter('thumb100') }}
                 <div class="img">
-                    <img src="{{ '/web/attachments/wechat_img/109' | imagine_filter('thumb100') }}" />
-                    <img src="{{ 'web/attachments/wechat_img/109' | imagine_filter('thumb100') }}" />
-                    <img src="{{ '/attachments/wechat_img/109' | imagine_filter('thumb100') }}" />
-                    <img src="{{ 'attachments/wechat_img/109' | imagine_filter('thumb100') }}" />
-                    <img src="{{ 'web/attachments/wechat_img/'+p.imgCover.id | imagine_filter('thumb100') }}" />
+                    <img src="{{ p.imgCover.id | imagine_filter('thumb100') }}" />
                     <span>{{ p.name }}</span>
                 </div>
                 <div class="details">
