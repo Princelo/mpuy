@@ -37,9 +37,7 @@ class Product
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="img_cover", type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Image")
      */
     private $imgCover;
 

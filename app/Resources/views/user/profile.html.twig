@@ -52,6 +52,21 @@
         <a href="javascript:void(0);" class="i-submit actived">我发布的</a>
         <a href="javascript:void(0);" class="i-like">我喜欢的</a>
     </div>
+    <div class="product-list">
+        <ul>
+            {% for p in products %}
+            <li>
+                <div class="img">
+                    <img src="{{ p.imgCover }}" />
+                    <span>{{ p.name }}</span>
+                </div>
+                <div class="details">
+                    {{ p.intro }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 </body>
 </html>
