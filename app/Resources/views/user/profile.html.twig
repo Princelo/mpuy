@@ -57,8 +57,8 @@
             {% for p in products %}
             <li>
                 <div class="img">
-                    {{ '/attachments/wechat_img/' ~ p.imgCover.id }}
-                    <img src="{{ '/attachments/wechat_img/' ~ p.imgCover.id | imagine_filter('thumb100') }}" />
+                    {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                    <img src="{{ imgSrc | imagine_filter('thumb100') }}" />
                     <span>{{ p.name }}</span>
                 </div>
                 <div class="details">
