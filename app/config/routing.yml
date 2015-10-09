@@ -10,3 +10,5 @@ JMSJobQueueBundle:
     resource: "@JMSJobQueueBundle/Controller/"
     type: annotation
     prefix: /jobs
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

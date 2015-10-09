@@ -109,3 +109,15 @@ snc_redis:
         query_cache:
             client: doctrine
             entity_manager: default
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        100x100:
+            quality: 100
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
