@@ -61,6 +61,7 @@
                 3{{ 'attachments/wechat_img/'+p.imgCover.id+'.jpg' | imagine_filter('100x100') }}
                 4{{ '/web/attachments/wechat_img/'+p.imgCover.id+'.jpg' | imagine_filter('100x100') }}
                 <div class="img">
+                    <img src="{{ 'web/attachments/wechat_img/'+p.imgCover.id+'.jpg' | imagine_filter('100x100') }}" />
                     <img src="{{ 'web/attachments/wechat_img/'+p.imgCover.id | imagine_filter('100x100') }}" />
                     <span>{{ p.name }}</span>
                 </div>
