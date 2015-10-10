@@ -22,8 +22,7 @@ class UserController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $products = $em->getRepository('AppBundle:Product')->findBy(['user' => $user], ['id' => 'DESC'], 5);
-        //$likes = $em->getRepository('AppBundle:Product')->findBy(['likeUsers' => $user], ['id' => 'DESC'], 5);
-        $likes = null;
+        $likes = $em->getRepository('AppBundle:Product')->getLikedProducts($user, 5);
 
         return $this->render('user/profile.html.twig', array(
             'user' => $user,

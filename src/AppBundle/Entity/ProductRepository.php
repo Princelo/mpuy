@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    public function getLikedProducts($user, $limit)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Product', 'p')
+            ->innerJoin('p.likeUsers', 'u')
+            ->where('u.id = :user_id' )
+            ->setParameter('user_id', $user->getId() )
+            ->getQuery()
+            ->setMaxResults($limit)
+            ->getResult();
+    }
 }
