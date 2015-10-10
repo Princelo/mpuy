@@ -194,6 +194,13 @@ class User extends BaseUser
     protected $gender;
 
     /**
+     * @var \AppBundle\Entity\Product[]
+     *
+     * @ORM\ManyToMany(targetEntity="\Acme\AppBundle\Entity\User", mappedBy="likeUsers")
+     */
+    protected $likedProducts;
+
+    /**
      * @var \AppBundle\Entity\Product
      * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Product", mappedBy="user")
      */

@@ -51,20 +51,56 @@
     <div class="user-home-control">
         <a href="javascript:void(0);" class="i-submit actived">我发布的</a>
         <a href="javascript:void(0);" class="i-like">我喜欢的</a>
+        <script>
+            $('.i-submit').live('click', function () {
+                $(this).removeClass('actived')
+                $('.i-like').removeClass('actived');
+                $(this).addClass('actived');
+                $('.product-list').show();
+                $('.liked-list').hide();
+            });
+            $('.i-like').live('click', function () {
+                $(this).removeClass('actived')
+                $('.i-submit').removeClass('actived');
+                $(this).addClass('actived');
+                $('.product-list').hide();
+                $('.liked-list').show();
+            });
+        </script>
     </div>
     <div class="product-list">
         <ul>
             {% for p in products %}
             <li>
-                <div class="img">
-                    {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
-                    <img src="{{ imgSrc | imagine_filter('thumb100') }}" />
-                    <span>{{ p.name }}</span>
-                </div>
-                <div class="details">
-                    {{ p.intro }}
-                </div>
+                <a href="{{ path('product_view', {product_id: p.id}) }}">
+                    <div class="img">
+                        {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                        <img src="{{ imgSrc | imagine_filter('thumb100') }}" />
+                        <span>{{ p.name }}</span>
+                    </div>
+                    <div class="details">
+                        {{ p.intro }}
+                    </div>
+                </a>
             </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="liked-list" style="display:none;">
+        <ul>
+            {% for p in likes %}
+                <li>
+                    <a href="{{ path('product_view', {product_id: p.id}) }}">
+                        <div class="img">
+                            {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                            <img src="{{ imgSrc | imagine_filter('thumb100') }}" />
+                            <span>{{ p.name }}</span>
+                        </div>
+                        <div class="details">
+                            {{ p.intro }}
+                        </div>
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </div>
