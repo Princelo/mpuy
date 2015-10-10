@@ -196,7 +196,7 @@ class User extends BaseUser
     /**
      * @var \AppBundle\Entity\Product[]
      *
-     * @ORM\ManyToMany(targetEntity="\Acme\AcmeBundle\Entity\User", mappedBy="likeUsers")
+     * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User", mappedBy="likeUsers")
      */
     protected $likedProducts;
 
