@@ -134,6 +134,15 @@ class Product
      * @var \Acme\AccountBundle\Entity\User[]
      *
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="likedProducts")
+     * @ORM\JoinTable(
+     *  name="user_product_likes",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *  }
+     * )
      */
     protected $likeUsers;
 
