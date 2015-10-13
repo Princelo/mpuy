@@ -56,6 +56,13 @@ class Product
     protected $isReturnable;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=true)
+     */
+    protected $isActive = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="intro", type="text")

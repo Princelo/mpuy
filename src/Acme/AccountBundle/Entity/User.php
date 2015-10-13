@@ -7,6 +7,7 @@
  */
 namespace Acme\AccountBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -206,6 +207,26 @@ class User extends BaseUser
      */
     protected $products;
 
+    /**
+     * @ManyToMany(targetEntity="User")
+     * @JoinTable(name="fans",
+     *     joinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")}
+     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $fansUsers;
+
+    /**
+     * @ManyToMany(targetEntity="User")
+     * @JoinTable(name="follow",
+     *     joinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")}
+     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $followedUsers;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -215,6 +236,8 @@ class User extends BaseUser
         $this->loginTime = $now;
         // may not be needed, see section on salt below
         $this->salt = md5(uniqid(null, true));
+        $this->fansUsers = new ArrayCollection();
+        $this->followedUsers = new ArrayCollection();
     }
 
     /*public function eraseCredentials()

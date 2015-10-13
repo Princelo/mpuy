@@ -25,4 +25,24 @@ class ProductRepository extends EntityRepository
             ->setMaxResults($limit)
             ->getResult();
     }
+
+    public function getRandomProduct($category)
+    {
+        $count = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('COUNT(p)')
+            ->from('AppBundle:Product', 'p')
+            ->getQuery()
+            ->getSingleScalarResult();
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->from('AppBundle:Product', 'p')
+            ->where('p.category = :category')
+            ->setFirstResult(rand(0, $count - 1))
+            ->setMaxResults(1)
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
 }

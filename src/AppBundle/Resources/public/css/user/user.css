@@ -18,9 +18,12 @@
     color: #fff; text-decoration: none;
 }
 .user-home-header .link-list .splitter {width: 1px; height: 30px; background: #fff; float:left; margin-top: 7px;}
-.user-home-control {margin-top: 20px;}
+.user-home-control {margin-top: 20px;
+    position: relative;}
 .user-home-control .i-submit {width: 30%; float: left; text-align: right; text-decoration: none; color: #5e5e5e;}
 .user-home-control .i-like {width: 30%; float: right; text-align: left; color: #5e5e5e; text-decoration: none;}
+.user-home-control .i-search {width: 30px;height:30px; display:block; text-align: left; color: #5e5e5e; text-decoration: none;
+position: absolute; left: 50%; margin-left: -15px; border:1px solid #000; border-radius: 15px;}
 .user-home-control .actived {color: #358fb0}
 
 @media (min-width:35em){
@@ -52,3 +55,4 @@
 }
 body .ui-body-c, body .ui-overlay-c,.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper { text-shadow:0 0 0 !important;}
 #mypanel {background: #fff;}
+

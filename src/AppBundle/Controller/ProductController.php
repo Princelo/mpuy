@@ -35,4 +35,35 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             'isOwn' => $isOwn,
         ));
     }
+
+    /**
+     * @Route("/product/random", name="product_random")
+     * @param Request $request
+     * @return Response
+     */
+    public function randomProductAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $randomCategory = rand(0, 5);
+        $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
+        $images = $em->getRepository('AppBundle:Image')->findBy(['product' => $randomProduct]);
+        $user = $this->getUser();
+        $avatar = $user->getAvatar();
+        $nickname = $user->getNickName();
+        $user = $this->getUser()->getId();
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
+        $owner = $randomProduct->getUser();
+        $isOwn = $owner == $user;
+        if (!$isOwn) {
+            $owner->setFansCount($owner->getFansCount() + 1);
+            $owner->setFansUsers()
+        }
+        return $this->render('product/product_view.html.twig', array(
+            'p' => $randomProduct,
+            'images' => $images,
+            'avatar' => $avatar,
+            'nickname' => $nickname,
+            'isOwn' => $isOwn,
+        ));
+    }
 }

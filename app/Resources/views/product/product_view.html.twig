@@ -60,8 +60,9 @@
                     <div class="countdown-tip"><label class="countdown" id="countdown"></label></div>
                 </div>
                 <div class="action-block">
-                    <!--<a class="update" href="javascript:void(0);">更新</a>-->
-                    <a class="bid-btn" onclick="">更新</a>
+                    {% if isOwn == false %}<a class="update" href="javascript:void(0);">更新</a>{% endif %}
+                    {% if isOwn == true %}<a class="bid-btn" onclick="">更新</a>{% endif %}
+                    {% if isOwn == true %}<a class="bid-btn" onclick="bid()">出价</a>{% endif %}
                     <div class="action-info">
                         <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
                         <span class="splitter">|</span>
@@ -96,6 +97,12 @@
                         </li>
                     </ul>
                 </div>-->
+            </div>
+            <div id="bid-box{{ p.id }}" class="bid-box">
+                <div class="box-inner">
+                    ￥<input name="" id="bid{{ p.id }}" value="" type="number" product="{{ p.id }}"/>元
+                    <button onclick="bid_send({{ p.id }})">出价</button>
+                </div>
             </div>
         </div>
     </div>
@@ -252,7 +259,25 @@
         setInterval(function(){
             clock1.innerHTML = countdown(targetDate).toString();
         }, 1000);
-        alert(window.innerWidth + " " + window.innerHeight);
+        var bid = function (product_id) {
+            $('#bid-box'+product_id).animate({bottom:"0px"}, "fast");
+        }
+        var bid_none = function () {
+            $('.bid-box').animate({bottom:"-200px"}, "fast");
+        }
+        var bid_send = function (product_id) {
+            $.ajax({
+                url: "{{ path('ajax_bid') }}",
+                type: "post",
+                data: {
+                    'product_id' : product_id,
+                    'volume' : $('#bid'+product_id).val()
+                },
+                success: function (response) {
+                    window.location.href='{{ path('bid_payment') }}?product_id='+product_id+'volume='+$('#bid'+product_id).val();
+                }
+            })
+        }
     </script>
     {% include 'menu.html.twig' %}
 {% endblock %}
