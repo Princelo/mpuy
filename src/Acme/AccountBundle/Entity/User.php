@@ -208,7 +208,7 @@ class User extends BaseUser
     protected $products;
 
     /**
-     * @ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
+     * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
      * @JoinTable(name="fans",
      *     joinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")}
@@ -218,7 +218,7 @@ class User extends BaseUser
     protected $fansUsers;
 
     /**
-     * @ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
+     * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
      * @JoinTable(name="follow",
      *     joinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")}
