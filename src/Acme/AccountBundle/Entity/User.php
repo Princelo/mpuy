@@ -209,9 +209,9 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
-     * @JoinTable(name="fans",
-     *     joinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")}
+     * @ORM\JoinTable(name="fans",
+     *     joinColumns={@ORM\JoinColumn(name="followed_user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="fans_user_id", referencedColumnName="id")}
      * )
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
@@ -219,9 +219,9 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
-     * @JoinTable(name="follow",
-     *     joinColumns={@JoinColumn(name="fans_user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@JoinColumn(name="followed_user_id", referencedColumnName="id")}
+     * @ORM\JoinTable(name="follow",
+     *     joinColumns={@ORM\JoinColumn(name="fans_user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="followed_user_id", referencedColumnName="id")}
      * )
      * @var \Doctrine\Common\Collections\ArrayCollection
      */
