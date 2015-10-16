@@ -56,6 +56,19 @@ class Payment
      */
     private $type;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="has_paid", type="boolean")
+     */
+    private $hasPaid = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="payments")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    protected $product;
+
 
     /**
      * Get id
@@ -180,5 +193,51 @@ class Payment
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set hasPaid
+     *
+     * @param boolean $hasPaid
+     * @return Payment
+     */
+    public function setHasPaid($hasPaid)
+    {
+        $this->hasPaid = $hasPaid;
+
+        return $this;
+    }
+
+    /**
+     * Get hasPaid
+     *
+     * @return boolean 
+     */
+    public function getHasPaid()
+    {
+        return $this->hasPaid;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     * @return Payment
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

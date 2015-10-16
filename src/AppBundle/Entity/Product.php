@@ -155,6 +155,17 @@ class Product
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="product")
+     */
+    protected $payments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="linkProduct")
+     */
+    protected $messages;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -548,5 +559,94 @@ class Product
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Product
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Add likeUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $likeUsers
+     * @return Product
+     */
+    public function addLikeUser(\Acme\AccountBundle\Entity\User $likeUsers)
+    {
+        $this->likeUsers[] = $likeUsers;
+
+        return $this;
+    }
+
+    /**
+     * Remove likeUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $likeUsers
+     */
+    public function removeLikeUser(\Acme\AccountBundle\Entity\User $likeUsers)
+    {
+        $this->likeUsers->removeElement($likeUsers);
+    }
+
+    /**
+     * Get likeUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLikeUsers()
+    {
+        return $this->likeUsers;
+    }
+
+    /**
+     * Add payments
+     *
+     * @param \AppBundle\Entity\Payment $payments
+     * @return Product
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
+
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     *
+     * @param \AppBundle\Entity\Payment $payments
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payments)
+    {
+        $this->payments->removeElement($payments);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPayments()
+    {
+        return $this->payments;
     }
 }

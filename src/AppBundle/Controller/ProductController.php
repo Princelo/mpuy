@@ -56,7 +56,12 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $isOwn = $owner == $user;
         if (!$isOwn) {
             $owner->setFansCount($owner->getFansCount() + 1);
-            $owner->setFansUsers()
+            $owner->addFansUsers($user);
+            $user->setFollowCount($user->getFollowCount() + 1);
+            $user->addFollowedUser($owner);
+            $em->persist($owner);
+            $em->persist($user);
+            $em->flush();
         }
         return $this->render('product/product_view.html.twig', array(
             'p' => $randomProduct,

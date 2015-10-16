@@ -34,4 +34,26 @@ class UserController extends Controller implements WechatTokenGetterInterface
             'likes' => $likes,
         ));
     }
+
+    public function listFollowingUsersAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $users = $em->getRepository('AccountBundle:User')->getFollowingUsersByUser($user, 0, 10);
+        return $this->render('user/list_following_users.html.twig', array(
+            'user' => $user,
+            'users' => $users,
+        ));
+    }
+
+    public function listFollowedUsersAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $this->getUser();
+        $users = $em->getRepository('AccountBundle:User')->getFollowedUsersByUser($user, 0, 10);
+        return $this->render('user/list_followed_users.html.twig', array(
+            'user' => $user,
+            'users' => $users,
+        ));
+    }
 }

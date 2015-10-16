@@ -75,4 +75,34 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this->getEntityName() === $class
         || is_subclass_of($class, $this->getEntityName());
     }
+
+    public function getFollowingUsersByUser($user, $offset, $limit)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AcmeAccountBundle:User', 'u')
+            ->innerJoin('u.fansUsers', 'fu')
+            ->where('u.id = :user_id' )
+            ->setParameter('user_id', $user->getId() )
+            ->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    public function getFollowedUsersByUser($user, $offset, $limit)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AcmeAccountBundle:User', 'u')
+            ->innerJoin('u.followedUsers', 'fu')
+            ->where('u.id = :user_id' )
+            ->setParameter('user_id', $user->getId() )
+            ->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getResult();
+    }
 }

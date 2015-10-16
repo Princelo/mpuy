@@ -208,6 +208,12 @@ class User extends BaseUser
     protected $products;
 
     /**
+     * @var \AppBundle\Entity\Message
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Message", mappedBy="receiveUser")
+     */
+    protected $messages;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
      * @ORM\JoinTable(name="fans",
      *     joinColumns={@ORM\JoinColumn(name="followed_user_id", referencedColumnName="id")},
@@ -1108,5 +1114,137 @@ class User extends BaseUser
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Add likedProducts
+     *
+     * @param \AppBundle\Entity\Product $likedProducts
+     * @return User
+     */
+    public function addLikedProduct(\AppBundle\Entity\Product $likedProducts)
+    {
+        $this->likedProducts[] = $likedProducts;
+
+        return $this;
+    }
+
+    /**
+     * Remove likedProducts
+     *
+     * @param \AppBundle\Entity\Product $likedProducts
+     */
+    public function removeLikedProduct(\AppBundle\Entity\Product $likedProducts)
+    {
+        $this->likedProducts->removeElement($likedProducts);
+    }
+
+    /**
+     * Get likedProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLikedProducts()
+    {
+        return $this->likedProducts;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \AppBundle\Entity\Message $messages
+     * @return User
+     */
+    public function addMessage(\AppBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \AppBundle\Entity\Message $messages
+     */
+    public function removeMessage(\AppBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Add fansUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $fansUsers
+     * @return User
+     */
+    public function addFansUser(\Acme\AccountBundle\Entity\User $fansUsers)
+    {
+        $this->fansUsers[] = $fansUsers;
+
+        return $this;
+    }
+
+    /**
+     * Remove fansUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $fansUsers
+     */
+    public function removeFansUser(\Acme\AccountBundle\Entity\User $fansUsers)
+    {
+        $this->fansUsers->removeElement($fansUsers);
+    }
+
+    /**
+     * Get fansUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFansUsers()
+    {
+        return $this->fansUsers;
+    }
+
+    /**
+     * Add followedUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $followedUsers
+     * @return User
+     */
+    public function addFollowedUser(\Acme\AccountBundle\Entity\User $followedUsers)
+    {
+        $this->followedUsers[] = $followedUsers;
+
+        return $this;
+    }
+
+    /**
+     * Remove followedUsers
+     *
+     * @param \Acme\AccountBundle\Entity\User $followedUsers
+     */
+    public function removeFollowedUser(\Acme\AccountBundle\Entity\User $followedUsers)
+    {
+        $this->followedUsers->removeElement($followedUsers);
+    }
+
+    /**
+     * Get followedUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFollowedUsers()
+    {
+        return $this->followedUsers;
     }
 }
