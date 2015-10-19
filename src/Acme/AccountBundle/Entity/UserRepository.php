@@ -80,7 +80,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('p')
+            ->select('u')
             ->from('AcmeAccountBundle:User', 'u')
             ->innerJoin('u.fansUsers', 'fu')
             ->where('u.id = :user_id' )
@@ -95,7 +95,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         return $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('p')
+            ->select('u')
             ->from('AcmeAccountBundle:User', 'u')
             ->innerJoin('u.followedUsers', 'fu')
             ->where('u.id = :user_id' )
