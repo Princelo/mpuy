@@ -23,26 +23,26 @@ class OrderController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
         switch ($type) {
             case '':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0, 'id desc');
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0, 'id desc');
                 break;
             case 'paying':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 1);
                 break;
             case 'delivering':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 2);
                 break;
             case 'receiving':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 3);
                 break;
             case 'finish':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 0);
                 break;
             default :
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0, 'id desc');
+                $orderList = $em->getRepository('AuctionOrder')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0, 'id desc');
                 break;
         }
         return $this->render('order/bought_list.html.twig', array(
@@ -63,26 +63,26 @@ class OrderController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
         switch ($type) {
             case '':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0, 'id desc');
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0, 'id desc');
                 break;
             case 'paying':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 1);
                 break;
             case 'delivering':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 2);
                 break;
             case 'receiving':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
                     'id desc', 3);
                 break;
             case 'finish':
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0,
                     'id desc', [0, -1]);
                 break;
             default :
-                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0, 'id desc');
+                $orderList = $em->getRepository('AuctionOrder')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0, 'id desc');
                 break;
         }
         return $this->render('order/sold_list.html.twig', array(
