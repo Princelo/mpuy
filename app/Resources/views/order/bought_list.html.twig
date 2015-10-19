@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" />
+    <title>{{ title }}</title>
+</head>
+<body>
+<div class="order-header">
+    <div class="btn">
+        <a href="{{ path('order_bought') }}" class="first active">买买买</a>
+        <a href="{{ path('order_sold') }}" class="second" >卖卖卖</a>
+    </div>
+    <div class="menu">
+        <ul>
+            <li class="active"><a href="{{ path('order_bought') }}">全部</a></li>
+            <li><a href="{{ path('order_bought', {'type', 'paying'}) }}">未付款</a></li>
+            <li><a href="{{ path('order_bought', {'type': 'delivering'}) }}">待发货</a></li>
+            <li><a href="{{ path('order_bought', {'type': 'receiving'}) }}">未收货</a></li>
+            <li><a href="{{ path('order_bought', {'type': 'finish'}) }}">已完成</a></li>
+        </ul>
+    </div>
+</div>
+<div class="order-list">
+    <ul>
+        {% for o in orders %}
+        {% if o.status == 0 %} {% set statusStr = '交易成功' %}
+        {% elseif o.status == 1 %} {% set statusStr = '未付款' %}
+        {% elseif o.status == 2 %} {% set statusStr = '待发货' %}
+        {% elseif o.status == 3 %} {% set statusStr = '未收货' %}
+        {% elseif o.status == 4 %} {% set statusStr = '流拍' %}
+        {% elseif o.status == -1 %} {% set statusStr = '交易失败' %}
+        {% endif %}
+        <li>
+            <a href="{{ path('order_details', {'order_id', o.id}) }}">
+                {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
+                <div class="text">
+                    <label>{{ o.product.name }}</label>
+                    <p>
+                        交易状态：{{ statusStr }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
+                        创建时间：{{ o.createTime|date('m月d日 H:i') }}
+                    </p>
+                </div>
+                <div class="tips">
+                    {{ stateStr }}
+                </div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

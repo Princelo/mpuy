@@ -233,6 +233,18 @@ class User extends BaseUser
      */
     protected $followedUsers;
 
+    /**
+     * @var \AppBundle\Entity\AuctionOrder
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\AuctionOrder", mappedBy="buyer")
+     */
+    protected $boughtOrders;
+
+    /**
+     * @var \AppBundle\Entity\AuctionOrder
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\AuctionOrder", mappedBy="seller")
+     */
+    protected $soldOrders;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -1246,5 +1258,71 @@ class User extends BaseUser
     public function getFollowedUsers()
     {
         return $this->followedUsers;
+    }
+
+    /**
+     * Add boughtOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $boughtOrders
+     * @return User
+     */
+    public function addBoughtOrder(\AppBundle\Entity\AuctionOrder $boughtOrders)
+    {
+        $this->boughtOrders[] = $boughtOrders;
+
+        return $this;
+    }
+
+    /**
+     * Remove boughtOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $boughtOrders
+     */
+    public function removeBoughtOrder(\AppBundle\Entity\AuctionOrder $boughtOrders)
+    {
+        $this->boughtOrders->removeElement($boughtOrders);
+    }
+
+    /**
+     * Get boughtOrders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBoughtOrders()
+    {
+        return $this->boughtOrders;
+    }
+
+    /**
+     * Add soldOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $soldOrders
+     * @return User
+     */
+    public function addSoldOrder(\AppBundle\Entity\AuctionOrder $soldOrders)
+    {
+        $this->soldOrders[] = $soldOrders;
+
+        return $this;
+    }
+
+    /**
+     * Remove soldOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $soldOrders
+     */
+    public function removeSoldOrder(\AppBundle\Entity\AuctionOrder $soldOrders)
+    {
+        $this->soldOrders->removeElement($soldOrders);
+    }
+
+    /**
+     * Get soldOrders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSoldOrders()
+    {
+        return $this->soldOrders;
     }
 }

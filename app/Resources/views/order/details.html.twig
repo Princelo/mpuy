@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" />
+    <title>{{ title }}</title>
+</head>
+<body>
+<div class="event-list">
+    <ul>
+        {% for e in events %}
+        <li>
+            {% if e.type == -1 %}
+            <div class="img">
+                <img src="{{ asset('bundles/app/images/bb-warn.png') }}" />
+            </div>
+            <div class="text">
+                <label>交易失败</label>
+                <p>
+                    原因：{{ e.order.failDescription }}<br />
+                    结束时间：{{ e.createTime }}
+                </p>
+            </div>
+            {% elseif e.type == 2 %}
+            <div class="img">
+                <img src="{{ asset('bundles/app/images/bb-bell.png') }}" />
+            </div>
+            <div class="text">
+                <label>竞拍成功</label>
+                <p>
+                    成功时间：{{ e.createTime }}
+                </p>
+            </div>
+            {% elseif e.type == 3 %}
+            <div class="img">
+                <img src="{{ asset('bundles/app/images/bb-clock.png') }}" />
+            </div>
+            <div class="text">
+                <label>开始竞拍</label>
+                <p>
+                    开始时间：{{ e.createTime }}
+                </p>
+            </div>
+            {% elseif e.type == 4 %}
+            <div class="img">
+                <img src="{{ asset('bundles/app/images/bb-warn.png') }}" />
+            </div>
+            <div class="text">
+                <label>流拍</label>
+                <p>
+                    结束时间：{{ e.createTime }}
+                </p>
+            </div>
+            {% elseif e.type == 0 %}
+            <div class="img">
+                <img src="{{ asset('bundles/app/images/bb-check.png') }}" />
+            </div>
+            <div class="text">
+                <label>交易成功</label>
+                <p>
+                    成功时间：{{ e.createTime }}
+                </p>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="order-list">
+    <ul>
+        <li>
+            <a href="{{ path('product_view', {'product_id': o.product.id}) }}">
+                {% set imgSrc = '/attachments/wechat_img/' ~ o.product.imgCover.id %}
+                <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
+                <div class="text">
+                    <label>{{ o.product.name }}</label>
+                    <p>
+                        交易状态：{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
+                        创建时间：{{ o.createTime|date('m月d日 H:i') }}
+                    </p>
+                </div>
+                <div class="tips">{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }}</div>
+            </a>
+        </li>
+    </ul>
+</div>
+<p class="order-info">
+    订单编号：{{ o.orderSn }}
+</p>
+</body>
+</html>

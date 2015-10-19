@@ -164,6 +164,16 @@ class Product
      */
     protected $messages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AuctionOrder", mappedBy="product")
+     */
+    protected $orders;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProductEvent", mappedBy="product")
+     */
+    protected $events;
+
 
     /**
      * Get id
@@ -648,5 +658,104 @@ class Product
     public function getPayments()
     {
         return $this->payments;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \AppBundle\Entity\Payment $messages
+     * @return Product
+     */
+    public function addMessage(\AppBundle\Entity\Payment $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \AppBundle\Entity\Payment $messages
+     */
+    public function removeMessage(\AppBundle\Entity\Payment $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $orders
+     * @return Product
+     */
+    public function addOrder(\AppBundle\Entity\AuctionOrder $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $orders
+     */
+    public function removeOrder(\AppBundle\Entity\AuctionOrder $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     * @return Product
+     */
+    public function addEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     */
+    public function removeEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }

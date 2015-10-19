@@ -62,4 +62,152 @@ class Message
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $linkProduct;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set context
+     *
+     * @param string $context
+     * @return Message
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return string 
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set isLinkProduct
+     *
+     * @param boolean $isLinkProduct
+     * @return Message
+     */
+    public function setIsLinkProduct($isLinkProduct)
+    {
+        $this->isLinkProduct = $isLinkProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get isLinkProduct
+     *
+     * @return boolean 
+     */
+    public function getIsLinkProduct()
+    {
+        return $this->isLinkProduct;
+    }
+
+    /**
+     * Set isRead
+     *
+     * @param boolean $isRead
+     * @return Message
+     */
+    public function setIsRead($isRead)
+    {
+        $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    /**
+     * Get isRead
+     *
+     * @return boolean 
+     */
+    public function getIsRead()
+    {
+        return $this->isRead;
+    }
+
+    /**
+     * Set createTime
+     *
+     * @param \DateTime $createTime
+     * @return Message
+     */
+    public function setCreateTime($createTime)
+    {
+        $this->createTime = $createTime;
+
+        return $this;
+    }
+
+    /**
+     * Get createTime
+     *
+     * @return \DateTime 
+     */
+    public function getCreateTime()
+    {
+        return $this->createTime;
+    }
+
+    /**
+     * Set receiveUser
+     *
+     * @param \Acme\AccountBundle\Entity\User $receiveUser
+     * @return Message
+     */
+    public function setReceiveUser(\Acme\AccountBundle\Entity\User $receiveUser = null)
+    {
+        $this->receiveUser = $receiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get receiveUser
+     *
+     * @return \Acme\AccountBundle\Entity\User 
+     */
+    public function getReceiveUser()
+    {
+        return $this->receiveUser;
+    }
+
+    /**
+     * Set linkProduct
+     *
+     * @param \AppBundle\Entity\Product $linkProduct
+     * @return Message
+     */
+    public function setLinkProduct(\AppBundle\Entity\Product $linkProduct = null)
+    {
+        $this->linkProduct = $linkProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get linkProduct
+     *
+     * @return \AppBundle\Entity\Product 
+     */
+    public function getLinkProduct()
+    {
+        return $this->linkProduct;
+    }
 }

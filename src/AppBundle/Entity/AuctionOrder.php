@@ -36,16 +36,14 @@ class AuctionOrder
     private $type;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="buyer", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="broughtOrders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $buyer;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="seller", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="soldOrders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $seller;
 
@@ -71,11 +69,10 @@ class AuctionOrder
     private $status;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="product_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="orders")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    private $productId;
+    private $product;
 
     /**
      * @var integer
@@ -146,6 +143,18 @@ class AuctionOrder
      * @ORM\Column(name="has_break_rule", type="boolean")
      */
     private $hasBreakRule;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fail_description", type="string", nullable=true)
+     */
+    private $failDescription;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProductEvent", mappedBy="order")
+     */
+    protected $events;
 
 
     /**
@@ -570,5 +579,91 @@ class AuctionOrder
     public function getHasBreakRule()
     {
         return $this->hasBreakRule;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set failDescription
+     *
+     * @param string $failDescription
+     * @return AuctionOrder
+     */
+    public function setFailDescription($failDescription)
+    {
+        $this->failDescription = $failDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get failDescription
+     *
+     * @return string 
+     */
+    public function getFailDescription()
+    {
+        return $this->failDescription;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Product $product
+     * @return AuctionOrder
+     */
+    public function setProduct(\AppBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     * @return AuctionOrder
+     */
+    public function addEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     */
+    public function removeEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }
