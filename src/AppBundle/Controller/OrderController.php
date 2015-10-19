@@ -12,7 +12,7 @@ use Doctrine\ORM\PessimisticLockException;
 class OrderController extends Controller implements WechatTokenGetterInterface
 {
     /**
-     * @Route("/order/bought/{type}", name="order_bought", defaults={"type" = ''})
+     * @Route("/order/bought/{type}", name="order_bought", defaults={"type" = ""})
      * @param $type
      * @param Request $request
      * @return Response
@@ -52,7 +52,7 @@ class OrderController extends Controller implements WechatTokenGetterInterface
     }
 
     /**
-     * @Route("/order/sold/{type}", name="order_sold", defaults={"type" = ''})
+     * @Route("/order/sold/{type}", name="order_sold", defaults={"type" = ""})
      * @param $type
      * @param Request $request
      * @return Response
