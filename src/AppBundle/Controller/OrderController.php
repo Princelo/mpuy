@@ -82,7 +82,7 @@ class OrderController extends Controller implements WechatTokenGetterInterface
                     'id desc', [0, -1]);
                 break;
             default :
-                $orderList = $em->getRepository('AuctionOrders')->getOrders($user, null, Constants::ORDER_PER_PAGE, 0, 'id desc');
+                $orderList = $em->getRepository('AuctionOrders')->getOrders(null, $user, Constants::ORDER_PER_PAGE, 0, 'id desc');
                 break;
         }
         return $this->render('order/sold_list.html.twig', array(
