@@ -39,9 +39,9 @@
             {{ user.nickname }}
         </div>
         <div class="link-list">
-            <a href="{{ path('profile_followed_users') }}">{{ user.followCount }}<br />关注</a>
+            <a href="{{ path('list_followed_users') }}">{{ user.followCount }}<br />关注</a>
             <span class="splitter"></span>
-            <a href="{{ path('profile_followed_users') }}">{{ user.fansCount }}<br />粉丝</a>
+            <a href="{{ path('list_following_users') }}">{{ user.fansCount }}<br />粉丝</a>
             <span class="splitter"></span>
             <a href="javascript:void(0);">{{ user.boughtCount }}<br />买入</a>
             <span class="splitter"></span>
