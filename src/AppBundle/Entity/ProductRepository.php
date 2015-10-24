@@ -32,6 +32,8 @@ class ProductRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('COUNT(p)')
             ->from('AppBundle:Product', 'p')
+            ->where('p.category = :category')
+            ->setParameter('category', $category)
             ->getQuery()
             ->getSingleScalarResult();
         return $this->getEntityManager()
