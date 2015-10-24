@@ -28,7 +28,7 @@ class ProductRepository extends EntityRepository
 
     public function getRandomProduct($category)
     {
-        $count = $this->getEntityManager()
+        return $count = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(p)')
             ->from('AppBundle:Product', 'p')
