@@ -51,9 +51,10 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $avatar = $user->getAvatar();
         $nickname = $user->getNickName();
         $userId = $this->getUser()->getId();
+        $user = $em->getRepository('AppBundle:Image')->find($userId);
         $owner = $randomProduct->getUser();
         $ownerId = $owner->getId();
-        $isOwn = $ownerId == $userId;
+        $isOwn = ( $ownerId == $userId );
         if (!$isOwn) {
             $owner->setFansCount($owner->getFansCount() + 1);
             $owner->addFansUser($user);
