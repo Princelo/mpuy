@@ -53,7 +53,7 @@ class ProductRepository extends EntityRepository
             ->select('p')
             ->from('AppBundle:Product', 'p')
             ->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
-            ->where('p.user in u.followedUsers')
+            ->where('p.user MEMBER OF u.fansUsers')
             ->setFirstResult($offset)
             ->setMaxResults($count)
             ->setParameter('user', $user)
