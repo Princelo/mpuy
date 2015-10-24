@@ -50,11 +50,11 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
         $avatar = $user->getAvatar();
         $nickname = $user->getNickName();
-        $user = $this->getUser()->getId();
-        $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
+        $userId = $this->getUser()->getId();
         $owner = $randomProduct->getUser();
-        $isOwn = $owner == $user;
-        /*if (!$isOwn) {
+        $ownerId = $owner->getId();
+        $isOwn = $ownerId == $userId;
+        if (!$isOwn) {
             $owner->setFansCount($owner->getFansCount() + 1);
             $owner->addFansUsers($user);
             $user->setFollowCount($user->getFollowCount() + 1);
@@ -62,7 +62,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             $em->persist($owner);
             $em->persist($user);
             $em->flush();
-        }*/
+        }
         return $this->render('product/product_view.html.twig', array(
             'p' => $randomProduct,
             'images' => $images,
