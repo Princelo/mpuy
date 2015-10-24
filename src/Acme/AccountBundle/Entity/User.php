@@ -1325,4 +1325,13 @@ class User extends BaseUser
     {
         return $this->soldOrders;
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function isFollowing(User $user)
+    {
+        return $this->fansUsers->contains($user);
+    }
 }
