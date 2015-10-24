@@ -1332,6 +1332,6 @@ class User extends BaseUser
      */
     public function isFollowing(User $user)
     {
-        return $this->fansUsers->contains($user);
+        return $this->followedUsers->contains($user);
     }
 }
