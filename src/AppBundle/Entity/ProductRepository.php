@@ -50,6 +50,7 @@ class ProductRepository extends EntityRepository
     {
         $this->getEntityManager()
             ->createQueryBuilder()
+            ->select('p')
             ->from('AppBundle:Product', 'p')
             ->where('p.user.fansUser = :user')
             ->setFirstResult($offset)
