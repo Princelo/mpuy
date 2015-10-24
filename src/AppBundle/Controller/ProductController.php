@@ -51,7 +51,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $avatar = $user->getAvatar();
         $nickname = $user->getNickName();
         $userId = $this->getUser()->getId();
-        $user = $em->getRepository('AppBundle:Image')->find($userId);
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($userId);
         $owner = $randomProduct->getUser();
         $ownerId = $owner->getId();
         $isOwn = ( $ownerId == $userId );
