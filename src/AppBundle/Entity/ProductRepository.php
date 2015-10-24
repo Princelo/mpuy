@@ -45,4 +45,17 @@ class ProductRepository extends EntityRepository
             ->getSingleResult()
             ;
     }
+
+    public function getHomeProducts($user, $offset = 0, $count = 5)
+    {
+        $this->getEntityManager()
+            ->createQueryBuilder()
+            ->from('AppBundle:Product', 'p')
+            ->where('p.user.fansUser = :user')
+            ->setFirstResult($offset)
+            ->setMaxResults($count)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

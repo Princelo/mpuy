@@ -181,12 +181,21 @@
     <link rel="stylesheet" href="{{ asset('bundles/app/PhotoSwipe/photoswipe.css') }}" />
 {% endblock %}
 {% block javascripts %}
-    {% javascripts '@AppBundle/Resources/public/PhotoSwipe/*.js' %}
+    {# javascripts '@AppBundle/Resources/public/PhotoSwipe/*.js' %}
     <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% endjavascripts #}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
     <script>
-        var photoswipe_action = function(i) {
+        var photoswipe_action = function (i) {
+            var images = [{% for img in images %}
+                    'attachments/wechat_img/{{ img.id }}',
+                {% endfor %}];
+            wx.previewImage({
+                current: images[i], // 当前显示图片的http链接
+                urls: images // 需要预览的图片http链接列表
+            });
+        }
+        var photoswipe_action_bak = function(i) {
             var pswpElement = document.querySelectorAll('.pswp')[0];
 
             // build items array
