@@ -28,7 +28,7 @@ class ProductRepository extends EntityRepository
 
     public function getRandomProduct($category)
     {
-        return $count = $this->getEntityManager()
+        $count = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(p)')
             ->from('AppBundle:Product', 'p')
@@ -36,6 +36,7 @@ class ProductRepository extends EntityRepository
             ->getSingleScalarResult();
         return $this->getEntityManager()
             ->createQueryBuilder()
+            ->select('p')
             ->from('AppBundle:Product', 'p')
             ->where('p.category = :category')
             ->setFirstResult(rand(0, $count - 1))
