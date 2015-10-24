@@ -1098,10 +1098,10 @@ class User extends BaseUser
     /**
      * Add products
      *
-     * @param \Acme\AccountBundle\Entity\Product $products
+     * @param \AppBundle\Entity\Product $products
      * @return User
      */
-    public function addProduct(\Acme\AccountBundle\Entity\Product $products)
+    public function addProduct(\AppBundle\Entity\Product $products)
     {
         $this->products[] = $products;
 
@@ -1111,9 +1111,9 @@ class User extends BaseUser
     /**
      * Remove products
      *
-     * @param \Acme\AccountBundle\Entity\Product $products
+     * @param \AppBundle\Entity\Product $products
      */
-    public function removeProduct(\Acme\AccountBundle\Entity\Product $products)
+    public function removeProduct(\AppBundle\Entity\Product $products)
     {
         $this->products->removeElement($products);
     }
