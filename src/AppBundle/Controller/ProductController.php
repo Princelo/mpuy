@@ -56,7 +56,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $isOwn = $ownerId == $userId;
         if (!$isOwn) {
             $owner->setFansCount($owner->getFansCount() + 1);
-            $owner->addFansUsers($user);
+            $owner->addFansUser($user);
             $user->setFollowCount($user->getFollowCount() + 1);
             $user->addFollowedUser($owner);
             $em->persist($owner);
