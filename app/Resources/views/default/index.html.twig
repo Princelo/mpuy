@@ -27,7 +27,7 @@
                     <div class="my-gallery" itemscope itemtype="">
                         {% for img in p.images %}
                             <figure itemprop="associatedMedia" itemscope itemtype="">
-                                <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action(0)">
+                                <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action{{ p.id }}(0)">
                                     <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
                                 </a>
                                 <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
@@ -110,16 +110,16 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
     <script>
-        var photoswipe_action = function (i) {
-            var images = [{% for img in images %}
+        {% for p in products %}
+        var photoswipe_action{{ p.id }} = function (i) {
+            var images{{ p.id }} = [{% for img in p.images %}
                 'attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
-                current: images[i], // 当前显示图片的http链接
-                urls: images // 需要预览的图片http链接列表
+                current: images{{ p.id }}[i], // 当前显示图片的http链接
+                urls: images{{ p.id }} // 需要预览的图片http链接列表
             });
         }
-        {% for p in products %}
         var clock{{ p.id }} = document.getElementById('countdown{{ p.id }}')
                 , targetDate{{ p.id }} = {{ p.expireTime|date('U') }}*1000;
 
