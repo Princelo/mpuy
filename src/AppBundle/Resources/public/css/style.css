@@ -72,3 +72,11 @@ li {list-style: none;}
 .event-list .text label {font-weight:bold; font-size:16px;}
 .event-list .text p {font-size: 12px; position:absolute; bottom:4px;}
 .event-list .tips {position: absolute; right: 12px; top: 2px; background: #087099; color:#fff; text-align:center; display:block; width: 100px; border-radius: 4px;}
+
+.user-third-info {color: #ababab !important; background:#fff; height: 137px; width:100%; float:left; margin-top:8px; margin-bottom: 20px;}
+.user-third-info li {width: 100%; float:left;}
+.user-third-info label {width: 17%; padding-left: 3%; float:left;}
+.user-third-info span {width: 80%; float:left;}
+.user-third-info img{width: 80px; height: 80px; float:left; margin-right: 6px;}
+.follow-btn > a {width: 40%; margin: 0 auto; height: 35px; border-radius:5px;color:#fff !important; background:#4f95d3; display:block; line-height: 35px; text-align:center; text-decoration:none;}
+#unfollow-btn {background: #e8373a;}
