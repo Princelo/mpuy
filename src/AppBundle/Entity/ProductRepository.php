@@ -28,12 +28,15 @@ class ProductRepository extends EntityRepository
 
     public function getRandomProduct($category)
     {
+        $now = new \DateTime();
         $count = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(p)')
             ->from('AppBundle:Product', 'p')
             ->where('p.category = :category')
+            ->andWhere('p.expireTime > :now')
             ->setParameter('category', $category)
+            ->setParameter('now', $now)
             ->getQuery()
             ->getSingleScalarResult();
         return $this->getEntityManager()
@@ -41,9 +44,11 @@ class ProductRepository extends EntityRepository
             ->select('p')
             ->from('AppBundle:Product', 'p')
             ->where('p.category = :category')
+            ->andWhere('p.expireTime > :now')
             ->setFirstResult(rand(0, $count - 1))
             ->setMaxResults(1)
             ->setParameter('category', $category)
+            ->setParameter('now', $now)
             ->getQuery()
             ->getOneOrNullResult();
     }

@@ -56,6 +56,8 @@ class ProductController extends Controller implements WechatTokenGetterInterface
                 break;
             }
         }
+        if (null == $randomProduct)
+            return new Response('没有未过期商品');
         $images = $em->getRepository('AppBundle:Image')->findBy(['product' => $randomProduct]);
         $user = $this->getUser();
         $avatar = $user->getAvatar();
