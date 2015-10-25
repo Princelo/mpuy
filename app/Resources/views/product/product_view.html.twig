@@ -276,6 +276,7 @@
         var bid_send = function (product_id) {
             var result = prompt("请输入金额");
             function isInt(n){
+                n = parseInt(n);
                 return Number(n) === n && n % 1 === 0;
             }
             if ( !isInt(result)) {
