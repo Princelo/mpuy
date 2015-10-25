@@ -88,6 +88,7 @@ class UserController extends Controller implements WechatTokenGetterInterface
         return $this->render('user/profile_third.html.twig', array(
             'user' => $user,
             'products' => $products,
+            'is_followed' => $this->getUser()->isFollowing($user)
         ));
     }
 }
