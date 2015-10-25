@@ -24,9 +24,40 @@ class AjaxController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $volume = $request->request->get('volume');
             $productId = $request->request->get('product_id');
+            $product = $em->getRepository('AppBundle:Product')->find($productId);
+            $stepPrice = $product->getStepPrice();
+            $startPrice = $product->getStartPrice();
+            $expireTime = $product->getExpireTime();
+            $now = new \DateTime();
+            if ($now >= $expireTime) {
+                return new JsonResponse(
+                    [
+                        'state' => 'error',
+                        'message' => '该拍卖已过期',
+                    ]
+                );
+            }
+            $highestPayment = $em->getRepository('AppBundle:Payment')->getHighestPayment($product);
+            if ( $highestPayment === null ) {
+                return new JsonResponse(
+                    [
+                        'state' => 'error',
+                        'message' =>
+                            '请确保您的出价在 起步价 ￥'. $startPrice .'元 以上'
+                    ]
+                );
+
+            } elseif ($volume < $highestPayment->getVolume() + $stepPrice) {
+                return new JsonResponse(
+                    [
+                        'state' => 'error',
+                        'message' => '当前最高出价为 ￥'.$highestPayment->getVolume().'元 , 步价为 ￥'. $stepPrice .'元 ,请'.
+                            '确保您的出价在 ￥'. bcadd($highestPayment->getVolume(), $stepPrice) .'元 以上'
+                    ]
+                );
+            }
             $payment = new Payment();
             $payment->setPayUser($this->getUser());
-            $product = $em->getRepository('AppBundle:Product')->find($productId);
             $payment->setRecieveUser($product->getUser());
             $payment->setVolume($volume);
             $payment->setPayTime(new \DateTime());
@@ -129,5 +160,27 @@ class AjaxController extends Controller
         $user->removeFollowedUser($thirdUser);
         $em->persist($user);
         $em->flush();
+    }
+
+    /**
+     * @Route("/ajax/get_bid_list", name="ajax_get_bid_list")
+     */
+    public function ajaxGetBidList(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit;
+        }
+        $em = $this->getDoctrine()->getEntityManager();
+        $productId = $request->request->get('product_id');
+        $product = $em->getRepository('AppBundle:Product')->find($productId);
+        $expireTime = $product->getExpireTime();
+        $now = new \DateTime();
+        if ($now >= $expireTime) {
+            return new JsonResponse(
+                'ended'
+            );
+        }
+        $bidList = $em->getRepository('AppBundle:Payment')->getBidList($product);
+        return new JsonResponse($bidList);
     }
 }

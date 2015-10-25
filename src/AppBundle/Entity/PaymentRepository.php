@@ -12,4 +12,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class PaymentRepository extends EntityRepository
 {
+    public function getHighestPayment($product)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Payment', 'p')
+            ->innerJoin('p.product', 'pr')
+            ->where('pr = :pr' )
+            ->setParameter('pr', $product )
+            ->addOrderBy('p.id DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getBidList($product)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p.volume, p.payTime as datetime, u.nickname, u.avatar')
+            ->from('AppBundle:Payment', 'p')
+            ->innerJoin('p.product', 'pr')
+            ->innerJoin('p.payUser', 'u')
+            ->where('pr = :pr' )
+            ->setParameter('pr', $product )
+            ->addOrderBy('p.id DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

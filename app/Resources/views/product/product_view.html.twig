@@ -69,8 +69,8 @@
                         <div class="step-price"><span>加</span><label>￥{{ p.stepPrice }}元</label></div>
                     </div>
                 </div>
-                <!--<div class="bid-list">
-                    <ul>
+                <div class="bid-list" id="bid-list{{ p.id }}">
+                    <!--<ul>
                         <li>
                             <img class="avatar" src="epuy_images/avatar1.png" />
                             <div class="bid-info">
@@ -95,13 +95,13 @@
                                 <div class="datetime">09-03 12:46</div>
                             </div>
                         </li>
-                    </ul>
-                </div>-->
+                    </ul>-->
+                </div>
             </div>
             <div id="bid-box{{ p.id }}" class="bid-box">
                 <div class="box-inner">
                     ￥<input name="" id="bid{{ p.id }}" value="" type="number" product="{{ p.id }}"/>元
-                    <button onclick="bid_send({{ p.id }})">出价</button>
+                    <button onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</button>
                 </div>
             </div>
         </div>
@@ -275,17 +275,82 @@
             $('.bid-box').animate({bottom:"-200px"}, "fast");
         }
         var bid_send = function (product_id) {
-            $.ajax({
-                url: "{{ path('ajax_bid') }}",
-                type: "post",
-                data: {
-                    'product_id' : product_id,
-                    'volume' : $('#bid'+product_id).val()
-                },
-                success: function (response) {
-                    window.location.href='{{ path('bid_payment') }}?product_id='+product_id+'volume='+$('#bid'+product_id).val();
-                }
-            })
+            var result = prompt("请输入金额");
+            if ( !(Number(result) === result && result % 1 === 0 ) ) {
+                alert('无效金额');
+            } else {
+                $.ajax({
+                    url: "{{ path('ajax_bid') }}",
+                    type: "post",
+                    data: {
+                        'product_id' : product_id,
+                        'volume' : result
+                    },
+                    success: function (response) {
+                        $.ajax({
+                            type: 'post',
+                            url: {{ path('ajax_get_bid_list') }},
+                            data: {
+                                'product_id' : product_id,
+                            },
+                            success: function (bid_list) {
+                                var template = '<ul>';
+                                var n = 0;
+                                if (bid_list == 'ended') {
+                                    template = "";
+                                    $('#bid_send'+product_id).html('已结束');
+                                    $('#bid_send'+product_id).prop('disabled', 'disabled');
+                                } else {
+                                    for( var b in bid_list) {
+                                        n ++;
+                                        if (n == 1) {
+                                            template += '<li>'+
+                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                    '<div class="bid-info">'+
+                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                    '<label>￥'+ b.volume +'元</label>'+
+                                                    '</div>'+
+                                                    '<div class="bid-order-info">'+
+                                                    '<div class="order-info leading">领先</div>'+
+                                                    '<div style="clear:both;"></div>'+
+                                                    '<div class="datetime">' + b.datetime + '</div>'+
+                                                    '</div>'+
+                                                    '</li>';
+                                        /*} else if ((n == 1 && b.type=='ended')) {
+                                            template += '<li>'+
+                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                    '<div class="bid-info">'+
+                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                    '<label>￥'+ b.volume +'元</label>'+
+                                                    '</div>'+
+                                                    '<div class="bid-order-info">'+
+                                                    '<div class="order-info leading">成交</div>'+
+                                                    '<div style="clear:both;"></div>'+
+                                                    '<div class="datetime">' + b.datetime + '</div>'+
+                                                    '</div>'+
+                                                    '</li>';*/
+                                        } else {
+                                            template += '<li>'+
+                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                    '<div class="bid-info">'+
+                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                    '<label>￥'+ b.volume +'元</label>'+
+                                                    '</div>'+
+                                                    '<div class="bid-order-info">'+
+                                                    '<div style="clear:both;"></div>'+
+                                                    '<div class="datetime">' + b.datetime + '</div>'+
+                                                    '</div>'+
+                                                    '</li>';
+                                        }
+                                    }
+                                    template += '</ul>';
+                                }
+                                $('#bid_list'+product_id).html(template);
+                            }
+                        })
+                    }
+                })
+            }
         }
     </script>
     {% include 'menu.html.twig' %}
