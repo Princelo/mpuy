@@ -56,8 +56,10 @@
                 </div>-->
                 <div style="clear:both; height:10px;"></div>
                 <div class="countdown-block">
+                    {% if is_expired != true %}
                     <div class="running-tip">距离结束:</div>
                     <div class="countdown-tip"><label class="countdown" id="countdown"></label></div>
+                    {% endif %}
                 </div>
                 <div class="action-block">
                     {% if isOwn == false %}<a class="update" href="javascript:void(0);">更新</a>{% endif %}
@@ -260,6 +262,7 @@
             gallery.init();
             return false;
         }
+        {% if is_expired != true %}
         var clock1 = document.getElementById('countdown')
                 , targetDate = {{ p.expireTime|date('U') }}*1000;
 
@@ -267,6 +270,7 @@
         setInterval(function(){
             clock1.innerHTML = countdown(targetDate).toString();
         }, 1000);
+        {% endif %}
         var bid = function (product_id) {
             $('#bid-box'+product_id).animate({bottom:"0px"}, "fast");
         }

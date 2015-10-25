@@ -74,12 +74,14 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             $em->persist($user);
             $em->flush();
         }
+        $now = new \DateTime();
         return $this->render('product/product_view.html.twig', array(
             'p' => $randomProduct,
             'images' => $images,
             'avatar' => $avatar,
             'nickname' => $nickname,
             'isOwn' => $isOwn,
+            'is_expired' => $now >= $randomProduct->getExpireTime()
         ));
     }
 }
