@@ -280,7 +280,7 @@
                 alert('无效金额');
             } else {
                 $.ajax({
-                    url: "{{ path('ajax_bid') }}",
+                    url: "{{ path('ajax_bid_send') }}",
                     type: "post",
                     data: {
                         'product_id' : product_id,
