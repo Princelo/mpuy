@@ -68,4 +68,26 @@ class UserController extends Controller implements WechatTokenGetterInterface
             'users' => $users,
         ));
     }
+
+    /**
+     * @param $user_id
+     * @param Request $request
+     * @return Response
+     * @Route("/profile/{user_id}", name="profile")
+     */
+    public function profileThirdAction($user_id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository('AcmeAccountBundle:User')->find($user_id);
+        $products = $em->getRepository('AppBundle:Product')
+            ->findBy(
+                ['user' => $user, 'isActive'=>true],
+                ['id' => 'DESC'],
+                3);
+
+        return $this->render('user/profile_third.html.twig', array(
+            'user' => $user,
+            'products' => $products,
+        ));
+    }
 }

@@ -45,8 +45,7 @@ class ProductRepository extends EntityRepository
             ->setMaxResults(1)
             ->setParameter('category', $category)
             ->getQuery()
-            ->getSingleResult()
-            ;
+            ->getOneOrNullResult();
     }
 
     public function getHomeProducts($user, $offset = 0, $count = 5)

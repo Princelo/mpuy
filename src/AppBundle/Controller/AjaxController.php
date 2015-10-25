@@ -94,4 +94,40 @@ class AjaxController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $em->getRepository('AccountBundle:User')->getFollowedUsersByUser($user, $offset, $limit);
     }
+
+    /**
+     * @param Request $request
+     * @Route("/ajax/follow", name="ajax_follow")
+     */
+    public function ajaxFollowAction(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit;
+        }
+        $thirdUserId = $request->request->get('user_id');
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $thirdUser = $em->getRepository('AcmeAccountBundle:User')->find($thirdUserId);
+        $user->addFollowedUser($thirdUser);
+        $em->persist($user);
+        $em->flush();
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/ajax/unfollow", name="ajax_unfollow")
+     */
+    public function ajaxUnfollowAction(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit;
+        }
+        $thirdUserId = $request->request->get('user_id');
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $thirdUser = $em->getRepository('AcmeAccountBundle:User')->find($thirdUserId);
+        $user->removeFollowedUser($thirdUser);
+        $em->persist($user);
+        $em->flush();
+    }
 }

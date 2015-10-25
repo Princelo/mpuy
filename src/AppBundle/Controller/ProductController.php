@@ -46,6 +46,16 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $em = $this->getDoctrine()->getEntityManager();
         $randomCategory = rand(0, 5);
         $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
+        // There may be no products belong to $randomCategory
+        // Make sure that $randomProduct is not null by checking at most 100 times
+        for ($i = 0; $i < 100; $i ++) {
+            if (null == $randomProduct) {
+                $randomCategory = rand(0, 5);
+                $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
+            } else {
+                break;
+            }
+        }
         $images = $em->getRepository('AppBundle:Image')->findBy(['product' => $randomProduct]);
         $user = $this->getUser();
         $avatar = $user->getAvatar();

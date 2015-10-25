@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/jquery-mobile/jquery.mobile-1.4.5.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/user/user.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" />
+    <script src="http://libs.baidu.com/jquery/1.8.0/jquery.js"></script>
+    <script src="{{ asset('bundles/app/js/jquery.mobile-1.4.5.min.js') }}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#mypanel').panel();
+            $('.panel-left-btn').live('click', function() {
+                $('#mypanel').panel('open');
+            });
+        });
+    </script>
+</head>
+<body style="background:#efeff4;">
+<div data-role="page">
+
+    <div class="user-home-header" style="height: 180px;">
+        <div class="avatar-info">
+            <img src="{{ user.avatar }}" />
+            {{ user.nickname }}
+        </div>
+        <div class="link-list" style="text-align:center; color:#fff;">
+            {{ user.intro }}
+        </div>
+    </div>
+
+    <div class="user-third-info">
+        <ul>
+            <li style="line-height: 35px; height:35px; border-bottom: 2px solid #eee;">
+                <label>地区</label>
+                <span>{{ user.address }}</span>
+            </li>
+            <li style="height: 90px; line-height:85px; padding-top: 10px;">
+                <label>最近拍品</label>
+                <a href="">
+                    {% for p in products %}
+                    <img src="/attachments/wechat_img/{{ p.imgCover.id }}" />
+                    {% endfor %}
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div style="clear:both;"></div>
+    {% if is_followed == true %}
+    <div class="follow-btn">
+        <a href="" id="follow-btn" style="display:none;">关注</a>
+        <a href="" id="unfollow-btn">取消关注</a>
+    </div>
+    {% else %}
+    <div class="follow-btn">
+        <a href="" id="follow-btn">关注</a>
+        <a href="" id="unfollow-btn" style="display: none;">取消关注</a>
+    </div>
+    {% endif %}
+    <script>
+        $('#follow-btn').bind('click', function() {
+            $.ajax({
+                type: 'post',
+                url: '{{ path('ajax_follow') }}',
+                data: {
+                    'user_id': '{{ user.id }}'
+                },
+                success: function () {
+                    $('#follow-btn').hide();
+                    $('#unfollow-btn').show();
+                }
+            });
+        });
+        $('#unfollow-btn').bind('click', function() {
+            $.ajax({
+                type: 'post',
+                url: '{{ path('ajax_unfollow') }}',
+                data: {
+                    'user_id': '{{ user.id }}'
+                },
+                success: function () {
+                    $('#unfollow-btn').hide();
+                    $('#follow-btn').show();
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>
