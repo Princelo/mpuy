@@ -100,7 +100,6 @@
             </div>
             <div id="bid-box{{ p.id }}" class="bid-box">
                 <div class="box-inner">
-                    ￥<input name="" id="bid{{ p.id }}" value="" type="number" product="{{ p.id }}"/>元
                     <button onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</button>
                 </div>
             </div>
@@ -276,7 +275,10 @@
         }
         var bid_send = function (product_id) {
             var result = prompt("请输入金额");
-            if ( !(Number(result) === result && result % 1 === 0 ) ) {
+            function isInt(n){
+                return Number(n) === n && n % 1 === 0;
+            }
+            if ( !isInt(result)) {
                 alert('无效金额');
             } else {
                 $.ajax({
