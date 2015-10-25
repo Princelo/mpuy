@@ -290,67 +290,75 @@
                         'volume' : result
                     },
                     success: function (response) {
-                        $.ajax({
-                            type: 'post',
-                            url: {{ path('ajax_get_bid_list') }},
-                            data: {
-                                'product_id' : product_id,
-                            },
-                            success: function (bid_list) {
-                                var template = '<ul>';
-                                var n = 0;
-                                if (bid_list == 'ended') {
-                                    template = "";
-                                    $('#bid_send'+product_id).html('已结束');
-                                    $('#bid_send'+product_id).prop('disabled', 'disabled');
-                                } else {
-                                    for( var b in bid_list) {
-                                        n ++;
-                                        if (n == 1) {
-                                            template += '<li>'+
-                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                    '<div class="bid-info">'+
-                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                    '<label>￥'+ b.volume +'元</label>'+
-                                                    '</div>'+
-                                                    '<div class="bid-order-info">'+
-                                                    '<div class="order-info leading">领先</div>'+
-                                                    '<div style="clear:both;"></div>'+
-                                                    '<div class="datetime">' + b.datetime + '</div>'+
-                                                    '</div>'+
-                                                    '</li>';
-                                        /*} else if ((n == 1 && b.type=='ended')) {
-                                            template += '<li>'+
-                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                    '<div class="bid-info">'+
-                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                    '<label>￥'+ b.volume +'元</label>'+
-                                                    '</div>'+
-                                                    '<div class="bid-order-info">'+
-                                                    '<div class="order-info leading">成交</div>'+
-                                                    '<div style="clear:both;"></div>'+
-                                                    '<div class="datetime">' + b.datetime + '</div>'+
-                                                    '</div>'+
-                                                    '</li>';*/
-                                        } else {
-                                            template += '<li>'+
-                                                    '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                    '<div class="bid-info">'+
-                                                    '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                    '<label>￥'+ b.volume +'元</label>'+
-                                                    '</div>'+
-                                                    '<div class="bid-order-info">'+
-                                                    '<div style="clear:both;"></div>'+
-                                                    '<div class="datetime">' + b.datetime + '</div>'+
-                                                    '</div>'+
-                                                    '</li>';
+                        if (response.state == 'success') {
+                            $.ajax({
+                                type: 'post',
+                                url: {{ path('ajax_get_bid_list') }},
+                                data: {
+                                    'product_id' : product_id,
+                                },
+                                success: function (bid_list) {
+                                    var template = '<ul>';
+                                    var n = 0;
+                                    if (bid_list == 'ended') {
+                                        template = "";
+                                        $('#bid_send'+product_id).html('已结束');
+                                        $('#bid_send'+product_id).prop('disabled', 'disabled');
+                                    } else {
+                                        for( var b in bid_list) {
+                                            n ++;
+                                            if (n == 1) {
+                                                template += '<li>'+
+                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                        '<div class="bid-info">'+
+                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                        '<label>￥'+ b.volume +'元</label>'+
+                                                        '</div>'+
+                                                        '<div class="bid-order-info">'+
+                                                        '<div class="order-info leading">领先</div>'+
+                                                        '<div style="clear:both;"></div>'+
+                                                        '<div class="datetime">' + b.datetime + '</div>'+
+                                                        '</div>'+
+                                                        '</li>';
+                                                /*} else if ((n == 1 && b.type=='ended')) {
+                                                 template += '<li>'+
+                                                 '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                 '<div class="bid-info">'+
+                                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                 '<label>￥'+ b.volume +'元</label>'+
+                                                 '</div>'+
+                                                 '<div class="bid-order-info">'+
+                                                 '<div class="order-info leading">成交</div>'+
+                                                 '<div style="clear:both;"></div>'+
+                                                 '<div class="datetime">' + b.datetime + '</div>'+
+                                                 '</div>'+
+                                                 '</li>';*/
+                                            } else {
+                                                template += '<li>'+
+                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                        '<div class="bid-info">'+
+                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                        '<label>￥'+ b.volume +'元</label>'+
+                                                        '</div>'+
+                                                        '<div class="bid-order-info">'+
+                                                        '<div style="clear:both;"></div>'+
+                                                        '<div class="datetime">' + b.datetime + '</div>'+
+                                                        '</div>'+
+                                                        '</li>';
+                                            }
                                         }
+                                        template += '</ul>';
                                     }
-                                    template += '</ul>';
+                                    $('#bid_list'+product_id).html(template);
                                 }
-                                $('#bid_list'+product_id).html(template);
+                            })
+                        } else {
+                            alert(response.message);
+                            if(response.type == 'ended') {
+                                $('#bid_send'+product_id).html('已结束');
+                                $('#bid_send'+product_id).prop('disabled', 'disabled');
                             }
-                        })
+                        }
                     }
                 })
             }

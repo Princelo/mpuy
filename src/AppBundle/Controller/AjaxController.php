@@ -33,6 +33,7 @@ class AjaxController extends Controller
                 return new JsonResponse(
                     [
                         'state' => 'error',
+                        'type' => 'ended',
                         'message' => '该拍卖已过期',
                     ]
                 );
@@ -42,6 +43,7 @@ class AjaxController extends Controller
                 return new JsonResponse(
                     [
                         'state' => 'error',
+                        'type' => 'volume',
                         'message' =>
                             '请确保您的出价在 起步价 ￥'. $startPrice .'元 以上'
                     ]
@@ -51,6 +53,7 @@ class AjaxController extends Controller
                 return new JsonResponse(
                     [
                         'state' => 'error',
+                        'type' => 'volume',
                         'message' => '当前最高出价为 ￥'.$highestPayment->getVolume().'元 , 步价为 ￥'. $stepPrice .'元 ,请'.
                             '确保您的出价在 ￥'. bcadd($highestPayment->getVolume(), $stepPrice) .'元 以上'
                     ]
@@ -67,7 +70,7 @@ class AjaxController extends Controller
             $em->flush();
             return new JsonResponse(['state' => 'success']);
         } catch (Exception $e) {
-            return new JsonResponse(['state' => 'error']);
+            return new JsonResponse(['state' => 'error', 'type' => 'unknown']);
         }
     }
 
