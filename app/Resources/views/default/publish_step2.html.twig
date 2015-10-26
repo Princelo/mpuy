@@ -35,101 +35,9 @@
             if(cval!=null) document.cookie= name + "="+cval+"; path=/;expires="+exp.toGMTString()+";domain=.{{ app.request.getHttpHost() }}";
         }
     </script>
-    <style>
-        body,ul,img,p {padding: 0; margin:0;}
-        li {list-style: none;}
-        body {
-            background: #eeeeff;
-            padding:0; margin:0;
-        }
-        .publish-content {
-            margin-top: 45px;
-            background: #fff;
-            padding: 10px;
-        }
-        .publish-content li{
-            width: 100%;
-            float: left;
-            box-sizing: border-box;
-        }
-        .publish-content li label {
-            width: 20%;
-            float: left;
-        }
-        .publish-content li span {
-            color: #6388d4;
-            width: 50%;
-            float: left;
-        }
-        .control-header {
-            height: 35px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            border-bottom: 1px solid #aaa;
-            background: #fff;
-        }
-        #next-btn {
-            color: #2a8;
-            font-weight: bold;
-            text-decoration: none;
-            float: right;
-            line-height: 35px;
-            padding-right: 8px;
-        }
-        .fade-panel {
-            width: 100%; height: 100%;
-            position: fixed; top: 0; left: 0; z-index: 999;
-            opacity: 0.8;
-            background-color: rgb(0, 0, 0);
-            display:none;
-        }
-        .time-panel {width: 80%; height: 80%; position:fixed; top: 10%; left: 10%; background: #fff; z-index: 1000;
-            display:none;
-        }
-        .time-buttons a {
-            width: 30%;
-            height: 25px;
-            border: 1px solid #999;
-            float: left;
-            text-align: center;
-            line-height: 25px;
-            color: #333;
-            text-decoration: none;
-            margin: 5px 1%;
-            border-radius: 2px;
-        }
-        .time-panel label.title {
-            color: #6488da;
-            width: 100%;
-            display: block;
-            float: left;
-            margin: 12px 0;
-            padding-left: 8px;
-        }
-        #category-box{
-            position:fixed;
-            bottom:-200px;
-            left:0%;
-            height:200px;;
-            background-color: #DBDBDB;
-            width: 100%;
-            display: block;
-            z-index:999999;
-        }
-
-        #box-inner {
-            position: absolute;
-            width:100%;
-            top: 0px;
-            bottom: 0px;
-            overflow: scroll;
-            -webkit-overflow-scrolling: touch;
-        }
-    </style>
 </head>
-<body>
 <div class="control-header" style=>
+    <a href="javascript:void(0);" id="cancel-btn" onclick="history.go(-1);">取消</a>
     <a href="javascript:void(0);" id="next-btn">发布</a>
 </div>
 <form action="{{ path('publish_step2_submit') }}" method="post" id="form">
@@ -144,36 +52,35 @@
                 <label>分类</label><span id="category-select" onclick="category_select()">请选择拍品分类</span><i class="cube"></i>
             </li>
             <li>
-                <label for="">起拍价</label><input value="0" name="start_price" />
+                <label for="">起拍价</label><input mytype="input" value="0" name="start_price" />
             </li>
             <li>
-                <label for="">加价幅度</label><input value="100" name="step_price" />
+                <label for="">加价幅度</label><input mytype="input" value="100" name="step_price" />
             </li>
         </ul>
         <div style="clear:both;"></div>
     </div>
-    <span class="tips">可选设置</span>
-    <div class="publish-content" style="
-    margin-top: 45px;
+    <span class="tips" style="margin-top:12px; color: #6388d4;display:block; margin-bottom:4px;">可选设置</span>
+    <div class="publish-content" style="margin-top:0px;
 ">
         <ul>
             <li>
-                <label>7天包退</label><input name="is_returnable" type="checkbox" />
+                <label>7天包退</label><input mytype="input" name="is_returnable" type="checkbox" />
             </li>
             <li>
-                <label>包邮</label><input name="is_free_postage" type="checkbox">
+                <label>包邮</label><input mytype="input" name="is_free_postage" type="checkbox">
             </li>
             <li>
-                <label for="">起拍价</label><input value="0" name="start_price" />
+                <label for="">起拍价</label><input mytype="input" value="0" name="start_price" />
             </li>
             <li>
-                <label for="">加价幅度</label><input value="100" name="step_price" />
+                <label for="">加价幅度</label><input mytype="input" value="100" name="step_price" />
             </li>
             <li>
-                <label for="">一口价</label><input value="0" name="fixed_price" />
+                <label for="">一口价</label><input mytype="input" value="0" name="fixed_price" />
             </li>
             <li>
-                <label for="">参考价</label><input value="0" name="reference_price" />
+                <label for="">参考价</label><input mytype="input" value="0" name="reference_price" />
             </li>
         </ul>
         <input type="hidden" value="" name="expire_date" id="expire_date" />
@@ -186,15 +93,29 @@
 <div class="fade-panel">
 </div>
 <div class="time-panel">
-    <label class="title">10月06日(今天)</label>
+    <label class="title">{{ "now"|date('m月d日') }}(今天)</label>
     <div class="time-buttons">
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '16:00'|date('U') %}
         <a href="javascript:void(0)" date="today">16:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '17:00'|date('U') %}
         <a href="javascript:void(0)" date="today">17:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '19:00'|date('U') %}
         <a href="javascript:void(0)" date="today">19:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '20:00'|date('U') %}
         <a href="javascript:void(0)" date="today">20:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '21:00'|date('U') %}
         <a href="javascript:void(0)" date="today">21:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '22:00'|date('U') %}
         <a href="javascript:void(0)" date="today">22:00</a>
+        {% endif %}
+        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '23:00'|date('U') %}
         <a href="javascript:void(0)" date="today">23:00</a>
+        {% endif %}
     </div>
     <label class="title">10月07日(明天)</label>
     <div class="time-buttons">
