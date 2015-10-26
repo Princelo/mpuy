@@ -96,32 +96,29 @@
 <div class="time-panel">
     <label class="title">{{ "now"|date('m月d日') }}(今天)</label>
     <div class="time-buttons">
-        {% if "now"|date('U') < (now ~ ' 09:00')|date('U') %}
-            <a href="javascript:void(0)" date="today">09:00</a>
-        {% endif %}
-        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 08:00')|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 16:00')|date('U') %}
         <a href="javascript:void(0)" date="today">16:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '17:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 17:00')|date('U') %}
         <a href="javascript:void(0)" date="today">17:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '19:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 19:00')|date('U') %}
         <a href="javascript:void(0)" date="today">19:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '20:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 20:00')|date('U') %}
         <a href="javascript:void(0)" date="today">20:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '21:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 21:00')|date('U') %}
         <a href="javascript:void(0)" date="today">21:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '22:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 22:00')|date('U') %}
         <a href="javascript:void(0)" date="today">22:00</a>
         {% endif %}
-        {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '23:00'|date('U') %}
+        {% if "now"|date('U') < ('now'|date('Y-m-d') ~ ' 23:00')|date('U') %}
         <a href="javascript:void(0)" date="today">23:00</a>
         {% endif %}
     </div>
-    <label class="title">10月07日(明天)</label>
+    <label class="title">{{ "tomorrow"|date('m月d日') }}(明天)</label>
     <div class="time-buttons">
         <a href="javascript:void(0)" date="tomorrow">12:00</a>
         <a href="javascript:void(0)" date="tomorrow">16:00</a>
@@ -161,7 +158,6 @@
         //$('#expire_date').val($(this).attr('date'));
         $('.fade-panel').hide();
         $('.time-panel').hide();
-        alert($(this).attr('date'));
         if ($(this).attr('date') == 'today') {
             $('#select_time').html(GetDateStr(0) + ' ' + $(this).html());
             $('#expire_date').val(GetDateStr(0));
