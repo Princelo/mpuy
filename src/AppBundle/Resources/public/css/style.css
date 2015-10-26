@@ -80,3 +80,66 @@ li {list-style: none;}
 .user-third-info img{width: 80px; height: 80px; float:left; margin-right: 6px;}
 .follow-btn > a {width: 40%; margin: 0 auto; height: 35px; border-radius:5px;color:#fff !important; background:#4f95d3; display:block; line-height: 35px; text-align:center; text-decoration:none;}
 #unfollow-btn {background: #e8373a;}
+
+body,ul,img,p {padding: 0; margin:0;}
+.publish-content .img-list {padding: 10px; width: 100%; box-sizing: border-box;}
+.publish-content .img-list .img-item {width: 150px; height: 150px; position:relative; float:left;}
+.publish-content .img-item img {width: 150px; height: 150px; float:left; border-radius:4px; border:1px solid #e0e4e5;}
+.publish-content .img-item i {position: absolute; top:0; right: 0; width: 16px; height: 16px; display: block;
+    border-radius: 8px; border: 1px solid #fff; background: #000;
+}
+.publish-content .img-item {margin-left: 10px;}
+.control-header {
+    height: 53px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    border-bottom: 1px solid #1f1f1f;
+    background: #2e2e2e;
+    padding-top:3px;
+}
+.control-header a {
+    margin-top:6px;
+    width:18%;
+    border:solid 1px #121212;
+    border-radius:4px;
+    height:35px;
+    color:#fff;
+    background: #2c2c2c;
+    text-align:center;
+    text-decoration: none;
+    line-height:35px;
+}
+#cancel-btn {float:left;margin-left:1%;}
+#next-btn {
+    float: right;
+    margin-right:1%;
+    background:#1a4f72;
+}
+.control-header {
+            height: 53px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid #1f1f1f;
+            background: #2e2e2e;
+            padding-top:3px;
+        }
+        .control-header a {
+            margin-top:6px;
+            width:18%;
+            border:solid 1px #121212;
+            border-radius:4px;
+            height:35px;
+            color:#fff;
+            background: #2c2c2c;
+            text-align:center;
+            text-decoration: none;
+            line-height:35px;
+        }
+        #cancel-btn {float:left;margin-left:1%;}
+        #next-btn {
+            float: right;
+            margin-right:1%;
+            background:#1a4f72;
+}
