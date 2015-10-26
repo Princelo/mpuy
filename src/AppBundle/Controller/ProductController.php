@@ -26,6 +26,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser()->getId();
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $isOwn = $product->getUser() == $user;
+        $now = new \DateTime();
         return $this->render('product/product_view.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'p' => $product,
@@ -33,6 +34,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             'avatar' => $avatar,
             'nickname' => $nickname,
             'isOwn' => $isOwn,
+            'is_expired' => $now >= $product->getExpireTime()
         ));
     }
 
