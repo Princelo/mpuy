@@ -59,12 +59,12 @@ class ProductRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('p')
             ->from('AppBundle:Product', 'p')
-            ->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
+            //->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
             //->where('p.user MEMBER OF u.followedUsers')
             ->where('p.isActive = TRUE')
             ->setFirstResult($offset)
             ->setMaxResults($count)
-            ->setParameter('user', $user)
+            //->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
