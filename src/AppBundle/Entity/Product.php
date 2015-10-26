@@ -138,6 +138,13 @@ class Product
     protected $images;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="like_count", type="integer", nullable=true)
+     */
+    protected $likeCount;
+
+    /**
      * @var \Acme\AccountBundle\Entity\User[]
      *
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="likedProducts")

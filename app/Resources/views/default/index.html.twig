@@ -45,14 +45,17 @@
                         <label class="date">{{ p.createTime|date('m月d日') }}</label>
                     </div>
                     <div class="attr_right">
-                        <span>15</span><i class="icon like"></i>
+                        <span>{{ p.likeCount }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
                     </div>
                 </div>
                 <div style="clear:both;"></div>
                 <div class="likes">
-                    <div class="title">TA们收藏了此拍品:</div>
-                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDJDqrLXUCZpmFvcMCpOt8JzopzicLMIGslEJoswiaWSCHtPiaUxca5ibSG7kQwxNvcvbI90Rbria9arKl0AYJjevq83U/0" />
-                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDKzmnY9MAQom4QiahpkKs3W4fFVrfx8ExfN0twcUUVPtI1stOvB8RmHibLgTujO2BclJQBPXZuLlJWZGMJusFeRIn/0" />
+                    <div class="title">TA们赞了此拍品:</div>
+                    {% for u in p.likeUsers %}
+                    <a href="{{ path('profile_third', {'user_id': u.id}) }}">
+                        <img src="{{ u.avatar }}" />
+                    </a>
+                    {% endfor %}
                     <div style="clear:both;"></div>
                 </div>
                 <div style="clear:both; height:10px;"></div>
@@ -110,7 +113,7 @@
         {% for p in products %}
         var photoswipe_action{{ p.id }} = function (i) {
             var images{{ p.id }} = [{% for img in p.images %}
-                'attachments/wechat_img/{{ img.id }}',
+                '/attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
                 current: images{{ p.id }}[i], // 当前显示图片的http链接
@@ -122,7 +125,7 @@
 
         clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
         setInterval(function(){
-            clock{{ p.id }}.innerHTML = countdown{{ p.id }}(targetDate{{ p.id }}).toString();
+            clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
         }, 1000);
         {% endfor %}
     </script>
