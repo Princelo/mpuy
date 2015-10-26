@@ -55,16 +55,15 @@ class ProductRepository extends EntityRepository
 
     public function getHomeProducts($user, $offset = 0, $count = 5)
     {
-        $this->getEntityManager()
+        return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('p')
             ->from('AppBundle:Product', 'p')
-            //->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
-            //->where('p.user MEMBER OF u.followedUsers')
-            //->where('p.isActive = TRUE')
-            //->setFirstResult($offset)
-            //->setMaxResults($count)
-            //->setParameter('user', $user)
+            ->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
+            ->where('p.user MEMBER OF u.followedUsers')
+            ->setFirstResult($offset)
+            ->setMaxResults($count)
+            ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
     }
