@@ -85,8 +85,11 @@ class PublishController extends Controller implements WechatTokenGetterInterface
             );
         }
         // replace this example code with whatever you need
+        $now = new \DateTime();
+        $now = $now->format('Y-m-d');
         return $this->render('default/publish_step2.html.twig', array(
-            'product_id' => $product_id
+            'product_id' => $product_id,
+            'now' => $now
         ));
     }
 
