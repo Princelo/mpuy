@@ -37,27 +37,11 @@
     </script>
 </head>
 <body style="background:#ecf0f1;">
-<div class="control-header" style="
-    height: 35px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    border-bottom: 1px solid #aaa;
-    background: #fff;
-">
+<div class="control-header">
     <a href="javascript:void(0);" id="cancel-btn" onclick="history.go(-1);">取消</a>
-    <a href="javascript:void(0);" id="next-btn" onclick="" style="
-    color: #2a8;
-    font-weight: bold;
-    text-decoration: none;
-    float: right;
-    line-height: 35px;
-    padding-right: 8px;
-">下一步</a>
+    <a href="javascript:void(0);" id="next-btn" onclick="" >下一步</a>
 </div>
-<div class="publish-content" style="
-    margin-top: 45px;
-">
+<div class="publish-content">
     <form action="{{ path('publish_step1_submit') }}" method="post" id="form">
         <input type="text" name="name" id="publish-title" placeholder="拍品名称"/>
         <textarea id="publish-content" placeholder="我的拍品描述..." name="description"></textarea>
