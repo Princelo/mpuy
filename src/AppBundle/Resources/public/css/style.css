@@ -15,10 +15,10 @@ li {list-style: none;}
 
 .bid-box{
     position:fixed;
-    bottom:-200px;
+    bottom:-220px;
     left:0%;
-    height:200px;;
-    background-color: #DBDBDB;
+    height:220px;;
+    background-color: #ecf0f1;
     width: 100%;
     display: block;
     z-index:999999;
