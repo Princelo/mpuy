@@ -96,7 +96,7 @@
 <div class="time-panel">
     <label class="title">{{ "now"|date('m月d日') }}(今天)</label>
     <div class="time-buttons">
-        {% if "now"|date('U') < now ~ ' 09:00'|date('U') %}
+        {% if "now"|date('U') < (now ~ ' 09:00')|date('U') %}
             <a href="javascript:void(0)" date="today">09:00</a>
         {% endif %}
         {% if "now"|date('U') < 'now'|date('Y-m-d') ~ '16:00'|date('U') %}
