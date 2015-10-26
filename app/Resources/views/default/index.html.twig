@@ -62,39 +62,33 @@
                 </div>
                 <div class="action-block">
                     <a class="update" href="javascript:void(0);">更新</a>
-                    <a class="bid-btn" onclick="chooseImage()">出价</a>
+                    <a class="bid-btn" onclick="">出价</a>
                     <div class="action-info">
-                        <div class="start-price"><span>起</span><label>￥118元</label></div>
+                        <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
                         <span class="splitter">|</span>
-                        <div class="step-price"><span>加</span><label>￥10元</label></div>
+                        <div class="step-price"><span>加</span><label>￥{{ p.stepPrice }}元</label></div>
                     </div>
                 </div>
                 <div class="bid-list">
                     <ul>
+                        {% for payment in p.payments %}
                         <li>
-                            <img class="avatar" src="epuy_images/avatar1.png" />
+                            <img class="avatar" src="{{ payment.payUser.avatar }}" />
                             <div class="bid-info">
-                                <a href="javascript:void(0);">云</a>
-                                <label>￥228元</label>
+                                <a href="javascript:void(0);">{{ payment.payUser.nickname }}</a>
+                                <label>￥{{ payment.volume }}元</label>
                             </div>
                             <div class="bid-order-info">
-                                <div class="order-info leading">领先</div>
+                                {%  if loop.index == 0 %}
+                                    <div class="order-info leading">领先</div>
+                                {% else %}
+                                    <div class="order-info dumped-out">出局</div>
+                                {% endif %}
                                 <div style="clear:both;"></div>
-                                <div class="datetime">09-03 14:57</div>
+                                <div class="datetime">{{ payment.payTime|date('m-d H:i') }}</div>
                             </div>
                         </li>
-                        <li>
-                            <img class="avatar" src="epuy_images/avatar2.png" />
-                            <div class="bid-info">
-                                <a href="javascript:void(0);">ˇ坚果墙♛</a>
-                                <label>￥198元</label>
-                            </div>
-                            <div class="bid-order-info">
-                                <div class="order-info dumped-out">出局</div>
-                                <div style="clear:both;"></div>
-                                <div class="datetime">09-03 12:46</div>
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
