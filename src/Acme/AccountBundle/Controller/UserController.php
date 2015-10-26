@@ -73,7 +73,7 @@ class UserController extends Controller implements WechatTokenGetterInterface
      * @param $user_id
      * @param Request $request
      * @return Response
-     * @Route("/profile/{user_id}", name="profile")
+     * @Route("/profile/{user_id}", name="profile_third")
      */
     public function profileThirdAction($user_id, Request $request)
     {
