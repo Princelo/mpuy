@@ -182,7 +182,7 @@ class AjaxController extends Controller
         $product = $em->getRepository('AppBundle:Product')->find($productId);
         $expireTime = $product->getExpireTime();
         $now = new \DateTime();
-        if ($now >= $expireTime) {
+        if ($now->getTimestamp() >= $expireTime->getTimestamp()) {
             return new JsonResponse(
                 'ended'
             );

@@ -169,6 +169,7 @@
                     },
                     success: function (response) {
                         if (response.state == 'success') {
+                            alert('出价成功');
                             $.ajax({
                                 type: 'post',
                                 url: {{ path('ajax_get_bid_list') }},
