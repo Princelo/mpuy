@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div style="clear:both;"></div>
-                <div class="likes" id="likes{{ pid }}">
+                <div class="likes" id="likes{{ p.id }}">
                     <div class="title">TA们赞了此拍品:</div>
                     {% for u in p.likeUsers %}
                     <a href="{{ path('profile_third', {'user_id': u.id}) }}">
