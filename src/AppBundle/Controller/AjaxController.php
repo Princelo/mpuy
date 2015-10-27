@@ -86,7 +86,8 @@ class AjaxController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $productId = $request->request->get('product_id');
             $product = $em->getRepository('AppBundle:Product')->find($productId);
-            $product->addLikeUsers($this->getUser());
+            $product->setLikeCount($product->getLikeCount() + 1);
+            $product->addLikeUser($this->getUser());
             $em->persist($product);
             $em->flush();
             return new JsonResponse(['state' => 'success']);
