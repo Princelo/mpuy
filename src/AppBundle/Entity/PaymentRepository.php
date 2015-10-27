@@ -21,7 +21,7 @@ class PaymentRepository extends EntityRepository
             ->innerJoin('p.product', 'pr')
             ->where('pr = :pr' )
             ->setParameter('pr', $product )
-            ->addOrderBy('p.id DESC')
+            ->addOrderBy('p.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
