@@ -14,7 +14,7 @@
     <ul>
         {% for u in users %}
             <li>
-                <a href="{{ path('profile', {'user_id': u.id}) }}">
+                <a href="{{ path('profile_third', {'user_id': u.id}) }}">
                     <img src="{{ u.avatar }}" />
                     <label>{{ u.nickname }}</label>
                     <div class="div-table">
