@@ -196,7 +196,7 @@
                     alert(bid_list);
                     alert(typeof bid_list);
                     for( var b in bid_list)
-                        alert(b.datetime);
+                        alert(b['datetime']);
                     if (bid_list == 'ended') {
                         template = "";
                         $('#bid_send'+product_id).html('已结束');
