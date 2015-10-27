@@ -146,13 +146,16 @@ class AjaxController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $thirdUser = $em->getRepository('AcmeAccountBundle:User')->find($thirdUserId);
-        $user->setFollowCount($user->getFollowCount() + 1);
-        $thirdUser->setFansCount($thirdUser->getFansCount() + 1);
-        $user->addFollowedUser($thirdUser);
-        $thirdUser->addFansUser($user);
-        $em->persist($user);
-        $em->persist($thirdUser);
-        $em->flush();
+        if (!$user->isFollowing($thirdUser)) {
+            $user->setFollowCount($user->getFollowCount() + 1);
+            $thirdUser->setFansCount($thirdUser->getFansCount() + 1);
+            $user->addFollowedUser($thirdUser);
+            $thirdUser->addFansUser($user);
+            $em->persist($user);
+            $em->persist($thirdUser);
+            $em->flush();
+        }
+        return new JsonResponse('nothing');
     }
 
     /**
@@ -168,13 +171,16 @@ class AjaxController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getEntityManager();
         $thirdUser = $em->getRepository('AcmeAccountBundle:User')->find($thirdUserId);
-        $user->removeFollowedUser($thirdUser);
-        $user->setFollowCount($user->getFollowCount() - 1);
-        $thirdUser->setFansCount($thirdUser->getFansCount() - 1);
-        $thirdUser->removeFansUser($user);
-        $em->persist($user);
-        $em->persist($thirdUser);
-        $em->flush();
+        if ($user->isFollowing($thirdUser)) {
+            $user->removeFollowedUser($thirdUser);
+            $user->setFollowCount($user->getFollowCount() - 1);
+            $thirdUser->setFansCount($thirdUser->getFansCount() - 1);
+            $thirdUser->removeFansUser($user);
+            $em->persist($user);
+            $em->persist($thirdUser);
+            $em->flush();
+        }
+        return new JsonResponse('nothing');
     }
 
     /**
