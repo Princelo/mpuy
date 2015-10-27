@@ -62,9 +62,10 @@
                     {% endif %}
                 </div>
                 <div class="action-block">
-                    {% if isOwn == false %}<a class="update" href="javascript:void(0);">更新</a>{% endif %}
-                    {% if isOwn == true %}<a class="bid-btn" onclick="">更新</a>{% endif %}
-                    {% if isOwn == true %}<a class="bid-btn" onclick="bid()">出价</a>{% endif %}
+                    {% if isOwn == false %}<!--<a class="update" href="javascript:void(0);">更新</a>-->{% endif %}
+                    {% if isOwn == true %}<!--<a class="bid-btn" onclick="">更新</a>-->{% endif %}
+                    {% if isOwn == false %}<a class="bid-btn" onclick="bid()">出价</a>{% endif %}
+                    {% if isOwn == true %}<a class="update" href="javascript:void(0);" onclick="window.location.reload()">更新</a>{% endif %}
                     <div class="action-info">
                         <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
                         <span class="splitter">|</span>
@@ -100,7 +101,7 @@
                     </ul>-->
                 </div>
             </div>
-            <div id="bid-box{{ p.id }}" class="bid-box">
+            <div id="bid-box{{ p.id }}" class="bid-box" style="display:none;">
                 <div class="box-inner">
                     <a class="bid-btn" onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
                 </div>

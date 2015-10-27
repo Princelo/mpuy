@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div style="clear:both;"></div>
-                <div class="likes">
+                <div class="likes" id="likes{{ pid }}">
                     <div class="title">TA们赞了此拍品:</div>
                     {% for u in p.likeUsers %}
                     <a href="{{ path('profile_third', {'user_id': u.id}) }}">
@@ -61,11 +61,20 @@
                 <div style="clear:both; height:10px;"></div>
                 <div class="countdown-block">
                     <div class="running-tip">距离结束:</div>
-                    <div class="countdown-tip"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                    {% if p.expireTime|date('U') > "now"|date('U') %}
+                        <div class="countdown-tip"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                    {% else %}
+                        <div class="countdown-tip"><label class="countdown">已经结束</label></div>
+                        <div class="countdown-tip" style="display:none;"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                    {% endif %}
                 </div>
                 <div class="action-block">
-                    <a class="update" href="javascript:void(0);">更新</a>
-                    <a class="bid-btn" onclick="">出价</a>
+                    {% if p.expireTime|date('U') > "now"|date('U') %}
+                        <!--<a class="update" href="javascript:void(0);">更新</a>-->
+                        <a class="bid-btn" onclick="bid_send({{ p.id }})">出价</a>
+                    {% else %}
+                        <a class="bid-btn" onclick="">已经结束</a>
+                    {% endif %}
                     <div class="action-info">
                         <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
                         <span class="splitter">|</span>
@@ -110,6 +119,20 @@
 {% block javascripts %}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
     <script>
+        var like_send = function (pid) {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'product_id': pid
+                },
+                url: '{{ path('ajax_like_send') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
+                    }
+                }
+            });
+        }
         {% for p in products %}
         var photoswipe_action{{ p.id }} = function (i) {
             var images{{ p.id }} = [{% for img in p.images %}
@@ -128,6 +151,96 @@
             clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
         }, 1000);
         {% endfor %}
+        var bid_send = function (product_id) {
+            var result = prompt("请输入金额");
+            function isInt(n){
+                n = parseInt(n);
+                return Number(n) === n && n % 1 === 0;
+            }
+            if ( !isInt(result)) {
+                alert('无效金额');
+            } else {
+                $.ajax({
+                    url: "{{ path('ajax_bid_send') }}",
+                    type: "post",
+                    data: {
+                        'product_id' : product_id,
+                        'volume' : result
+                    },
+                    success: function (response) {
+                        if (response.state == 'success') {
+                            $.ajax({
+                                type: 'post',
+                                url: {{ path('ajax_get_bid_list') }},
+                                data: {
+                                    'product_id' : product_id,
+                                },
+                                success: function (bid_list) {
+                                    var template = '<ul>';
+                                    var n = 0;
+                                    if (bid_list == 'ended') {
+                                        template = "";
+                                        $('#bid_send'+product_id).html('已结束');
+                                        $('#bid_send'+product_id).prop('disabled', 'disabled');
+                                    } else {
+                                        for( var b in bid_list) {
+                                            n ++;
+                                            if (n == 1) {
+                                                template += '<li>'+
+                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                        '<div class="bid-info">'+
+                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                        '<label>￥'+ b.volume +'元</label>'+
+                                                        '</div>'+
+                                                        '<div class="bid-order-info">'+
+                                                        '<div class="order-info leading">领先</div>'+
+                                                        '<div style="clear:both;"></div>'+
+                                                        '<div class="datetime">' + b.datetime + '</div>'+
+                                                        '</div>'+
+                                                        '</li>';
+                                                /*} else if ((n == 1 && b.type=='ended')) {
+                                                 template += '<li>'+
+                                                 '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                 '<div class="bid-info">'+
+                                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                 '<label>￥'+ b.volume +'元</label>'+
+                                                 '</div>'+
+                                                 '<div class="bid-order-info">'+
+                                                 '<div class="order-info leading">成交</div>'+
+                                                 '<div style="clear:both;"></div>'+
+                                                 '<div class="datetime">' + b.datetime + '</div>'+
+                                                 '</div>'+
+                                                 '</li>';*/
+                                            } else {
+                                                template += '<li>'+
+                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                                        '<div class="bid-info">'+
+                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                                        '<label>￥'+ b.volume +'元</label>'+
+                                                        '</div>'+
+                                                        '<div class="bid-order-info">'+
+                                                        '<div style="clear:both;"></div>'+
+                                                        '<div class="datetime">' + b.datetime + '</div>'+
+                                                        '</div>'+
+                                                        '</li>';
+                                            }
+                                        }
+                                        template += '</ul>';
+                                    }
+                                    $('#bid_list'+product_id).html(template);
+                                }
+                            })
+                        } else {
+                            alert(response.message);
+                            if(response.type == 'ended') {
+                                $('#bid_send'+product_id).html('已结束');
+                                $('#bid_send'+product_id).prop('disabled', 'disabled');
+                            }
+                        }
+                    }
+                })
+            }
+        }
     </script>
     {% include 'menu.html.twig' %}
 {% endblock %}
