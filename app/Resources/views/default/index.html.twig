@@ -133,11 +133,12 @@
                     }
                 }
             });
+            alert('ajax called');
         }
         {% for p in products %}
         var photoswipe_action{{ p.id }} = function (i) {
             var images{{ p.id }} = [{% for img in p.images %}
-                '/attachments/wechat_img/{{ img.id }}',
+                'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
                 current: images{{ p.id }}[i], // 当前显示图片的http链接
@@ -242,6 +243,7 @@
                     }
                 })
             }
+            alert('bid sent');
         }
     </script>
     {% include 'menu.html.twig' %}
