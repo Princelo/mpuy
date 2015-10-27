@@ -26,7 +26,7 @@ class DefaultController extends Controller implements WechatTokenGetterInterface
         $offset = $page * Constants::PRODUCT_PER_PAGE;
         $products = $em->getRepository('AppBundle:Product')
             ->getHomeProducts($this->getUser(), $offset, Constants::PRODUCT_PER_PAGE);
-        $template = $this->renderView('default/index_ajax_template.html.twig', ['products' => $products]);
+        $template = $this->renderView('default/index-ajax-template.html.twig', ['products' => $products]);
         echo '<pre>';
         print_r($template);
         exit;
