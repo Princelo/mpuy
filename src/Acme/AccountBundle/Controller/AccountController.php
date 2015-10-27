@@ -110,6 +110,7 @@ class AccountController extends BaseController
             $newUser->setEmail($jsonOutput->openid.'@ct-life.cn');
             $em->persist($newUser);
             $em->flush();
+            return $this->redirectToRoute('homepage');
         } else {
             $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
             $this->get("security.context")->setToken($token); //now the user is logged in
