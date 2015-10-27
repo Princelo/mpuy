@@ -33,33 +33,15 @@
     }
     #bar-home {margin-right: 50px;}
     #bar-profile {margin-left: 50px;}
+    .headroom > a > img {width: 28px;}
 </style>
 <!-- /Menu-->
-<div id="soulnavbar">
+<footer id="soulnavbar" class="headroom header--fixed">
     <a href="{{ path('homepage') }}" id="bar-home"><img src="{{ asset('bundles/app/images/house.png') }}" /></a>
     <a href="javascript:void(0);" id="bar-publish" onclick="chooseImage()"><img src="{{ asset('bundles/app/images/camera.png') }}" /></a>
     <a href="{{ path('profile') }}" id="bar-profile"><img src="{{ asset('bundles/app/images/profile.png') }}" /></a>
-</div>
+</footer>
 <!-- /Menu -->
-<script>
-    var lastScrollTop = 0, delta = 5;
-    $(window).scroll(function(event){
-        var st = $(this).scrollTop();
-
-        if(Math.abs(lastScrollTop - st) <= delta)
-            return;
-
-        if (st > lastScrollTop){
-            // downscroll code
-            $("#soulnavbar").slideUp("fast")
-        } else {
-            // upscroll code
-            $("#soulnavbar").slideDown("fast");
-
-        }
-        lastScrollTop = st;
-    });
-</script>
 <script>
     var chooseImage = function () {
         wx.chooseImage({
@@ -99,5 +81,19 @@
             }
         });
     }
+    // grab an element
+    var myElement = document.querySelector("footer");
+    // construct an instance of Headroom, passing the element
+    var headroom = new Headroom(myElement, {
+        "offset": 300,
+        "tolerance": 15,
+        "classes": {
+            "initial": "animated",
+            "pinned": "slideUp",
+            "unpinned": "slideDown"
+        }
+    });
+    // initialise
+    headroom.init();
 </script>
 <div class="upload-info"></div>
