@@ -81,9 +81,9 @@
                         <div class="step-price"><span>加</span><label>￥{{ p.stepPrice }}元</label></div>
                     </div>
                 </div>
-                <div class="bid-list">
+                <div class="bid-list" id="bid_list{{ p.id }}">
                     <ul>
-                        {% for payment in p.payments %}
+                        {% for payment in p.payments|reverse %}
                         <li>
                             <img class="avatar" src="{{ payment.payUser.avatar }}" />
                             <div class="bid-info">
