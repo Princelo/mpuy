@@ -16,6 +16,7 @@ class AuctionOrderRepository extends EntityRepository
     {
         $prepare = $this->getEntityManager()
             ->createQueryBuilder()
+            ->select('o')
             ->from('AppBundle:AuctionOrder', 'o');
         if ( $buyer != null) {
             $prepare = $prepare
