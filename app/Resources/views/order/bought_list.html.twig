@@ -18,10 +18,10 @@
     <div class="menu">
         <ul>
             <li class="active"><a href="{{ path('order_bought') }}">全部</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'paying'}) }}">未付款</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'delivering'}) }}">待发货</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'receiving'}) }}">未收货</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'finish'}) }}">已完成</a></li>
+            <li><a href="{{ path('order_bought') }}?type=paying">未付款</a></li>
+            <li><a href="{{ path('order_bought') }}?type=delivering">待发货</a></li>
+            <li><a href="{{ path('order_bought') }}?type=receiving">未收货</a></li>
+            <li><a href="{{ path('order_bought') }}?type=finish">已完成</a></li>
         </ul>
     </div>
 </div>
