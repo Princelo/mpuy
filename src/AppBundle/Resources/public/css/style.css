@@ -3,12 +3,16 @@ li {list-style: none;}
 
 .product-list li {width: 48%; margin:1%; float:left;}
 .product-list li .img img{width: 100%; height: 100%;}
-.product-list li .img {position:relative;}
-.product-list li .img span{position: absolute; width: 100%; line-height: 50px; bottom: 0; height: 50px; padding-left: 12px; background: #fff; opacity: 0.6}
+.product-list li .img {position:relative;
+    -webkit-border-radius: 8px 8px 0 0;
+    -moz-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;}
+.product-list li .img span{position: absolute; width: 100%; line-height: 50px; bottom: 0; height: 50px; padding-left: 12px; background: #fff; opacity: 0.6;
+left:0}
 .product-list li .details {text-decoration:none;}
 
 .liked-list li {width: 48%; margin:1%; float:left;}
-.liked-list li .img img{width: 100%; height: 100%; position:absolute; left:0; top:0;}
+.liked-list li .img img{width: 100%; height: 100%;}
 .liked-list li .img {position:relative; border-radius: 8px 8px 0 0;}
 .liked-list li .img span{position: absolute; width: 100%; line-height: 50px; bottom: 0; height: 50px; padding-left: 12px; background: #fff; opacity: 0.6
 ;left: 0;}
