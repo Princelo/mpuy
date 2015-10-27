@@ -29,7 +29,7 @@ class AjaxController extends Controller
             $startPrice = $product->getStartPrice();
             $expireTime = $product->getExpireTime();
             $now = new \DateTime();
-            if ($now >= $expireTime) {
+            if ($now->getTimestamp() >= $expireTime->getTimestamp()) {
                 return new JsonResponse(
                     [
                         'state' => 'error',
