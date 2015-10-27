@@ -193,6 +193,8 @@
                 success: function (bid_list) {
                     var template = '<ul>';
                     var n = 0;
+                    for( var b in bid_list)
+                        alert(b.datetime.date.substring(5, 15));
                     if (bid_list == 'ended') {
                         template = "";
                         $('#bid_send'+product_id).html('已结束');
