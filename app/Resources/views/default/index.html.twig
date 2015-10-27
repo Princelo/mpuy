@@ -14,7 +14,7 @@
     </div>
     <div class="goods-list">
         {% for p in products %}
-        <div class="goods-item">
+        <div class="goods-item>
             <div class="avatar">
                 <img src="{{ p.user.avatar }}" />
             </div>
@@ -45,7 +45,7 @@
                         <label class="date">{{ p.createTime|date('m月d日') }}</label>
                     </div>
                     <div class="attr_right">
-                        <span>{{ p.likeCount|number_format }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
+                        <span id="likes_count{{ p.id }}">{{ p.likeCount|number_format }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
                     </div>
                 </div>
                 <div style="clear:both;"></div>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="action-block">
                     {% if p.expireTime|date('U') > "now"|date('U') %}
-                        <!--<a class="update" href="javascript:void(0);">更新</a>-->
+                        <a class="update" href="javascript:void(0);" onclick="update_bid_list({{ p.id }})">更新</a>
                         <a class="bid-btn" onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
                     {% else %}
                         <a class="bid-btn" onclick="">已经结束</a>
@@ -128,6 +128,7 @@
                 url: '{{ path('ajax_like_send') }}',
                 success: function(response) {
                     if (response.state == 'success') {
+                        $('#likes_count'+pid).html(parseInt($('likes_count'+pid).html())+1);
                         $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
                     }
                 }
@@ -246,6 +247,28 @@
                 }
             })
         }
+    </script>
+    <script src="{{ asset('bundles/app/js/jquery.waypoints.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var $loading = $("<div class='loading'><p>Loading more items&hellip;</p></div>"),
+                    $footer = $('footer'),
+                    opts = {
+                        offset: '100%'
+                    };
+
+            $footer.waypoint(function(event, direction) {
+                $footer.waypoint('remove');
+                $('body').append($loading);
+                $.get($('.more a').attr('href'), function(data) {
+                    var $data = $(data);
+                    $('#container').append($data.find('.article'));
+                    $loading.detach();
+                    $('.more').replaceWith($data.find('.more'));
+                    $footer.waypoint(opts);
+                });
+            }, opts);
+        });
     </script>
     {% include 'menu.html.twig' %}
 {% endblock %}
