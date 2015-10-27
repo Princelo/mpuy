@@ -28,6 +28,14 @@
 <div class="order-list">
     <ul>
         {% for o in orders %}
+        {% if o.status == 0 %} {% set statusStr = '交易成功' %}
+        {% elseif o.status == 1 %} {% set statusStr = '未付款' %}
+        {% elseif o.status == 2 %} {% set statusStr = '待发货' %}
+        {% elseif o.status == 3 %} {% set statusStr = '未收货' %}
+        {% elseif o.status == 4 %} {% set statusStr = '流拍' %}
+        {% elseif o.status == -1 %} {% set statusStr = '交易失败' %}
+        {% endif %}
+        {% for o in orders %}
             <li>
                 <a href="{{ path('order_details', {'order_id': o.id}) }}">
                     {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
@@ -35,11 +43,13 @@
                     <div class="text">
                         <label>{{ o.product.name }}</label>
                         <p>
-                            交易状态：{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
+                            交易状态：{{ statusStr }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
                             创建时间：{{ o.createTime|date('m月d日 H:i') }}
                         </p>
                     </div>
-                    <div class="tips">{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }}</div>
+                    <div class="tips">
+                        {{ stateStr }}
+                    </div>
                 </a>
             </li>
         {% endfor %}
