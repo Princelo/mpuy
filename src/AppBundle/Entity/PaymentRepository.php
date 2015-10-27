@@ -37,7 +37,7 @@ class PaymentRepository extends EntityRepository
             ->innerJoin('p.payUser', 'u')
             ->where('pr = :pr' )
             ->setParameter('pr', $product )
-            ->addOrderBy('p.id DESC')
+            ->addOrderBy('p.id', 'ASC')
             ->getQuery()
             ->getResult();
     }
