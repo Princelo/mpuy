@@ -31,9 +31,9 @@ class Payment
     /**
      * @var integer
      *
-     * @ORM\Column(name="recieve_user", type="integer")
+     * @ORM\Column(name="receive_user", type="integer")
      */
-    private $recieveUser;
+    private $receiveUser;
 
     /**
      * @var float

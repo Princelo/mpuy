@@ -62,9 +62,10 @@ class AjaxController extends Controller
             }
             $payment = new Payment();
             $payment->setPayUser($this->getUser());
-            $payment->setRecieveUser($product->getUser());
+            $payment->setReceiveUser($product->getUser());
             $payment->setVolume($volume);
             $payment->setPayTime(new \DateTime());
+            $payment->setProduct($product);
             $payment->setType(0);
 
             $em->persist($payment);
