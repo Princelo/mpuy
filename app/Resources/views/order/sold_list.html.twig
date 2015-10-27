@@ -18,7 +18,7 @@
     <div class="menu">
         <ul>
             <li class="active"><a href="{{ path('order_sold') }}">全部</a></li>
-            <li><a href="{{ path('order_sold', {'type', 'paying'}) }}">未付款</a></li>
+            <li><a href="{{ path('order_sold', {'type': 'paying'}) }}">未付款</a></li>
             <li><a href="{{ path('order_sold', {'type': 'delivering'}) }}">待发货</a></li>
             <li><a href="{{ path('order_sold', {'type': 'receiving'}) }}">未收货</a></li>
             <li><a href="{{ path('order_sold', {'type': 'finish'}) }}">已完成</a></li>
@@ -29,7 +29,7 @@
     <ul>
         {% for o in orders %}
             <li>
-                <a href="{{ path('order_details', {'order_id', o.id}) }}">
+                <a href="{{ path('order_details', {'order_id': o.id}) }}">
                     {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
                     <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                     <div class="text">
