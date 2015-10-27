@@ -177,6 +177,7 @@ class AjaxController extends Controller
         if ( !$request->isXmlHttpRequest() ) {
             exit('not ajax');
         }
+        exit('ended');
         $em = $this->getDoctrine()->getEntityManager();
         $productId = $request->request->get('product_id');
         $product = $em->getRepository('AppBundle:Product')->find($productId);
