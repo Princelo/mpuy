@@ -193,10 +193,9 @@
                 success: function (bid_list) {
                     var template = '<ul>';
                     var n = 0;
-                    alert(bid_list);
-                    alert(typeof bid_list);
                     for( var b in bid_list)
-                        alert(b['datetime']);
+                        for (var bb in b)
+                            alert(bb);
                     if (bid_list == 'ended') {
                         template = "";
                         $('#bid_send'+product_id).html('已结束');
