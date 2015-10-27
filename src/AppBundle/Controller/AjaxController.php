@@ -206,7 +206,7 @@ class AjaxController extends Controller
         $offset = $page * Constants::PRODUCT_PER_PAGE;
         $products = $em->getRepository('AppBundle:Product')
             ->getHomeProducts($this->getUser(), $offset, Constants::PRODUCT_PER_PAGE);
-        $template = $this->renderView('default/index_ajax_template.html.twig', ['products' => $products]);
+        $template = $this->renderView('default/index-ajax-template.html.twig', ['products' => $products]);
         return new JsonResponse([
             'html' => $template,
             'count' => count($products),
