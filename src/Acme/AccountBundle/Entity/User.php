@@ -245,6 +245,16 @@ class User extends BaseUser
      */
     protected $soldOrders;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="payUser")
+     */
+    protected $payments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="receiveUser")
+     */
+    protected $receivePayments;
+
     public function __construct()
     {
         $this->isActive = true;

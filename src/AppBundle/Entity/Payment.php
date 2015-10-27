@@ -22,16 +22,14 @@ class Payment
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="pay_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="payments")
+     * @ORM\JoinColumn(name="pay_user_id", referencedColumnName="id")
      */
     private $payUser;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="receive_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="receivePayments")
+     * @ORM\JoinColumn(name="receive_user_id", referencedColumnName="id")
      */
     private $receiveUser;
 
