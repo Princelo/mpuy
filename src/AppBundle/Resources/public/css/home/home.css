@@ -151,3 +151,9 @@
 }
 .goods-list .bid-list .leading {color: #ee4417; border: 3px solid #ee4417; border-radius: 3px;}
 .goods-list .bid-list .dumped-out {color: #444; border: 3px solid #444; border-radius: 3px;}
+
+.home-search {font-size: 36px;
+    text-align: center;
+    background: #eee;
+    color: #666;
+    margin-top: 80px;}

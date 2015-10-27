@@ -9,7 +9,7 @@
             <div class="tips">XXX，展示已订阅的卖家拍品</div>
         </div>
         <div class="avatar">
-            <img src="{{ avatar }}" />
+            <a href="{{ path('profile') }}"><img src="{{ avatar }}" /></a>
         </div>
     </div>
     <div class="goods-list">
@@ -107,7 +107,7 @@
         </div>
         {% endfor %}
         {% if products|length == 0 %}
-            <a href="{{ path('product_random') }}">搜索拍品</a>
+            <div class="home-search" onclick="window.location.href='{{ path('product_random') }}'">点击这里<br />获取感兴趣的拍品!</div>
         {% endif %}
     </div>
 {% endblock %}

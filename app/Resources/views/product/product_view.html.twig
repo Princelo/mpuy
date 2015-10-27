@@ -9,7 +9,7 @@
             <div class="tips">{% if isOwn == true %}我的{% else %}{{ p.name }} {% endif %}商品详情</div>
         </div>
         <div class="avatar">
-            <img src="{{ avatar }}" />
+            <a href="{{ path('profile') }}"><img src="{{ avatar }}" /></a>
         </div>
     </div>
     <div class="goods-list">
