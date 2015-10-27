@@ -22,6 +22,7 @@ class PaymentRepository extends EntityRepository
             ->where('pr = :pr' )
             ->setParameter('pr', $product )
             ->addOrderBy('p.id DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
     }
