@@ -60,8 +60,9 @@ class AjaxController extends Controller
                     ]
                 );
             }
+            $user = $em->getRepository('AcmeAccountBundle:User')->find($this->getUser()->getId());
             $payment = new Payment();
-            $payment->setPayUser($this->getUser());
+            $payment->setPayUser($user);
             $payment->setReceiveUser($product->getUser());
             $payment->setVolume($volume);
             $payment->setPayTime(new \DateTime());
