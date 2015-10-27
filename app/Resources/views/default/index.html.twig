@@ -127,13 +127,11 @@
                 },
                 url: '{{ path('ajax_like_send') }}',
                 success: function(response) {
-                    alert(response);
                     if (response.state == 'success') {
                         $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
                     }
                 }
             });
-            alert('ajax called');
         }
         {% for p in products %}
         var photoswipe_action{{ p.id }} = function (i) {
@@ -170,7 +168,6 @@
                         'volume' : result
                     },
                     success: function (response) {
-                        alert(response);
                         if (response.state == 'success') {
                             $.ajax({
                                 type: 'post',
@@ -243,7 +240,6 @@
                     }
                 })
             }
-            alert('bid sent');
         }
     </script>
     {% include 'menu.html.twig' %}

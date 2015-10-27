@@ -40,15 +40,16 @@ class AjaxController extends Controller
             }
             $highestPayment = $em->getRepository('AppBundle:Payment')->getHighestPayment($product);
             if ( $highestPayment === null ) {
-                return new JsonResponse(
-                    [
-                        'state' => 'error',
-                        'type' => 'volume',
-                        'message' =>
-                            '请确保您的出价在 起步价 ￥'. $startPrice .'元 以上'
-                    ]
-                );
-
+                if ($volume < $startPrice) {
+                    return new JsonResponse(
+                        [
+                            'state' => 'error',
+                            'type' => 'volume',
+                            'message' =>
+                                '请确保您的出价在 起步价 ￥'. $startPrice .'元 以上'
+                        ]
+                    );
+                }
             } elseif ($volume < $highestPayment->getVolume() + $stepPrice) {
                 return new JsonResponse(
                     [
