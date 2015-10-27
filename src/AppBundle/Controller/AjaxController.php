@@ -18,7 +18,7 @@ class AjaxController extends Controller
     public function bidSendAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         try {
             $em = $this->getDoctrine()->getEntityManager();
@@ -80,7 +80,7 @@ class AjaxController extends Controller
     public function likeSendAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         try {
             $em = $this->getDoctrine()->getEntityManager();
@@ -101,7 +101,7 @@ class AjaxController extends Controller
     public function getFollowingUsers(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         $page = $request->query->get('page');
         $perPage = Constants::USER_PER_PAGE;
@@ -118,7 +118,7 @@ class AjaxController extends Controller
     public function getFollowedUsers(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         $page = $request->query->get('page');
         $perPage = Constants::USER_PER_PAGE;
@@ -136,7 +136,7 @@ class AjaxController extends Controller
     public function ajaxFollowAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         $thirdUserId = $request->request->get('user_id');
         $user = $this->getUser();
@@ -154,7 +154,7 @@ class AjaxController extends Controller
     public function ajaxUnfollowAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         $thirdUserId = $request->request->get('user_id');
         $user = $this->getUser();
@@ -171,7 +171,7 @@ class AjaxController extends Controller
     public function ajaxGetBidList(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit;
+            exit('not ajax');
         }
         $em = $this->getDoctrine()->getEntityManager();
         $productId = $request->request->get('product_id');
