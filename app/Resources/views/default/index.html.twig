@@ -257,7 +257,7 @@
                 if (processing)
                     return false;
 
-                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700){
+                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700 && $('#no-more').val() != '1'){
                     processing = true;
                     $.ajax({
                         type: 'get',
@@ -269,7 +269,9 @@
                             $('#current-page').val(parseInt($('#current-page').val() + 1));
                             if (response.count < response.per) {
                                 update_products(response.html);
+                                $('#no-more').val('1');
                                 $('.goods-list').append('<div class="no-more">没有更多了</div>');
+                                processing = false;
                             } else {
                                 update_products(response.html);
                                 processing = false;
@@ -299,5 +301,6 @@
         }
     </style>
     <input type="hidden" id="current-page" value="0"/>
+    <input type="hidden" id="no-more" value=""/>
     {% include 'menu.html.twig' %}
 {% endblock %}
