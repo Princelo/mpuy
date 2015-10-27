@@ -20,7 +20,7 @@
             <div class="goods-details" style="">
                 <div class="title"><i class="level"></i><a href="javascript:void(0);">{{ p.user.nickname }}</a></div>
                 <div class="details">
-                    {{ p.intro }}
+                    {{ p.intro|nl2br }}
                 </div>
                 <div class="img-list">
                     <div class="my-gallery" itemscope itemtype="">
@@ -43,17 +43,20 @@
                         <i class="icon ensure"></i>
                         <label class="date">{{ p.createTime|date('m月d日') }}</label>
                     </div>
-                    <!--<div class="attr_right">
-                        <span>15</span><i class="icon like"></i>
-                    </div>-->
+                    <div class="attr_right">
+                        <span id="likes_count{{ p.id }}">{{ p.likeCount|number_format }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
+                    </div>
                 </div>
                 <div style="clear:both;"></div>
-                <!--<div class="likes">
-                    <div class="title">TA们收藏了此拍品:</div>
-                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDJDqrLXUCZpmFvcMCpOt8JzopzicLMIGslEJoswiaWSCHtPiaUxca5ibSG7kQwxNvcvbI90Rbria9arKl0AYJjevq83U/0" />
-                    <img src="http://wx.qlogo.cn/mmopen/XJk3SpwHpDKzmnY9MAQom4QiahpkKs3W4fFVrfx8ExfN0twcUUVPtI1stOvB8RmHibLgTujO2BclJQBPXZuLlJWZGMJusFeRIn/0" />
+                <div class="likes" id="likes{{ p.id }}">
+                    <div class="title">TA们赞了此拍品:</div>
+                    {% for u in p.likeUsers %}
+                        <a href="{{ path('profile_third', {'user_id': u.id}) }}">
+                            <img src="{{ u.avatar }}" />
+                        </a>
+                    {% endfor %}
                     <div style="clear:both;"></div>
-                </div>-->
+                </div>
                 <div style="clear:both; height:10px;"></div>
                 <div class="countdown-block">
                     {% if is_expired != true %}
@@ -62,14 +65,13 @@
                     {% endif %}
                 </div>
                 <div class="action-block">
-                    {% if isOwn == false %}<!--<a class="update" href="javascript:void(0);">更新</a>-->{% endif %}
-                    {% if isOwn == true %}<!--<a class="bid-btn" onclick="">更新</a>-->{% endif %}
+                    {% if isOwn == false %}<a class="update" href="javascript:void(0);" onclick="update_bid_list({{ p.id }})">更新</a>{% endif %}
+                    {% if isOwn == true %}<a class="bid-btn" onclick="update_bid_list({{ p.id }})">更新</a>{% endif %}
                     {% if isOwn == false %}<a class="bid-btn" onclick="bid()">出价</a>{% endif %}
-                    {% if isOwn == true %}<a class="update" href="javascript:void(0);" onclick="window.location.reload()">更新</a>{% endif %}
                     <div class="action-info">
-                        <div class="start-price"><span>起</span><label>￥{{ p.startPrice }}元</label></div>
+                        <div class="start-price"><span>起</span><label>￥{{ p.startPrice|number_format }}元</label></div>
                         <span class="splitter">|</span>
-                        <div class="step-price"><span>加</span><label>￥{{ p.stepPrice }}元</label></div>
+                        <div class="step-price"><span>加</span><label>￥{{ p.stepPrice|number_format }}元</label></div>
                     </div>
                 </div>
                 <div class="bid-list" id="bid-list{{ p.id }}">
@@ -188,6 +190,21 @@
     {% endjavascripts #}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
     <script>
+        var like_send = function (pid) {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'product_id': pid
+                },
+                url: '{{ path('ajax_like_send') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        $('#likes_count'+pid).html(parseInt($('#likes_count'+pid).html())+1);
+                        $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
+                    }
+                }
+            });
+        }
         var photoswipe_action = function (i) {
             var images = [{% for img in images %}
                     'attachments/wechat_img/{{ img.id }}',
@@ -296,67 +313,8 @@
                     },
                     success: function (response) {
                         if (response.state == 'success') {
-                            $.ajax({
-                                type: 'post',
-                                url: {{ path('ajax_get_bid_list') }},
-                                data: {
-                                    'product_id' : product_id,
-                                },
-                                success: function (bid_list) {
-                                    var template = '<ul>';
-                                    var n = 0;
-                                    if (bid_list == 'ended') {
-                                        template = "";
-                                        $('#bid_send'+product_id).html('已结束');
-                                        $('#bid_send'+product_id).prop('disabled', 'disabled');
-                                    } else {
-                                        for( var b in bid_list) {
-                                            n ++;
-                                            if (n == 1) {
-                                                template += '<li>'+
-                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                        '<div class="bid-info">'+
-                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                        '<label>￥'+ b.volume +'元</label>'+
-                                                        '</div>'+
-                                                        '<div class="bid-order-info">'+
-                                                        '<div class="order-info leading">领先</div>'+
-                                                        '<div style="clear:both;"></div>'+
-                                                        '<div class="datetime">' + b.datetime + '</div>'+
-                                                        '</div>'+
-                                                        '</li>';
-                                                /*} else if ((n == 1 && b.type=='ended')) {
-                                                 template += '<li>'+
-                                                 '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                 '<div class="bid-info">'+
-                                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                 '<label>￥'+ b.volume +'元</label>'+
-                                                 '</div>'+
-                                                 '<div class="bid-order-info">'+
-                                                 '<div class="order-info leading">成交</div>'+
-                                                 '<div style="clear:both;"></div>'+
-                                                 '<div class="datetime">' + b.datetime + '</div>'+
-                                                 '</div>'+
-                                                 '</li>';*/
-                                            } else {
-                                                template += '<li>'+
-                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                        '<div class="bid-info">'+
-                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                        '<label>￥'+ b.volume +'元</label>'+
-                                                        '</div>'+
-                                                        '<div class="bid-order-info">'+
-                                                        '<div style="clear:both;"></div>'+
-                                                        '<div class="datetime">' + b.datetime + '</div>'+
-                                                        '</div>'+
-                                                        '</li>';
-                                            }
-                                        }
-                                        template += '</ul>';
-                                    }
-                                    $('#bid_list'+product_id).html(template);
-                                }
-                            })
+                            alert('出价成功');
+                            update_bid_list(product_id);
                         } else {
                             alert(response.message);
                             if(response.type == 'ended') {
@@ -367,6 +325,70 @@
                     }
                 })
             }
+        }
+
+        var update_bid_list = function (product_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ path('ajax_get_bid_list') }}',
+                data: {
+                    'product_id' : product_id
+                },
+                success: function (bid_list) {
+                    var template = '<ul>';
+                    var n = 0;
+                    if (bid_list == 'ended') {
+                        template = "";
+                        $('#bid_send'+product_id).html('已结束');
+                        //$('#bid_send'+product_id).prop('disabled', 'disabled');
+                    } else {
+                        for( var i = 0; i < bid_list.length; i ++ ) {
+                            if (i == 0) {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info leading">领先</div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                                /*} else if ((n == 1 && b.type=='ended')) {
+                                 template += '<li>'+
+                                 '<img class="avatar" src="'+ b.avatar+'" />'+
+                                 '<div class="bid-info">'+
+                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                 '<label>￥'+ b.volume +'元</label>'+
+                                 '</div>'+
+                                 '<div class="bid-order-info">'+
+                                 '<div class="order-info leading">成交</div>'+
+                                 '<div style="clear:both;"></div>'+
+                                 '<div class="datetime">' + b.datetime + '</div>'+
+                                 '</div>'+
+                                 '</li>';*/
+                            } else {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info dumped-out">出局</div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                            }
+                        }
+                        template += '</ul>';
+                    }
+                    $('#bid_list'+product_id).html(template);
+                }
+            })
         }
     </script>
     {% include 'menu.html.twig' %}
