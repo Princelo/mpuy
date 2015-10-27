@@ -12,13 +12,13 @@ use Doctrine\ORM\PessimisticLockException;
 class OrderController extends Controller implements WechatTokenGetterInterface
 {
     /**
-     * @Route("/order/bought", name="order_bought")
+     * @Route("/order/bought/{type}", name="order_bought", defaults={"type" = ""})
+     * @param $type
      * @param Request $request
      * @return Response
      */
-    public function orderBoughtListAction(Request $request)
+    public function orderBoughtListAction($type, Request $request)
     {
-        $type = $request->query->get('type');
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->getUser();
         switch ($type) {
@@ -52,13 +52,13 @@ class OrderController extends Controller implements WechatTokenGetterInterface
     }
 
     /**
-     * @Route("/order/sold", name="order_sold")
+     * @Route("/order/sold/{type}", name="order_sold", defaults={"type" = ""})
+     * @param $type
      * @param Request $request
      * @return Response
      */
-    public function orderSoldListAction(Request $request)
+    public function orderSoldListAction($type, Request $request)
     {
-        $type = $request->query->get('type');
         $em = $this->getDoctrine()->getEntityManager();
         $user = $this->getUser();
         switch ($type) {

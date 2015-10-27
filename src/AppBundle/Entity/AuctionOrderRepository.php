@@ -32,7 +32,7 @@ class AuctionOrderRepository extends EntityRepository
             $prepare = $prepare
                 ->where('o.status = :status')
                 ->setParameter('status', $status);
-        } elseif (is_array($status)) {
+        } elseif (is_array($status) && count($status) > 1) {
             $prepare = $prepare
                 ->andWhere('o.status = '.$status[0].' OR o.status = '.$status[1]);
         }
