@@ -247,29 +247,42 @@
                 }
             })
         }
-    </script>
-    <script src="{{ asset('bundles/app/js/jquery.waypoints.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            var $loading = $("<div class='loading'><p>Loading more items&hellip;</p></div>"),
-                    $footer = $('footer'),
-                    opts = {
-                        offset: '100%'
-                    };
 
-            $footer.waypoint(function(event, direction) {
-                $footer.waypoint('remove');
-                $('body').append($loading);
-                $.get($('.more a').attr('href'), function(data) {
-                    var $data = $(data);
-                    $('#container').append($data.find('.article'));
-                    $loading.detach();
-                    $('.more').replaceWith($data.find('.more'));
-                    $footer.waypoint(opts);
-                });
-            }, opts);
+        var processing;
+
+        $(document).ready(function(){
+
+            $(document).scroll(function(e){
+
+                if (processing)
+                    return false;
+
+                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700){
+                    processing = true;
+                    $.ajax({
+                        type: 'get',
+                        url: '{{ path('ajax_get_home_products') }}',
+                        data: {
+                            'page': parseInt($('#current-page').val() + 1)
+                        },
+                        success: function (response) {
+                            $('#current-page').val(parseInt($('#current-page').val() + 1));
+                            if (response.count < response.per) {
+                                update_products(response.html);
+                            } else {
+                                update_products(response.html);
+                                processing = false;
+                            }
+                        }
+                    });
+                }
+            });
         });
+
+        var update_products = function (html) {
+            $('.goods-list').append(html);
+        }
     </script>
+    <input type="hidden" id="current-page" value="0"/>
     {% include 'menu.html.twig' %}
-    <footer></footer>
 {% endblock %}

@@ -1,0 +1,116 @@
+        {% for p in products %}
+            <div class="goods-item">
+                <div class="avatar">
+                    <img src="{{ p.user.avatar }}" />
+                </div>
+                <div class="goods-details" style="">
+                    <div class="title"><i class="level"></i><a href="javascript:void(0);">{{ p.user.nickname }}</a></div>
+                    <div class="details">
+                        {{ p.intro }}
+                    </div>
+                    <div class="img-list">
+                        <div class="my-gallery" itemscope itemtype="">
+                            {% for img in p.images %}
+                                <figure itemprop="associatedMedia" itemscope itemtype="">
+                                    <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action{{ p.id }}(0)">
+                                        <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
+                                    </a>
+                                    <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
+                                </figure>
+                            {% endfor %}
+
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div class="attr">
+                        <div class="attr_left">
+                            {% if p.isReturnable == true %}<i class="icon-text blue">包退</i>{% endif %}
+                            {% if p.isFreePostage == true %}<i class="icon-text orange">包邮</i>{% endif %}
+                            <i class="icon ensure"></i>
+                            <label class="date">{{ p.createTime|date('m月d日') }}</label>
+                        </div>
+                        <div class="attr_right">
+                            <span id="likes_count{{ p.id }}">{{ p.likeCount|number_format }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
+                        </div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="likes" id="likes{{ p.id }}">
+                        <div class="title">TA们赞了此拍品:</div>
+                        {% for u in p.likeUsers %}
+                            <a href="{{ path('profile_third', {'user_id': u.id}) }}">
+                                <img src="{{ u.avatar }}" />
+                            </a>
+                        {% endfor %}
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div style="clear:both; height:10px;"></div>
+                    <div class="countdown-block">
+                        <div class="running-tip">距离结束:</div>
+                        {% if p.expireTime|date('U') > "now"|date('U') %}
+                            <div class="countdown-tip"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                        {% else %}
+                            <div class="countdown-tip"><label class="countdown">已经结束</label></div>
+                            <div class="countdown-tip" style="display:none;"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                        {% endif %}
+                    </div>
+                    <div class="action-block">
+                        {% if p.expireTime|date('U') > "now"|date('U') %}
+                            <a class="update" href="javascript:void(0);" onclick="update_bid_list({{ p.id }})">更新</a>
+                            <a class="bid-btn" onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
+                        {% else %}
+                            <a class="bid-btn" onclick="">已经结束</a>
+                        {% endif %}
+                        <div class="action-info">
+                            <div class="start-price"><span>起</span><label>￥{{ p.startPrice|number_format }}元</label></div>
+                            <span class="splitter">|</span>
+                            <div class="step-price"><span>加</span><label>￥{{ p.stepPrice|number_format }}元</label></div>
+                        </div>
+                    </div>
+                    <div class="bid-list" id="bid_list{{ p.id }}">
+                        <ul>
+                            {% for payment in p.payments|reverse %}
+                                <li>
+                                    <img class="avatar" src="{{ payment.payUser.avatar }}" />
+                                    <div class="bid-info">
+                                        <a href="javascript:void(0);">{{ payment.payUser.nickname }}</a>
+                                        <label>￥{{ payment.volume }}元</label>
+                                    </div>
+                                    <div class="bid-order-info">
+                                        {%  if loop.index == 1 %}
+                                            <div class="order-info leading">领先</div>
+                                        {% else %}
+                                            <div class="order-info dumped-out">出局</div>
+                                        {% endif %}
+                                        <div style="clear:both;"></div>
+                                        <div class="datetime">{{ payment.payTime|date('m-d H:i') }}</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if products|length == 0 %}
+            <a href="{{ path('product_random') }}" class="no-more">没有更多了</a>
+        {% endif %}
+    <script>
+        {% for p in products %}
+        var photoswipe_action{{ p.id }} = function (i) {
+            var images{{ p.id }} = [{% for img in p.images %}
+                'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
+                {% endfor %}];
+            wx.previewImage({
+                current: images{{ p.id }}[i], // 当前显示图片的http链接
+                urls: images{{ p.id }} // 需要预览的图片http链接列表
+            });
+        }
+        var clock{{ p.id }} = document.getElementById('countdown{{ p.id }}')
+                , targetDate{{ p.id }} = {{ p.expireTime|date('U') }}*1000;
+
+        clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
+        setInterval(function(){
+            clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
+        }, 1000);
+        {% endfor %}
+    </script>

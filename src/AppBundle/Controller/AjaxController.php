@@ -18,7 +18,7 @@ class AjaxController extends Controller
     public function bidSendAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         try {
             $em = $this->getDoctrine()->getEntityManager();
@@ -83,7 +83,7 @@ class AjaxController extends Controller
     public function likeSendAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         try {
             $em = $this->getDoctrine()->getEntityManager();
@@ -105,7 +105,7 @@ class AjaxController extends Controller
     public function getFollowingUsers(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         $page = $request->query->get('page');
         $perPage = Constants::USER_PER_PAGE;
@@ -122,7 +122,7 @@ class AjaxController extends Controller
     public function getFollowedUsers(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         $page = $request->query->get('page');
         $perPage = Constants::USER_PER_PAGE;
@@ -140,7 +140,7 @@ class AjaxController extends Controller
     public function ajaxFollowAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         $thirdUserId = $request->request->get('user_id');
         $user = $this->getUser();
@@ -158,7 +158,7 @@ class AjaxController extends Controller
     public function ajaxUnfollowAction(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         $thirdUserId = $request->request->get('user_id');
         $user = $this->getUser();
@@ -175,7 +175,7 @@ class AjaxController extends Controller
     public function ajaxGetBidList(Request $request)
     {
         if ( !$request->isXmlHttpRequest() ) {
-            exit('not ajax');
+            exit();
         }
         $em = $this->getDoctrine()->getEntityManager();
         $productId = $request->request->get('product_id');
@@ -190,4 +190,28 @@ class AjaxController extends Controller
         $bidList = $em->getRepository('AppBundle:Payment')->getBidList($product);
         return new JsonResponse($bidList);
     }
+
+    /**
+     * @Route("/ajax/get_home_products", name="ajax_get_home_products")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxHomeProducts(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $page = $request->query->get('page');
+        $em = $this->getDoctrine()->getEntityManager();
+        $offset = $page * Constants::PRODUCT_PER_PAGE;
+        $products = $em->getRepository('AppBundle:Product')
+            ->getHomeProducts($this->getUser(), $offset, Constants::PRODUCT_PER_PAGE);
+        $template = $this->renderView('default/index_ajax_template.html.twig', ['products' => $products]);
+        return new JsonResponse([
+            'html' => $template,
+            'count' => count($products),
+            'per' => Constants::PRODUCT_PER_PAGE,
+        ]);
+    }
+    
 }
