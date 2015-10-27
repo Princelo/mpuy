@@ -207,7 +207,7 @@
         }
         var photoswipe_action = function (i) {
             var images = [{% for img in images %}
-                    'attachments/wechat_img/{{ img.id }}',
+                    'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
                 current: images[i], // 当前显示图片的http链接
