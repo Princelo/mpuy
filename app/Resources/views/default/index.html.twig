@@ -186,24 +186,17 @@
         var update_bid_list = function (product_id) {
             $.ajax({
                 type: 'post',
-                url: {{ path('ajax_get_bid_list') }},
+                url: '{{ path('ajax_get_bid_list') }}',
                 data: {
                     'product_id' : product_id
                 },
                 success: function (bid_list) {
-                    alert(bid_list);
-                    alert( typeof bid_list );
                     var template = '<ul>';
                     var n = 0;
-                    if (bid_list == 'ended' || true) {
-                        //template = "";
-                        //$('#bid_send'+product_id).html('已结束');
+                    if (bid_list == 'ended') {
+                        template = "";
+                        $('#bid_send'+product_id).html('已结束');
                         //$('#bid_send'+product_id).prop('disabled', 'disabled');
-                        //for( var b in bid_list) {
-                        //alert(b.datetime.date.substring(5,15));
-                        //alert(b.datetime);
-                        //}
-                        alert( typeof bid_list );
                     } else {
                         for( var b in bid_list) {
                             n ++;
@@ -250,7 +243,6 @@
                         }
                         template += '</ul>';
                     }
-                    alert(template);
                     $('#bid_list'+product_id).html(template);
                 }
             })
