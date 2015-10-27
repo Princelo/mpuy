@@ -89,7 +89,7 @@
                         <span>{{ p.name }}</span>
                     </div>
                     <div class="details">
-                        {{ p.intro[:24] }}
+                        {{ p.intro[:24]~'...' }}
                     </div>
                 </a>
             </li>
@@ -107,7 +107,7 @@
                             <span>{{ p.name }}</span>
                         </div>
                         <div class="details">
-                            {{ p.intro[:24] }}
+                            {{ p.intro[:24]~'...' }}
                         </div>
                     </a>
                 </li>
