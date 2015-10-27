@@ -177,6 +177,8 @@
                                     'product_id' : product_id,
                                 },
                                 success: function (bid_list) {
+                                    alert(bid_list);
+                                    alert( typeof bid_list );
                                     var template = '<ul>';
                                     var n = 0;
                                     if (bid_list == 'ended' || true) {
