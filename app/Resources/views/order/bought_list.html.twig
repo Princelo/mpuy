@@ -36,7 +36,7 @@
         {% elseif o.status == -1 %} {% set statusStr = '交易失败' %}
         {% endif %}
         <li>
-            <a href="{{ path('order_details', {'order_id', o.id}) }}">
+            <a href="{{ path('order_details', {'order_id': o.id}) }}">
                 {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
                 <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                 <div class="text">
