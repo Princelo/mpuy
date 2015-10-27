@@ -193,27 +193,23 @@
                 success: function (bid_list) {
                     var template = '<ul>';
                     var n = 0;
-                    for( var b in bid_list)
-                        for (var bb in b)
-                            alert(bb);
                     if (bid_list == 'ended') {
                         template = "";
                         $('#bid_send'+product_id).html('已结束');
                         //$('#bid_send'+product_id).prop('disabled', 'disabled');
                     } else {
-                        for( var b in bid_list) {
-                            n ++;
-                            if (n == 1) {
+                        for( var i = 0; i < bid_list.length; i ++ ) {
+                            if (i == 0) {
                                 template += '<li>'+
-                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
                                         '<div class="bid-info">'+
-                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                        '<label>￥'+ b.volume +'元</label>'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
                                         '</div>'+
                                         '<div class="bid-order-info">'+
                                         '<div class="order-info leading">领先</div>'+
                                         '<div style="clear:both;"></div>'+
-                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
                                         '</div>'+
                                         '</li>';
                                 /*} else if ((n == 1 && b.type=='ended')) {
@@ -231,15 +227,15 @@
                                  '</li>';*/
                             } else {
                                 template += '<li>'+
-                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
                                         '<div class="bid-info">'+
-                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                        '<label>￥'+ b.volume +'元</label>'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
                                         '</div>'+
                                         '<div class="bid-order-info">'+
                                         '<div class="order-info dumped-out">出局</div>'+
                                         '<div style="clear:both;"></div>'+
-                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
                                         '</div>'+
                                         '</li>';
                             }
