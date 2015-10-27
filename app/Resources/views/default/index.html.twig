@@ -269,6 +269,7 @@
                             $('#current-page').val(parseInt($('#current-page').val() + 1));
                             if (response.count < response.per) {
                                 update_products(response.html);
+                                $('.goods-list').append('<div class="no-more">没有更多了</div>');
                             } else {
                                 update_products(response.html);
                                 processing = false;

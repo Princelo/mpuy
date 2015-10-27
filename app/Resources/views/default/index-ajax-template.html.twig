@@ -91,9 +91,6 @@
                 </div>
             </div>
         {% endfor %}
-        {% if products|length == 0 %}
-            <a href="{{ path('product_random') }}" class="no-more">没有更多了</a>
-        {% endif %}
     <script>
         {% for p in products %}
         var photoswipe_action{{ p.id }} = function (i) {

@@ -231,3 +231,18 @@ body,ul,img,p {padding: 0; margin:0;}
     line-height: 36px;
 }
 .goods-item {margin-bottom: 20px;}
+.no-more {
+    display: block;
+}
+.no-more {
+    display: block;
+    margin: 0 20px;
+    padding: 20px 0;
+    font-size: 28px;
+    text-align: center;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    color: #666;
+    background: #E5E5E5;
+    clear: both;
+}
