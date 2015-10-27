@@ -17,11 +17,11 @@
     </div>
     <div class="menu">
         <ul>
-            <li class="active"><a href="{{ path('order_bought') }}">全部</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'paying'}) }}">未付款</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'delivering'}) }}">待发货</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'receiving'}) }}">未收货</a></li>
-            <li><a href="{{ path('order_bought', {'type': 'finish'}) }}">已完成</a></li>
+            <li {% if type == 'all' %}class="active"{% endif %}><a href="{{ path('order_bought') }}">全部</a></li>
+            <li {% if type == 'paying' %}class="active"{% endif %}><a href="{{ path('order_bought', {'type': 'paying'}) }}">未付款</a></li>
+            <li {% if type == 'delivering' %}class="active"{% endif %}><a href="{{ path('order_bought', {'type': 'delivering'}) }}">待发货</a></li>
+            <li {% if type == 'receiving' %}class="active"{% endif %}><a href="{{ path('order_bought', {'type': 'receiving'}) }}">未收货</a></li>
+            <li {% if type == 'finish' %}class="active"{% endif %}><a href="{{ path('order_bought', {'type': 'finish'}) }}">已完成</a></li>
         </ul>
     </div>
 </div>

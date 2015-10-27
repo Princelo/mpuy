@@ -48,6 +48,7 @@ class OrderController extends Controller implements WechatTokenGetterInterface
         return $this->render('order/bought_list.html.twig', array(
             'title' => '我的已买拍品',
             'orders' => $orderList,
+            'type' => $type == ''?'all':$type
         ));
     }
 
@@ -88,6 +89,7 @@ class OrderController extends Controller implements WechatTokenGetterInterface
         return $this->render('order/sold_list.html.twig', array(
             'title' => '我的已卖拍品',
             'orders' => $orderList,
+            'type' => $type == ''?'all':$type
         ));
     }
 
