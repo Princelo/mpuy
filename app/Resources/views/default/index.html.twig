@@ -109,6 +109,7 @@
         {% if products|length == 0 %}
             <div class="home-search" onclick="window.location.href='{{ path('product_random') }}'">点击这里<br />获取感兴趣的拍品!</div>
             <style>
+                .no-more {display:none !important;}
                 .home-search {
                     font-size: 36px;
                     text-align: center;
