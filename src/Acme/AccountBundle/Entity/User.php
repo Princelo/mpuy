@@ -246,12 +246,12 @@ class User extends BaseUser
     protected $soldOrders;
 
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Payment", mappedBy="payUser")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Payment", mappedBy="payUser")
      */
     protected $payments;
 
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Payment", mappedBy="receiveUser")
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Payment", mappedBy="receiveUser")
      */
     protected $receivePayments;
 
