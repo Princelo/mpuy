@@ -170,76 +170,7 @@
                     success: function (response) {
                         if (response.state == 'success') {
                             alert('出价成功');
-                            $.ajax({
-                                type: 'post',
-                                url: {{ path('ajax_get_bid_list') }},
-                                data: {
-                                    'product_id' : product_id
-                                },
-                                success: function (bid_list) {
-                                    alert(bid_list);
-                                    alert( typeof bid_list );
-                                    var template = '<ul>';
-                                    var n = 0;
-                                    if (bid_list == 'ended' || true) {
-                                        //template = "";
-                                        //$('#bid_send'+product_id).html('已结束');
-                                        //$('#bid_send'+product_id).prop('disabled', 'disabled');
-                                        //for( var b in bid_list) {
-                                            //alert(b.datetime.date.substring(5,15));
-                                            //alert(b.datetime);
-                                        //}
-                                        alert( typeof bid_list );
-                                    } else {
-                                        for( var b in bid_list) {
-                                            n ++;
-                                            if (n == 1) {
-                                                template += '<li>'+
-                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                        '<div class="bid-info">'+
-                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                        '<label>￥'+ b.volume +'元</label>'+
-                                                        '</div>'+
-                                                        '<div class="bid-order-info">'+
-                                                        '<div class="order-info leading">领先</div>'+
-                                                        '<div style="clear:both;"></div>'+
-                                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
-                                                        '</div>'+
-                                                        '</li>';
-                                                /*} else if ((n == 1 && b.type=='ended')) {
-                                                 template += '<li>'+
-                                                 '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                 '<div class="bid-info">'+
-                                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                 '<label>￥'+ b.volume +'元</label>'+
-                                                 '</div>'+
-                                                 '<div class="bid-order-info">'+
-                                                 '<div class="order-info leading">成交</div>'+
-                                                 '<div style="clear:both;"></div>'+
-                                                 '<div class="datetime">' + b.datetime + '</div>'+
-                                                 '</div>'+
-                                                 '</li>';*/
-                                            } else {
-                                                template += '<li>'+
-                                                        '<img class="avatar" src="'+ b.avatar+'" />'+
-                                                        '<div class="bid-info">'+
-                                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
-                                                        '<label>￥'+ b.volume +'元</label>'+
-                                                        '</div>'+
-                                                        '<div class="bid-order-info">'+
-                                                        '<div class="order-info dumped-out">出局</div>'+
-                                                        '<div style="clear:both;"></div>'+
-                                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
-                                                        '</div>'+
-                                                        '</li>';
-                                            }
-                                        }
-                                        template += '</ul>';
-                                    }
-                                    alert(template);
-                                    $('#bid_list'+product_id).html(template);
-                                }
-                            })
+                            update_bid_list(product_id);
                         } else {
                             alert(response.message);
                             if(response.type == 'ended') {
@@ -250,6 +181,79 @@
                     }
                 })
             }
+        }
+
+        var update_bid_list = function (product_id) {
+            $.ajax({
+                type: 'post',
+                url: {{ path('ajax_get_bid_list') }},
+                data: {
+                    'product_id' : product_id
+                },
+                success: function (bid_list) {
+                    alert(bid_list);
+                    alert( typeof bid_list );
+                    var template = '<ul>';
+                    var n = 0;
+                    if (bid_list == 'ended' || true) {
+                        //template = "";
+                        //$('#bid_send'+product_id).html('已结束');
+                        //$('#bid_send'+product_id).prop('disabled', 'disabled');
+                        //for( var b in bid_list) {
+                        //alert(b.datetime.date.substring(5,15));
+                        //alert(b.datetime);
+                        //}
+                        alert( typeof bid_list );
+                    } else {
+                        for( var b in bid_list) {
+                            n ++;
+                            if (n == 1) {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                        '<label>￥'+ b.volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info leading">领先</div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                                /*} else if ((n == 1 && b.type=='ended')) {
+                                 template += '<li>'+
+                                 '<img class="avatar" src="'+ b.avatar+'" />'+
+                                 '<div class="bid-info">'+
+                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                 '<label>￥'+ b.volume +'元</label>'+
+                                 '</div>'+
+                                 '<div class="bid-order-info">'+
+                                 '<div class="order-info leading">成交</div>'+
+                                 '<div style="clear:both;"></div>'+
+                                 '<div class="datetime">' + b.datetime + '</div>'+
+                                 '</div>'+
+                                 '</li>';*/
+                            } else {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ b.avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                        '<label>￥'+ b.volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info dumped-out">出局</div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + b.datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                            }
+                        }
+                        template += '</ul>';
+                    }
+                    alert(template);
+                    $('#bid_list'+product_id).html(template);
+                }
+            })
         }
     </script>
     {% include 'menu.html.twig' %}
