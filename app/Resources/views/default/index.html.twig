@@ -123,9 +123,6 @@
     </div>
 {% endblock %}
 {% block stylesheets %}
-    {% stylesheets '@AppBundle/Resources/public/css/home/*' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
@@ -295,7 +292,7 @@
 
         var update_products = function (html) {
             $('.goods-list').append(html);
-            var lastScrollTop = 0, delta = 5;
+            /*var lastScrollTop = 0, delta = 5;
             $(window).scroll(function(event){
                 var st = $(this).scrollTop();
 
@@ -311,7 +308,7 @@
 
                 }
                 lastScrollTop = st;
-            });
+            });*/
         }
     </script>
     <style>
