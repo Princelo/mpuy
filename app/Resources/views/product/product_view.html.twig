@@ -75,32 +75,26 @@
                     </div>
                 </div>
                 <div class="bid-list" id="bid-list{{ p.id }}">
-                    <!--<ul>
-                        <li>
-                            <img class="avatar" src="epuy_images/avatar1.png" />
-                            <div class="bid-info">
-                                <a href="javascript:void(0);">云</a>
-                                <label>￥228元</label>
-                            </div>
-                            <div class="bid-order-info">
-                                <div class="order-info leading">领先</div>
-                                <div style="clear:both;"></div>
-                                <div class="datetime">09-03 14:57</div>
-                            </div>
-                        </li>
-                        <li>
-                            <img class="avatar" src="epuy_images/avatar2.png" />
-                            <div class="bid-info">
-                                <a href="javascript:void(0);">ˇ坚果墙♛</a>
-                                <label>￥198元</label>
-                            </div>
-                            <div class="bid-order-info">
-                                <div class="order-info dumped-out">出局</div>
-                                <div style="clear:both;"></div>
-                                <div class="datetime">09-03 12:46</div>
-                            </div>
-                        </li>
-                    </ul>-->
+                    <ul>
+                        {% for payment in p.payments|reverse %}
+                            <li>
+                                <img class="avatar" src="{{ payment.payUser.avatar }}" />
+                                <div class="bid-info">
+                                    <a href="javascript:void(0);">{{ payment.payUser.nickname }}</a>
+                                    <label>￥{{ payment.volume }}元</label>
+                                </div>
+                                <div class="bid-order-info">
+                                    {%  if loop.index == 1 %}
+                                        <div class="order-info leading">领先</div>
+                                    {% else %}
+                                        <div class="order-info dumped-out">出局</div>
+                                    {% endif %}
+                                    <div style="clear:both;"></div>
+                                    <div class="datetime">{{ payment.payTime|date('m-d H:i') }}</div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             <div id="bid-box{{ p.id }}" class="bid-box" style="display:none;">
