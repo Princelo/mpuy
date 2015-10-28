@@ -145,7 +145,7 @@
 .goods-list .bid-list .bid-info label {color: #770018; font-weight: bold; position: absolute; bottom: 3px;}
 .goods-list .bid-list .bid-order-info {float: right; width: 30%; position: relative; height: 60px;}
 .goods-list .bid-list .order-info { width: 60px; height: 30px; display: block; float:right; line-height: 30px; text-align: center;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 .goods-list .bid-list .bid-order-info .datetime {float: right;  font-size: 12px; position: absolute; bottom: 3px; right: 5px;
 }
