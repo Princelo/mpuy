@@ -22,7 +22,7 @@ left:0}
     position:fixed;
     bottom:-220px;
     left:0%;
-    height:220px;;
+    height:220px;
     background-color: #ecf0f1;
     width: 100%;
     display: block;
@@ -235,7 +235,7 @@ body,ul,img,p {padding: 0; margin:0;}
     font-size: 18px;
     line-height: 36px;
 }
-.goods-item {margin-bottom: 20px;}
+.goods-item {margin-bottom: 20px; padding-bottom:20px;}
 
 .no-more {
     display: block;
