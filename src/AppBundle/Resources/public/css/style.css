@@ -235,7 +235,6 @@ body,ul,img,p {padding: 0; margin:0;}
     font-size: 18px;
     line-height: 36px;
 }
-.goods-item {margin-bottom: 20px; padding-bottom:20px;}
 
 .no-more {
     display: block;
@@ -252,3 +251,4 @@ body,ul,img,p {padding: 0; margin:0;}
     background: #E5E5E5;
     clear: both;
 }
+.bid-list {margin-bottom:20px;}
