@@ -106,10 +106,6 @@
         </div>
     </div>
 {% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('bundles/app/PhotoSwipe/default-skin/default-skin.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/app/PhotoSwipe/photoswipe.css') }}" />
-{% endblock %}
 {% block javascripts %}
     <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
     <script>
@@ -146,12 +142,6 @@
             clock1.innerHTML = countdown(targetDate).toString();
         }, 1000);
         {% endif %}
-        var bid = function (product_id) {
-            $('#bid-box'+product_id).animate({bottom:"0px"}, "fast");
-        }
-        var bid_none = function () {
-            $('.bid-box').animate({bottom:"-200px"}, "fast");
-        }
         var bid_send = function (product_id) {
             var result = prompt("请输入金额");
             function isInt(n){
