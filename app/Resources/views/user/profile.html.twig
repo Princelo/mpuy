@@ -82,7 +82,7 @@
         <ul>
             {% for p in products %}
             <li>
-                <a href="{{ path('product_view', {product_id: p.id}) }}">
+                <a href="{{ path('product_view', {'product_id': p.id}) }}">
                     <div class="img">
                         {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
                         <img src="{{ imgSrc | imagine_filter('thumb400') }}" />
@@ -100,7 +100,7 @@
         <ul>
             {% for p in likes %}
                 <li>
-                    <a href="{{ path('product_view', {product_id: p.id}) }}">
+                    <a href="{{ path('product_view', {'product_id': p.id}) }}">
                         <div class="img">
                             {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
                             <img src="{{ imgSrc | imagine_filter('thumb400') }}" />
@@ -115,5 +115,6 @@
         </ul>
     </div>
 </div>
+{% include 'menu.html.twig' %}
 </body>
 </html>
