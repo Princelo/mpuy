@@ -93,9 +93,9 @@
                             </div>
                             <div class="bid-order-info">
                                 {%  if loop.index == 1 %}
-                                    <div class="order-info leading">领先</div>
+                                    <div class="order-info"><img src="{{ asset('bundles/app/images/leading.png') }}" /></div>
                                 {% else %}
-                                    <div class="order-info dumped-out">出局</div>
+                                    <div class="order-info"><img src="{{ asset('bundles/app/images/dumped-out.png') }}" /></div>
                                 {% endif %}
                                 <div style="clear:both;"></div>
                                 <div class="datetime">{{ payment.payTime|date('m-d H:i') }}</div>
@@ -216,7 +216,7 @@
                                         '<label>￥'+ bid_list[i].volume +'元</label>'+
                                         '</div>'+
                                         '<div class="bid-order-info">'+
-                                        '<div class="order-info leading">领先</div>'+
+                                        '<div class="order-info"><img src="{{ asset('bundles/app/images/leading.png') }}"/></div>'+
                                         '<div style="clear:both;"></div>'+
                                         '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
                                         '</div>'+
@@ -242,7 +242,7 @@
                                         '<label>￥'+ bid_list[i].volume +'元</label>'+
                                         '</div>'+
                                         '<div class="bid-order-info">'+
-                                        '<div class="order-info dumped-out">出局</div>'+
+                                        '<div class="order-info"><img src="{{ asset('bundles/app/images/dumped-out.png') }}"/></div>'+
                                         '<div style="clear:both;"></div>'+
                                         '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
                                         '</div>'+
