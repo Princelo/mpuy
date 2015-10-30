@@ -189,5 +189,12 @@
         $('#category-box').animate({bottom:"-220px"}, "fast");
         $('.fade-panel').hide();
     }
+    if ('ontouchstart' in window) {
+        $(document).on('focus', 'textarea,input,select', function() {
+            $('.control-header').css('position', 'absolute');
+        }).on('blur', 'textarea,input,select', function() {
+            $('.control-header').css('position', 'fixed');
+        });
+    }
 </script>
 </body></html>

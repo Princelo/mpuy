@@ -80,6 +80,13 @@
     $('#next-btn').bind('click', function (){
         $('#form').submit();
     });
+    if ('ontouchstart' in window) {
+        $(document).on('focus', 'textarea,input,select', function() {
+            $('.control-header').css('position', 'absolute');
+        }).on('blur', 'textarea,input,select', function() {
+            $('.control-header').css('position', 'fixed');
+        });
+    }
 </script>
 
 
