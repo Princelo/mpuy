@@ -42,6 +42,7 @@ class OrderCreateCommand extends ContainerAwareCommand
                 $order->setIsDelete(false);
                 $order->setOrderSn($now->format('YmdHis').sprintf("%04s", $i));
                 $order->setStatus(Constants::ORDER_CREATE);
+                $order->setPayStatus(Constants::ORDER_NON_PAY);
                 $em->persist($order);
                 $em->flush();
             }

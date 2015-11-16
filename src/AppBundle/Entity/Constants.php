@@ -11,4 +11,6 @@ class Constants {
     const ORDER_PER_PAGE = 10;
     const EVENT_PRODUCT_PUBLISH = 0;
     const ORDER_CREATE = 0;
+    const ORDER_NON_PAY = 10;
+    const ORDER_PAID = 11;
 }
