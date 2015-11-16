@@ -416,51 +416,6 @@ class Product
     }
 
     /**
-     * Set bidPrice
-     *
-     * @param float $bidPrice
-     * @return Product
-     */
-    public function setBidPrice($bidPrice)
-    {
-        $this->bidPrice = $bidPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get bidPrice
-     *
-     * @return float 
-     */
-    public function getBidPrice()
-    {
-        return $this->bidPrice;
-    }
-
-    /**
-     * Set topPrice
-     *
-     * @param float $topPrice
-     * @return Product
-     */
-    public function setTopPrice($topPrice)
-    {
-        $this->topPrice = $topPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get topPrice
-     *
-     * @return float 
-     */
-    public function getTopPrice()
-    {
-        return $this->topPrice;
-    }
-    /**
      * Constructor
      */
     public function __construct()
