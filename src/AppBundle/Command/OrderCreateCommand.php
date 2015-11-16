@@ -29,7 +29,7 @@ class OrderCreateCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $now = new \DateTime('now');
-        $products = $em->getRepository('AppBundle:Products')->getProductsExpired($now);
+        $products = $em->getRepository('AppBundle:Product')->getProductsExpired($now);
         foreach($products as $i => $p) {
             $order = new AuctionOrder();
             $order->setProduct($p);
