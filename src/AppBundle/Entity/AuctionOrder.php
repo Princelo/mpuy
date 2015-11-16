@@ -95,6 +95,12 @@ class AuctionOrder
      */
     protected $events;
 
+    /**
+     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Payment")
+     * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
+     **/
+    protected $payment;
+
 
     /**
      * Get id
@@ -129,28 +135,6 @@ class AuctionOrder
         return $this->orderSn;
     }
 
-    /**
-     * Set type
-     *
-     * @param integer $type
-     * @return AuctionOrder
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 
     /**
      * Set buyer
@@ -444,5 +428,28 @@ class AuctionOrder
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Set payment
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     * @return AuctionOrder
+     */
+    public function setPayment(\AppBundle\Entity\Payment $payment = null)
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Get payment
+     *
+     * @return \AppBundle\Entity\Payment 
+     */
+    public function getPayment()
+    {
+        return $this->payment;
     }
 }
