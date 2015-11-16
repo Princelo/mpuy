@@ -350,6 +350,7 @@ class AuctionOrder
     {
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->createTime = new \DateTime();
+        $this->updateTime = new \DateTime();
     }
 
     /**
