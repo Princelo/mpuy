@@ -67,4 +67,16 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getProductsExpired($time)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Product', 'p')
+            ->where('p.expiredTime > :now')
+            ->setParameter('now', $time)
+            ->getQuery()
+            ->getResult();
+    }
 }

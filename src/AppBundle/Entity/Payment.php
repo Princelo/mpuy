@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\PaymentRepository")
+ * @ORM\EntityListeners({ "AppBundle\Entity\Listener\PaymentListener" })
  */
 class Payment
 {
@@ -239,5 +240,28 @@ class Payment
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set receiveUser
+     *
+     * @param \Acme\AccountBundle\Entity\User $receiveUser
+     * @return Payment
+     */
+    public function setReceiveUser(\Acme\AccountBundle\Entity\User $receiveUser = null)
+    {
+        $this->receiveUser = $receiveUser;
+
+        return $this;
+    }
+
+    /**
+     * Get receiveUser
+     *
+     * @return \Acme\AccountBundle\Entity\User 
+     */
+    public function getReceiveUser()
+    {
+        return $this->receiveUser;
     }
 }

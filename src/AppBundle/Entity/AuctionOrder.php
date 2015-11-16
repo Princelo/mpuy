@@ -28,12 +28,6 @@ class AuctionOrder
      */
     private $orderSn;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="type", type="integer")
-     */
-    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="broughtOrders")
@@ -77,13 +71,6 @@ class AuctionOrder
     /**
      * @var integer
      *
-     * @ORM\Column(name="delivery_status", type="integer")
-     */
-    private $deliveryStatus;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="pay_status", type="integer")
      */
     private $payStatus;
@@ -94,13 +81,6 @@ class AuctionOrder
      * @ORM\Column(name="is_delete", type="boolean")
      */
     private $isDelete;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="return_total_score", type="integer")
-     */
-    private $returnTotalScore;
 
     /**
      * @var float
@@ -115,34 +95,6 @@ class AuctionOrder
      * @ORM\Column(name="payment_id", type="integer")
      */
     private $paymentId;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="refund_money", type="float")
-     */
-    private $refundMoney;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="refund_status", type="integer")
-     */
-    private $refundStatus;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="has_argument", type="boolean")
-     */
-    private $hasArgument;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="has_break_rule", type="boolean")
-     */
-    private $hasBreakRule;
 
     /**
      * @var string

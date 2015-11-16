@@ -21,3 +21,11 @@ services:
         #arguments: ["%tokens%"]
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    app_bundle.doctrine.entity_listener_resolver:
+        class: AppBundle\Doctrine\EntityListenerResolver
+        arguments: [ "@service_container" ]
+    app_bundle.entity_listener.payment:
+        class: AppBundle\Entity\Listener\PaymentListener
+        #arguments: [ "@acme_demo.mailer.user" ]
+        tags:
+            -  { name: doctrine.entity_listener }

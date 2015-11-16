@@ -9,4 +9,6 @@ class Constants {
     const USER_PER_PAGE = 10;
     const PRODUCT_PER_PAGE = 5;
     const ORDER_PER_PAGE = 10;
+    const EVENT_PRODUCT_PUBLISH = 0;
+    const ORDER_CREATE = 0;
 }

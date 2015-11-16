@@ -118,19 +118,12 @@ class Product
      */
     private $fixedPrice;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="bid_price", type="float", nullable=true)
-     */
-    private $bidPrice;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="top_price", type="float", nullable=true)
-     */
-    private $topPrice;
+     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Payment")
+     * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
+     **/
+    protected $topPayment;
 
     /**
      * @ORM\OneToMany(targetEntity="Image", mappedBy="product")
@@ -764,5 +757,51 @@ class Product
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Set likeCount
+     *
+     * @param integer $likeCount
+     * @return Product
+     */
+    public function setLikeCount($likeCount)
+    {
+        $this->likeCount = $likeCount;
+
+        return $this;
+    }
+
+    /**
+     * Get likeCount
+     *
+     * @return integer 
+     */
+    public function getLikeCount()
+    {
+        return $this->likeCount;
+    }
+
+    /**
+     * Set topPayment
+     *
+     * @param \AppBundle\Entity\Payment $topPayment
+     * @return Product
+     */
+    public function setTopPayment(\AppBundle\Entity\Payment $topPayment = null)
+    {
+        $this->topPayment = $topPayment;
+
+        return $this;
+    }
+
+    /**
+     * Get topPayment
+     *
+     * @return \AppBundle\Entity\Payment 
+     */
+    public function getTopPayment()
+    {
+        return $this->topPayment;
     }
 }

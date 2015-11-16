@@ -1346,4 +1346,70 @@ class User extends BaseUser
     {
         return $this->followedUsers->contains($user);
     }
+
+    /**
+     * Add payments
+     *
+     * @param \AppBundle\Entity\Payment $payments
+     * @return User
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
+
+        return $this;
+    }
+
+    /**
+     * Remove payments
+     *
+     * @param \AppBundle\Entity\Payment $payments
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payments)
+    {
+        $this->payments->removeElement($payments);
+    }
+
+    /**
+     * Get payments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+
+    /**
+     * Add receivePayments
+     *
+     * @param \AppBundle\Entity\Payment $receivePayments
+     * @return User
+     */
+    public function addReceivePayment(\AppBundle\Entity\Payment $receivePayments)
+    {
+        $this->receivePayments[] = $receivePayments;
+
+        return $this;
+    }
+
+    /**
+     * Remove receivePayments
+     *
+     * @param \AppBundle\Entity\Payment $receivePayments
+     */
+    public function removeReceivePayment(\AppBundle\Entity\Payment $receivePayments)
+    {
+        $this->receivePayments->removeElement($receivePayments);
+    }
+
+    /**
+     * Get receivePayments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReceivePayments()
+    {
+        return $this->receivePayments;
+    }
 }
