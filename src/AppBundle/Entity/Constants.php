@@ -13,4 +13,5 @@ class Constants {
     const ORDER_CREATE = 0;
     const ORDER_NON_PAY = 10;
     const ORDER_PAID = 11;
+    const EVENT_ORDER_INIT = 0;
 }

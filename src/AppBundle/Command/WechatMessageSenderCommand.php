@@ -21,19 +21,39 @@ class WechatMessageSenderCommand extends ContainerAwareCommand
             ->setName('wechat_message_sender:command')
             ->setDescription('Send Message By Wechat')
             ->addArgument(
-                'serverid',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
-                'imageid',
-                InputArgument::REQUIRED
-            )
-            ->addArgument(
                 'accesstoken',
                 InputArgument::REQUIRED
             )
             ->addArgument(
-                'basedir',
+                'openid',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'ordersn',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'volume',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'mobile',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'productname',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'objectname',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'orderid',
+                InputArgument::REQUIRED
+            )
+            ->addArgument(
+                'object',
                 InputArgument::REQUIRED
             )
         ;
@@ -44,32 +64,92 @@ class WechatMessageSenderCommand extends ContainerAwareCommand
         $accessToken = substr($input->getArgument('accesstoken'), 1);
         $apiUrl = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='.$accessToken;
         $openId = substr($input->getArgument('openid'), 1);
-        $postData = '{
-           "touser":"'.$openId.'",
-           "template_id":"ngqIpbwh8bUfcSsECmogfXcV14J0tQlEpBO27izEYtY",
-           "url":"http://weixin.qq.com/download",
-           "data":{
-                   "first": {
-                       "value":"恭喜你购买成功！",
-                       "color":"#173177"
-                   },
-                   "keynote1":{
-                       "value":"巧克力",
-                       "color":"#173177"
-                   },
-                   "keynote2": {
-                       "value":"39.8元",
-                       "color":"#173177"
-                   },
-                   "keynote3": {
-                       "value":"2014年9月22日",
-                       "color":"#173177"
-                   },
-                   "remark":{
-                       "value":"欢迎再次购买！",
-                       "color":"#173177"
-                   }
-           }
-       }';
+        $orderSn = $input->getArgument('ordersn');
+        $volume = $input->getArgument('volume');
+        $mobile = $input->getArgument('mobile');
+        $productName = $input->getArgument('productname');
+        $objectName = $input->getArgument('objectname');
+        $orderId = $input->getArgument('orderid');
+        $object = $input->getArgument('object');
+        $router = $this->getContainer()->get('router')->getContext();
+        $orderUrl = $router->generateUrl('order_details', ['id' => $orderId]);
+        if ($object == 'forBuyer') {
+            $postData = '{
+               "touser":"'.$openId.'",
+               "template_id":"DbSMq1Qp6tezIcJUK4HpEPRUyxgEXJlnLisYXHImIVw",
+               "url":"",
+               "data":{
+                       "first": {
+                           "value":"恭喜您竞拍成功！",
+                           "color":"#173177"
+                       },
+                       "orderID":{
+                           "value":"'.$orderSn.'",
+                           "color":"#173177"
+                       },
+                       "orderMoneySum": {
+                           "value":"'.$volume.'元",
+                           "color":"#173177"
+                       },
+                       "backupFieldName": {
+                           "value":"竞拍商品",
+                           "color":"#173177"
+                       },
+                       "backupFieldName":{
+                           "value":"'.$productName.'！",
+                           "color":"#173177"
+                       },
+                       "remark": {
+                           "value":"请联系卖主'.$objectName.'(手机号:'.$mobile.')",
+                           "color":"#173177"
+                       }
+               }
+            }';
+        } elseif ($object == 'forSeller') {
+            $postData = '{
+               "touser":"'.$openId.'",
+               "template_id":"DbSMq1Qp6tezIcJUK4HpEPRUyxgEXJlnLisYXHImIVw",
+               "url":"",
+               "data":{
+                       "first": {
+                           "value":"恭喜您的拍品竞拍成功！",
+                           "color":"#173177"
+                       },
+                       "orderID":{
+                           "value":"'.$orderSn.'",
+                           "color":"#173177"
+                       },
+                       "orderMoneySum": {
+                           "value":"'.$volume.'元",
+                           "color":"#173177"
+                       },
+                       "backupFieldName": {
+                           "value":"竞拍商品",
+                           "color":"#173177"
+                       },
+                       "backupFieldName":{
+                           "value":"'.$productName.'！",
+                           "color":"#173177"
+                       },
+                       "remark": {
+                           "value":"请联系拍家'.$objectName.'(手机号:'.$mobile.')",
+                           "color":"#173177"
+                       }
+               }
+            }';
+        }
+        $this->sendPostData($apiUrl, $postData);
     }
+
+    function sendPostData($url, $post){
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,$post);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        $result = curl_exec($ch);
+        curl_close($ch);  // Seems like good practice
+        return $result;
+    }
+
 }
