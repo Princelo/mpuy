@@ -28,14 +28,14 @@ services:
         class: AppBundle\Entity\Listener\PaymentListener
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
-            -  { name: doctrine.entity_listener }
+            -  { name: doctrine.entity_listener, event: postPersist }
     app_bundle.entity_listener.product:
         class: AppBundle\Entity\Listener\ProductListener
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
-            -  { name: doctrine.entity_listener }
+            -  { name: doctrine.entity_listener, event: preUpdate }
     app_bundle.entity_listener.auctionorder:
         class: AppBundle\Entity\Listener\AuctionOrderListener
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
-            -  { name: doctrine.entity_listener }
+            -  { name: doctrine.entity_listener, event: postPersist }

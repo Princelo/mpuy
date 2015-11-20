@@ -15,7 +15,6 @@ class PaymentListener
 {
     public function postPersist(Payment $payment, LifecycleEventArgs $event)
     {
-        // Checks the user is new.
         if ($payment->getId() !== null) {
             $product = $payment->getProduct();
             $exPayment = $product->getTopPayment();
