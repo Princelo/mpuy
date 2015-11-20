@@ -22,6 +22,7 @@ class PaymentListener
             $product->setTopPayment($payment);
             // Implement all logic needed in order to send a welcome email...
             $em = $event->getEntityManager();
+            $em->persist($product);
             $messageForPayer = new Message();
             $messageForExPayer = new Message();
             $messageForReceiver = new Message();
