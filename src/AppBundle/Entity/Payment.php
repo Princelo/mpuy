@@ -70,12 +70,6 @@ class Payment
      */
     protected $product;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="has_generated_order", type="boolean")
-     */
-    private $hasGeneratedOrder = false;
 
 
     /**
@@ -272,26 +266,4 @@ class Payment
         return $this->receiveUser;
     }
 
-    /**
-     * Set hasGeneratedOrder
-     *
-     * @param boolean $hasGeneratedOrder
-     * @return Payment
-     */
-    public function setHasGeneratedOrder($hasGeneratedOrder)
-    {
-        $this->hasGeneratedOrder = $hasGeneratedOrder;
-
-        return $this;
-    }
-
-    /**
-     * Get hasGeneratedOrder
-     *
-     * @return boolean 
-     */
-    public function getHasGeneratedOrder()
-    {
-        return $this->hasGeneratedOrder;
-    }
 }

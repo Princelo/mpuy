@@ -174,6 +174,13 @@ class Product
      */
     protected $events;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="has_generated_order", type="boolean", nullable=true)
+     */
+    private $hasGeneratedOrder = false;
+
 
     /**
      * Get id
@@ -758,5 +765,28 @@ class Product
     public function getTopPayment()
     {
         return $this->topPayment;
+    }
+
+    /**
+     * Set hasGeneratedOrder
+     *
+     * @param boolean $hasGeneratedOrder
+     * @return Product
+     */
+    public function setHasGeneratedOrder($hasGeneratedOrder)
+    {
+        $this->hasGeneratedOrder = $hasGeneratedOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get hasGeneratedOrder
+     *
+     * @return boolean 
+     */
+    public function getHasGeneratedOrder()
+    {
+        return $this->hasGeneratedOrder;
     }
 }
