@@ -13,16 +13,16 @@ use AppBundle\Entity\Payment;
 
 class PaymentListener
 {
-    public function prePersist(Payment $payment, LifecycleEventArgs $event)
+    public function postPersist(Payment $payment, LifecycleEventArgs $event)
     {
         // Checks the user is new.
-        if ($payment->getId() === null) {
+        if ($payment->getId() !== null) {
             $product = $payment->getProduct();
             $exPayment = $product->getTopPayment();
             $product->setTopPayment($payment);
             // Implement all logic needed in order to send a welcome email...
             $em = $event->getEntityManager();
-            $em->merge($product);
+            $em->persist($product);
             $messageForPayer = new Message();
             $messageForExPayer = new Message();
             $messageForReceiver = new Message();
