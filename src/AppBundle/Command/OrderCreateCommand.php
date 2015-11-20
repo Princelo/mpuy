@@ -44,6 +44,8 @@ class OrderCreateCommand extends ContainerAwareCommand
                 $order->setStatus(Constants::ORDER_CREATE);
                 $order->setPayStatus(Constants::ORDER_NON_PAY);
                 $em->persist($order);
+                $p->setHasGeneratedOrder(true);
+                $em->persist($p);
                 $em->flush();
             }
         }

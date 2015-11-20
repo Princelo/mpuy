@@ -75,6 +75,7 @@ class ProductRepository extends EntityRepository
             ->select('p')
             ->from('AppBundle:Product', 'p')
             ->where('p.expireTime < :now')
+            ->andWhere('p.hasGeneratedOrder = false')
             ->setParameter('now', $time)
             ->getQuery()
             ->getResult();
