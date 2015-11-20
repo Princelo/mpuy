@@ -29,3 +29,13 @@ services:
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
             -  { name: doctrine.entity_listener }
+    app_bundle.entity_listener.product:
+        class: AppBundle\Entity\Listener\ProductListener
+        #arguments: [ "@acme_demo.mailer.user" ]
+        tags:
+            -  { name: doctrine.entity_listener }
+    app_bundle.entity_listener.auctionorder:
+        class: AppBundle\Entity\Listener\AuctionOrderListener
+        #arguments: [ "@acme_demo.mailer.user" ]
+        tags:
+            -  { name: doctrine.entity_listener }
