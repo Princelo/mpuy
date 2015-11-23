@@ -15,12 +15,12 @@ class PaymentListener
 {
     public function postPersist(Payment $payment, LifecycleEventArgs $event)
     {
-        /*if ($payment->getId() === null) {
+        if ($payment->getId() !== null) {
             $product = $payment->getProduct();
             $exPayment = $product->getTopPayment();
-            //$product->setTopPayment($payment);
+            $product->setTopPayment($payment);
             $em = $event->getEntityManager();
-            //$em->persist($product);
+            $em->persist($product);
             $messageForPayer = new Message();
             $messageForExPayer = new Message();
             $messageForReceiver = new Message();
@@ -40,6 +40,6 @@ class PaymentListener
             $messageForReceiver->setLinkProduct($product);
             $em->persist($messageForReceiver);
             $em->flush();
-        }*/
+        }
     }
 }
