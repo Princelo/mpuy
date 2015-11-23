@@ -16,7 +16,7 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class ProductListener
 {
-    public function preUpdate(PreUpdateEventArgs $eventArgs)
+    public function preUpdate(Product $product, PreUpdateEventArgs $eventArgs)
     {
         if ($eventArgs->getEntity() instanceof Product) {
             if ($eventArgs->hasChangedField('isActive') && $eventArgs->getNewValue('isActive') == true) {

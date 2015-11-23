@@ -13,7 +13,7 @@ use AppBundle\Entity\Payment;
 
 class PaymentListener
 {
-    public function prePersist(Payment $payment, LifecycleEventArgs $event)
+    public function prePersist(LifecycleEventArgs $event)
     {
         /*if ($payment->getId() === null) {
             $product = $payment->getProduct();
