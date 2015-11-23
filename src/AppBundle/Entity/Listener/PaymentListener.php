@@ -15,7 +15,7 @@ class PaymentListener
 {
     public function prePersist(Payment $payment, LifecycleEventArgs $event)
     {
-        if ($payment->getId() !== null) {
+        if ($payment->getId() === null) {
             $product = $payment->getProduct();
             $exPayment = $product->getTopPayment();
             $product->setTopPayment($payment);
