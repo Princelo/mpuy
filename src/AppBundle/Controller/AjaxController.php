@@ -70,6 +70,7 @@ class AjaxController extends Controller
             $payment->setType(0);
 
             $em->persist($payment);
+            $product->setTopPayment($payment);
             $em->flush();
             return new JsonResponse(['state' => 'success']);
         } catch (Exception $e) {
