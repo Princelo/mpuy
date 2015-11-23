@@ -27,6 +27,7 @@ class PaymentListener
             $messageForPayer->setContext('您拍了'.$product->getName().'商品, 拍价为'.$payment->getVolume().'元');
             $messageForPayer->setIsLinkProduct(true);
             $messageForPayer->setLinkProduct($product);
+            $messageForPayer->setReceiveUser($payment->getPayUser());
             $em->persist($messageForPayer);
             if ($exPayment !== null) {
                 $messageForPayer->setReceiveUser($exPayment->getPayUser());
@@ -38,6 +39,7 @@ class PaymentListener
             $messageForReceiver->setContext($payment->getPayUser()->getNickName().'拍了您的'.$product->getName().'商品, 拍价为'.$payment->getVolume().'元');
             $messageForReceiver->setIsLinkProduct(true);
             $messageForReceiver->setLinkProduct($product);
+            $messageForReceiver->setReceiveUser($product->getUser());
             $em->persist($messageForReceiver);
             $em->flush();
         }
