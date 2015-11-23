@@ -61,6 +61,7 @@ class ProductRepository extends EntityRepository
             ->from('AppBundle:Product', 'p')
             ->join('AcmeAccountBundle:User', 'u', 'WITH', 'u = :user')
             ->where('p.user MEMBER OF u.followedUsers')
+            ->orderby('p.id', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($count)
             ->setParameter('user', $user)
