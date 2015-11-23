@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
+ * @ORM\EntityListeners({ "AppBundle\Entity\Listener\ProductListener" })
  */
 class Product
 {
