@@ -19,7 +19,6 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
     {
         $this->container = $container;
         $this->mapping = array(
-            'PaymentListener',
         );
     }
 
@@ -34,6 +33,6 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
             return $this->container->get($this->mapping[$className]);
         }
 
-        return parent::resolve($className);
+        //return parent::resolve($className);
     }
 }
