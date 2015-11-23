@@ -19,9 +19,7 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
     {
         $this->container = $container;
         $this->mapping = array(
-            'prePersistHandle',
-            'postPersistHandle',
-            'preUpdateHandle',
+            'PaymentListener',
         );
     }
 
