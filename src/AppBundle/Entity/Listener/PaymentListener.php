@@ -15,11 +15,10 @@ class PaymentListener
 {
     public function prePersist(Payment $payment, LifecycleEventArgs $event)
     {
-        if ($payment->getId() === null) {
+        /*if ($payment->getId() === null) {
             $product = $payment->getProduct();
             $exPayment = $product->getTopPayment();
             //$product->setTopPayment($payment);
-            // Implement all logic needed in order to send a welcome email...
             $em = $event->getEntityManager();
             //$em->persist($product);
             $messageForPayer = new Message();
@@ -41,6 +40,6 @@ class PaymentListener
             $messageForReceiver->setLinkProduct($product);
             $em->persist($messageForReceiver);
             $em->flush();
-        }
+        }*/
     }
 }

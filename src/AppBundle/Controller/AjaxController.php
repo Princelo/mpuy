@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Constants;
+use AppBundle\Entity\Message;
 use AppBundle\Entity\Payment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,12 +71,37 @@ class AjaxController extends Controller
             $payment->setType(0);
 
             $em->persist($payment);
+            $this->bidMessages($payment, $product, $em);
             $product->setTopPayment($payment);
             $em->flush();
             return new JsonResponse(['state' => 'success']);
         } catch (Exception $e) {
             return new JsonResponse(['state' => 'error', 'type' => 'unknown']);
         }
+    }
+
+    protected function bidMessages($payment, $product, $em)
+    {
+        $exPayment = $product->getTopPayment();
+        $messageForPayer = new Message();
+        $messageForExPayer = new Message();
+        $messageForReceiver = new Message();
+        $messageForPayer->setContext('您拍了'.$product->getName().'商品, 拍价为'.$payment->getVolume().'元');
+        $messageForPayer->setIsLinkProduct(true);
+        $messageForPayer->setLinkProduct($product);
+        $em->persist($messageForPayer);
+        if ($exPayment !== null) {
+            $messageForPayer->setReceiveUser($exPayment->getPayUser());
+            $messageForExPayer->setContext('您用'.$exPayment->getVolume().'元拍的'.$product->getName().'商品, 被'.$payment->getVolume().'元拍价超越了');
+            $messageForExPayer->setIsLinkProduct(true);
+            $messageForExPayer->setLinkProduct($product);
+            $em->persist($messageForExPayer);
+        }
+        $messageForReceiver->setContext($payment->getPayUser()->getNickName().'拍了您的'.$product->getName().'商品, 拍价为'.$payment->getVolume().'元');
+        $messageForReceiver->setIsLinkProduct(true);
+        $messageForReceiver->setLinkProduct($product);
+        $em->persist($messageForReceiver);
+        $em->flush();
     }
 
     /**
