@@ -33,6 +33,6 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
             return $this->container->get($this->mapping[$className]);
         }
 
-        //return parent::resolve($className);
+        return parent::resolve($className);
     }
 }
