@@ -18,6 +18,7 @@ class ProductListener
 {
     public function preUpdate(Product $product, PreUpdateEventArgs $eventArgs)
     {
+        new jjj();
         if ($eventArgs->getEntity() instanceof Product) {
             if ($eventArgs->hasChangedField('isActive') && $eventArgs->getNewValue('isActive') == true) {
                 $productEvent = new ProductEvent();
