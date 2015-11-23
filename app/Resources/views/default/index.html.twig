@@ -181,7 +181,6 @@
                             alert('出价成功');
                             update_bid_list(product_id);
                         } else {
-                            alert(response);
                             alert(response.message);
                             if(response.type == 'ended') {
                                 $('#bid_send'+product_id).html('已结束');
