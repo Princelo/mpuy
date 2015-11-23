@@ -25,16 +25,13 @@ class EntityListenerResolver extends DefaultEntityListenerResolver
     public function addMapping($className, $service)
     {
         $this->mapping[$className] = $service;
-        $this->resolve($className);
     }
 
     public function resolve($className)
     {
         if (isset($this->mapping[$className]) && $this->container->has($this->mapping[$className])) {
-            print_r($this->container->get($this->mapping[$className]));
-            //return $this->container->get($this->mapping[$className]);
+            return $this->container->get($this->mapping[$className]);
         }
-        exit;
 
         return parent::resolve($className);
     }
