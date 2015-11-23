@@ -120,7 +120,7 @@ class Product
 
 
     /**
-     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Payment")
+     * @ORM\OneToOne(targetEntity="\AppBundle\Entity\Payment", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
      **/
     protected $topPayment;
