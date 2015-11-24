@@ -13,6 +13,7 @@ use AppBundle\Entity\Message;
 use AppBundle\Entity\ProductEvent;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\Payment;
+use JMS\JobQueueBundle\Entity\Job;
 
 class AuctionOrderListener
 {

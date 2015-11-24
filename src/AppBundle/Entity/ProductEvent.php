@@ -53,6 +53,10 @@ class ProductEvent
      */
     private $actionUser;
 
+    public function __construct()
+    {
+        $this->createTime = new \DateTime();
+    }
 
     /**
      * Get id
