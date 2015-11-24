@@ -48,9 +48,8 @@ class ProductEvent
     private $createTime;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="action_user", type="integer")
+     * @ORM\ManyToOne(targetEntity="Acme\AccountBundle\Entity\User", inversedBy="events")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $actionUser;
 

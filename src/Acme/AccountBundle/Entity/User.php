@@ -214,6 +214,12 @@ class User extends BaseUser
     protected $messages;
 
     /**
+     * @var \AppBundle\Entity\ProductEvent
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\ProductEvent", mappedBy="actionUser")
+     */
+    protected $events;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\Acme\AccountBundle\Entity\User")
      * @ORM\JoinTable(name="fans",
      *     joinColumns={@ORM\JoinColumn(name="followed_user_id", referencedColumnName="id")},
