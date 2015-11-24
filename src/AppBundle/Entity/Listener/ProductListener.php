@@ -13,13 +13,14 @@ use AppBundle\Entity\ProductEvent;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use AppBundle\Entity\Product;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\ORM\Mapping\PostUpdate;
 
 class ProductListener
 {
-    public function preUpdate(Product $product, PreUpdateEventArgs $eventArgs)
+    public function postUpdate(Product $product, PostUpdate $eventArgs)
     {
         if ($eventArgs->getEntity() instanceof Product) {
-            if ($eventArgs->hasChangedField('isActive') && $eventArgs->getNewValue('isActive') == true) {
+            if ($product->getIsActive() == true && $product->getEvents() === null) {
                 $productEvent = new ProductEvent();
                 $productEvent->setActionUser($eventArgs->getEntity()->getUser());
                 $productEvent->setProduct($eventArgs->getEntity());

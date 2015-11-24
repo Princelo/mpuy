@@ -33,7 +33,7 @@ services:
         class: AppBundle\Entity\Listener\ProductListener
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
-            -  { name: doctrine.entity_listener, event: preUpdate }
+            -  { name: doctrine.entity_listener, event: postUpdate }
     app_bundle.entity_listener.auctionorder:
         class: AppBundle\Entity\Listener\AuctionOrderListener
         #arguments: [ "@acme_demo.mailer.user" ]
