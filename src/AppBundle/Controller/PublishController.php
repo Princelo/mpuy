@@ -127,19 +127,8 @@ class PublishController extends Controller implements WechatTokenGetterInterface
         $em->persist($product);
         $user->setSoldCount($user->getSoldCount() + 1);
         $em->persist($user);
-        //$this->productEvent($user, $product, $em);
         $em->flush();
         return $this->redirectToRoute('product_view', ['product_id' => $product->getId()]);
-    }
-
-    protected function productEvent($user, $product, $em)
-    {
-        $productEvent = new ProductEvent();
-        $productEvent->setActionUser($user);
-        $productEvent->setProduct($product);
-        $productEvent->setType(Constants::EVENT_PRODUCT_PUBLISH);
-        $em->persist($productEvent);
-        $em->flush();
     }
 
 }
