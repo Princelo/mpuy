@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\PostUpdate;
 
 class ProductListener
 {
-    public function postUpdate(Product $product, PostUpdate $eventArgs)
+    public function postUpdate(Product $product, LifecycleEventArgs $eventArgs)
     {
         if ($eventArgs->getEntity() instanceof Product) {
             if ($product->getIsActive() == true && $product->getEvents() === null) {
