@@ -20,7 +20,7 @@ class ProductListener
     public function postUpdate(Product $product, LifecycleEventArgs $eventArgs)
     {
         if ($eventArgs->getEntity() instanceof Product) {
-            if ($product->getIsActive() == true && $product->getEvents() === null) {
+            if ($product->getIsActive() == true && $product->getEvents()->isEmpty()) {
                 $productEvent = new ProductEvent();
                 $productEvent->setActionUser($eventArgs->getEntity()->getUser());
                 $productEvent->setProduct($eventArgs->getEntity());
