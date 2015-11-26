@@ -34,12 +34,12 @@
             <div class="search-hr-right"></div>
         </div>
         <ul class="search-ul">
-            <li><a href="javascript:void(0);" id="category-0" {% if category == 0 %}class="active"{% endif %}>分类一</a></li>
-            <li><a href="javascript:void(0);" id="category-1" {% if category == 1 %}class="active"{% endif %}>分类二</a></li>
-            <li><a href="javascript:void(0);" id="category-2" {% if category == 2 %}class="active"{% endif %}>分类三</a></li>
-            <li><a href="javascript:void(0);" id="category-3" {% if category == 3 %}class="active"{% endif %}>分类四</a></li>
-            <li><a href="javascript:void(0);" id="category-4" {% if category == 4 %}class="active"{% endif %}>分类五</a></li>
-            <li><a href="javascript:void(0);" id="category-5" {% if category == 5 %}class="active"{% endif %}>分类六</a></li>
+            <li><a href="javascript:void(0);" id="category-0" {% if category == 0 %}class="active"{% endif %} onclick="cookieThenPath(0)">分类一</a></li>
+            <li><a href="javascript:void(0);" id="category-1" {% if category == 1 %}class="active"{% endif %} onclick="cookieThenPath(1)">分类二</a></li>
+            <li><a href="javascript:void(0);" id="category-2" {% if category == 2 %}class="active"{% endif %} onclick="cookieThenPath(2)">分类三</a></li>
+            <li><a href="javascript:void(0);" id="category-3" {% if category == 3 %}class="active"{% endif %} onclick="cookieThenPath(3)">分类四</a></li>
+            <li><a href="javascript:void(0);" id="category-4" {% if category == 4 %}class="active"{% endif %} onclick="cookieThenPath(4)">分类五</a></li>
+            <li><a href="javascript:void(0);" id="category-5" {% if category == 5 %}class="active"{% endif %} onclick="cookieThenPath(5)">分类六</a></li>
         </ul>
     </div>
 {% endblock %}
@@ -49,8 +49,17 @@
             cookieSet(i);
             pathGo();
         }
+        function addcookie_mins(name,value,expireMins){
+            var cookieString=name+"="+encodeURIComponent(value)+"; path=/"+";domain=.{{ app.request.getHttpHost() }}";
+            if(expireHours>0){
+                var date=new Date();
+                date.setTime(date.getTime+Min*60*1000);
+                cookieString=cookieString+"; expire="+date.toGMTString();
+            }
+            document.cookie=cookieString;
+        }
         var cookieSet = function(i) {
-            addcookie('random_category', i, 1);
+            addcookie_mins('random_category', i, 10);
         }
         var pathGo = function() {
             window.location.href = '{{ path('product_random') }}';
