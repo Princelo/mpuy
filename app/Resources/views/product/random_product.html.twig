@@ -9,7 +9,7 @@
     <div style="width:75%; height: 40px; background:#364451; margin: 0 auto;padding: 10px; padding-top:0; position:relative;">
         <h1 style="margin:0; color:#fff; font-size:18px; font-weight:bold;">{{ p.name }}</h1>
         <label style="color:#fff; text-align:right; width: 100%;" >
-            当前竞拍价：<span style="color:#f60; font-weight:bold;">{% if p.topPayment null %}0元{% else %}{{ p.topPayment.volume }}元{% endif %}</span>
+            当前竞拍价：<span style="color:#f60; font-weight:bold;">{% if p.topPayment is null %}0元{% else %}{{ p.topPayment.volume }}元{% endif %}</span>
         </label>
         <div style="position: absolute; right: 12px; bottom: 12px;">
             <a href="{{ path('product_random') }}" style="color:#fff; text-decoration:none; background: #f60; border-radius: 5px; width: 100px; height: 24px;line-height:24px; text-align:center; display:block;">
