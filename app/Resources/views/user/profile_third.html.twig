@@ -40,9 +40,9 @@
                 <label>地区</label>
                 <span>{{ user.address }}</span>
             </li>
-            <li style="height: 90px; line-height:85px; padding-top: 10px;">
+            <li style="height: 90px; line-height:85px; padding-top: 10px;" onclick="window.location.href='{{ path('user_product_list', {'id': user.id}) }}'">
                 <label>最近拍品</label>
-                <a href="">
+                <a href="javascript:void(0);">
                     {% for p in products %}
                     <img src="/attachments/wechat_img/{{ p.imgCover.id }}" />
                     {% endfor %}

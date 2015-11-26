@@ -230,6 +230,31 @@ class AjaxController extends Controller
     }
 
     /**
+     * @Route("/ajax/get_user_products/{id}", name="ajax_get_user_products")
+     * @param $id
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxUserProducts($id, Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $page = $request->query->get('page');
+        $em = $this->getDoctrine()->getEntityManager();
+        $offset = $page * Constants::PRODUCT_PER_PAGE;
+        $user = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['id'=>$id]);
+        $products = $em->getRepository('AppBundle:Product')
+            ->getUserProducts($user, $offset, Constants::PRODUCT_PER_PAGE);
+        $template = $this->renderView('default/index-ajax-template.html.twig', ['products' => $products]);
+        return new JsonResponse([
+            'html' => $template,
+            'count' => count($products),
+            'per' => Constants::PRODUCT_PER_PAGE,
+        ]);
+    }
+
+    /**
      * @Route("/ajax/check_mobile", name="ajax_check_mobile")
      * @param Request $request
      * @return JsonResponse

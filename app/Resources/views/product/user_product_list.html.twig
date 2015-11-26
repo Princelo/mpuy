@@ -1,0 +1,398 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/home/home.css') }}" />
+    <div class="home-header">
+        <div class="home-header-bg">
+            <div class="username">{{ nickname }}</div>
+        </div>
+        <div class="tips-block">
+            <div class="tips">展示{{ nickname }}的拍品</div>
+        </div>
+        <div class="avatar">
+            <a href="{{ path('profile') }}"><img src="{{ avatar }}" /></a>
+        </div>
+    </div>
+    <div class="goods-list">
+        {% for p in products %}
+            <div class="goods-item">
+                <div class="avatar">
+                    <img src="{{ p.user.avatar }}" />
+                </div>
+                <div class="goods-details" style="">
+                    <div class="title"><i class="level"></i><a href="javascript:void(0);">{{ p.user.nickname }}</a></div>
+                    <div class="details">
+                        {{ p.intro|nl2br }}
+                    </div>
+                    <div class="img-list">
+                        <div class="my-gallery" itemscope itemtype="">
+                            {% for img in p.images %}
+                                <figure itemprop="associatedMedia" itemscope itemtype="">
+                                    <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action{{ p.id }}({{ loop.index - 1 }})">
+                                        <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
+                                    </a>
+                                    <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
+                                </figure>
+                            {% endfor %}
+
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div class="attr">
+                        <div class="attr_left">
+                            {% if p.isReturnable == true %}<i class="icon-text blue">包退</i>{% endif %}
+                            {% if p.isFreePostage == true %}<i class="icon-text orange">包邮</i>{% endif %}
+                            <i class="icon ensure"></i>
+                            <label class="date">{{ p.createTime|date('m月d日') }}</label>
+                        </div>
+                        <div class="attr_right">
+                            <span id="likes_count{{ p.id }}">{{ p.likeCount|number_format }}</span><i class="icon like" onclick="like_send({{ p.id }})"></i>
+                        </div>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="likes" id="likes{{ p.id }}">
+                        <div class="title">TA们赞了此拍品:</div>
+                        {% for u in p.likeUsers %}
+                            <a href="{{ path('profile_third', {'user_id': u.id}) }}">
+                                <img src="{{ u.avatar }}" />
+                            </a>
+                        {% endfor %}
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div style="clear:both; height:10px;"></div>
+                    <div class="countdown-block">
+                        <div class="running-tip">距离结束:</div>
+                        {% if p.expireTime|date('U') > "now"|date('U') %}
+                            <div class="countdown-tip"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                        {% else %}
+                            <div class="countdown-tip"><label class="countdown">已经结束</label></div>
+                            <div class="countdown-tip" style="display:none;"><label class="countdown" id="countdown{{ p.id }}"></label></div>
+                        {% endif %}
+                    </div>
+                    <div class="action-block">
+                        {% if p.expireTime|date('U') > "now"|date('U') %}
+                            <a class="update" href="javascript:void(0);" onclick="update_bid_list({{ p.id }})">更新</a>
+                            <a class="bid-btn" onclick="bid_send_with_check({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
+                        {% else %}
+                            <a class="bid-btn" onclick="">已经结束</a>
+                        {% endif %}
+                        <div class="action-info">
+                            <div class="start-price"><span>起</span><label>￥{{ p.startPrice|number_format }}元</label></div>
+                            <span class="splitter">|</span>
+                            <div class="step-price"><span>加</span><label>￥{{ p.stepPrice|number_format }}元</label></div>
+                        </div>
+                    </div>
+                    <div class="bid-list" id="bid_list{{ p.id }}">
+                        <ul>
+                            {% for payment in p.payments|reverse %}
+                                <li>
+                                    <img class="avatar" src="{{ payment.payUser.avatar }}" />
+                                    <div class="bid-info">
+                                        <a href="javascript:void(0);">{{ payment.payUser.nickname }}</a>
+                                        <label>￥{{ payment.volume }}元</label>
+                                    </div>
+                                    <div class="bid-order-info">
+                                        {%  if loop.index == 1 %}
+                                            <div class="order-info"><img src="{{ asset('bundles/app/images/leading.png') }}" /></div>
+                                        {% else %}
+                                            <div class="order-info"><img src="{{ asset('bundles/app/images/dumped-out.png') }}" /></div>
+                                        {% endif %}
+                                        <div style="clear:both;"></div>
+                                        <div class="datetime">{{ payment.payTime|date('m-d H:i') }}</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if products|length == 0 %}
+            <div class="home-search" onclick="window.location.href='{{ path('product_random') }}'">点击这里<br />获取感兴趣的拍品!</div>
+            <style>
+                .no-more {display:none !important;}
+                .home-search {
+                    font-size: 36px;
+                    text-align: center;
+                    background: #eee;
+                    color: #666;
+                    margin-top: 80px;
+                }
+            </style>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/app/CountDown/countdown.js') }}"></script>
+    <script>
+        var like_send = function (pid) {
+            $.ajax({
+                type: 'post',
+                data: {
+                    'product_id': pid
+                },
+                url: '{{ path('ajax_like_send') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        $('#likes_count'+pid).html(parseInt($('#likes_count'+pid).html())+1);
+                        $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
+                    }
+                }
+            });
+        }
+        {% for p in products %}
+        var photoswipe_action{{ p.id }} = function (i) {
+            var images{{ p.id }} = [{% for img in p.images %}
+                'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
+                {% endfor %}];
+            wx.previewImage({
+                current: images{{ p.id }}[i], // 当前显示图片的http链接
+                urls: images{{ p.id }} // 需要预览的图片http链接列表
+            });
+        }
+        var clock{{ p.id }} = document.getElementById('countdown{{ p.id }}')
+                , targetDate{{ p.id }} = {{ p.expireTime|date('U') }}*1000;
+
+        clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
+        setInterval(function(){
+            clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
+        }, 1000);
+        {% endfor %}
+        var bid_send_with_check = function(product_id)
+        {
+            $.ajax({
+                url: '{{ path('ajax_check_mobile') }}',
+                type: 'post',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        bid_send(product_id);
+                        $('.fade-panel').hide();
+                    } else if(response.state == 'error' && response.desc == 'mobile_null') {
+                        alert('您尚未设定手机号码, 请先设定您的手机号码');
+                        var result = prompt("请输入您要设定的手机号码");
+                        var telReg = !!result.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+                        if(telReg == false){
+                            alert('请输入正确手机号');
+                            $('.fade-panel').hide();
+                            return false;
+                        }
+                        $.ajax({
+                            'type': 'post',
+                            url: '{{ path('ajax_set_mobile') }}',
+                            data: {'mobile': result},
+                            success: function (response) {
+                                alert(response);
+                                if (response.state == 'success') {
+                                    bid_send(product_id);
+                                    $('.fade-panel').hide();
+                                } else if (response.desc == 'mobile_unique') {
+                                    alert('手机号码已存在!');
+                                    $('.fade-panel').hide();
+                                    return false;
+                                } else {
+                                    alert('未知错误, 请重试');
+                                    $('.fade-panel').hide();
+                                    return false;
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        var bid_send = function (product_id) {
+            var result = prompt("请输入金额");
+            function isInt(n){
+                n = parseInt(n);
+                return Number(n) === n && n % 1 === 0;
+            }
+            if ( !isInt(result)) {
+                alert('无效金额');
+            } else {
+                $.ajax({
+                    url: "{{ path('ajax_bid_send') }}",
+                    type: "post",
+                    data: {
+                        'product_id' : product_id,
+                        'volume' : result
+                    },
+                    success: function (response) {
+                        if (response.state == 'success') {
+                            alert('出价成功');
+                            update_bid_list(product_id);
+                        } else {
+                            alert(response.message);
+                            if(response.type == 'ended') {
+                                $('#bid_send'+product_id).html('已结束');
+                                $('#bid_send'+product_id).prop('disabled', 'disabled');
+                            }
+                        }
+                    }
+                })
+            }
+        }
+
+        var update_bid_list = function (product_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ path('ajax_get_bid_list') }}',
+                data: {
+                    'product_id' : product_id
+                },
+                success: function (bid_list) {
+                    var template = '<ul>';
+                    var n = 0;
+                    if (bid_list == 'ended') {
+                        template = "";
+                        $('#bid_send'+product_id).html('已结束');
+                        //$('#bid_send'+product_id).prop('disabled', 'disabled');
+                    } else {
+                        for( var i = 0; i < bid_list.length; i ++ ) {
+                            if (i == 0) {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info"><img src="{{ asset('bundles/app/images/leading.png') }}"/></div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                                /*} else if ((n == 1 && b.type=='ended')) {
+                                 template += '<li>'+
+                                 '<img class="avatar" src="'+ b.avatar+'" />'+
+                                 '<div class="bid-info">'+
+                                 '<a href="javascript:void(0);">'+ b.nickname +'</a>'+
+                                 '<label>￥'+ b.volume +'元</label>'+
+                                 '</div>'+
+                                 '<div class="bid-order-info">'+
+                                 '<div class="order-info leading">成交</div>'+
+                                 '<div style="clear:both;"></div>'+
+                                 '<div class="datetime">' + b.datetime + '</div>'+
+                                 '</div>'+
+                                 '</li>';*/
+                            } else {
+                                template += '<li>'+
+                                        '<img class="avatar" src="'+ bid_list[i].avatar+'" />'+
+                                        '<div class="bid-info">'+
+                                        '<a href="javascript:void(0);">'+ bid_list[i].nickname +'</a>'+
+                                        '<label>￥'+ bid_list[i].volume +'元</label>'+
+                                        '</div>'+
+                                        '<div class="bid-order-info">'+
+                                        '<div class="order-info"><img src="{{ asset('bundles/app/images/dumped-out.png') }}"/></div>'+
+                                        '<div style="clear:both;"></div>'+
+                                        '<div class="datetime">' + bid_list[i].datetime.date.substring(5, 15) + '</div>'+
+                                        '</div>'+
+                                        '</li>';
+                            }
+                        }
+                        template += '</ul>';
+                    }
+                    $('#bid_list'+product_id).html(template);
+                }
+            })
+        }
+
+        var processing;
+
+        $(document).ready(function(){
+
+            $(document).scroll(function(e){
+
+                if (processing)
+                    return false;
+
+                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 700 && $('#no-more').val() != '1'){
+                    processing = true;
+                    $.ajax({
+                        type: 'get',
+                        url: '{{ path('ajax_get_user_products', {'id': {{ third_user.id }} }) }}',
+                        data: {
+                            'page': parseInt($('#current-page').val() + 1)
+                        },
+                        success: function (response) {
+                            $('#current-page').val(parseInt($('#current-page').val() + 1));
+                            if (response.count < response.per) {
+                                update_products(response.html);
+                                $('#no-more').val('1');
+                                $('.goods-list').append('<div class="no-more">没有更多了</div>');
+                                processing = false;
+                            } else {
+                                update_products(response.html);
+                                processing = false;
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        var update_products = function (html) {
+            $('.goods-list').append(html);
+            /*var lastScrollTop = 0, delta = 5;
+             $(window).scroll(function(event){
+             var st = $(this).scrollTop();
+
+             if(Math.abs(lastScrollTop - st) <= delta)
+             return;
+
+             if (st > lastScrollTop){
+             // downscroll code
+             $("#soulnavbar").slideUp("fast")
+             } else {
+             // upscroll code
+             $("#soulnavbar").slideDown("fast");
+
+             }
+             lastScrollTop = st;
+             });*/
+        }
+        /*function onBridgeReady(){
+         WeixinJSBridge.invoke(
+         'getBrandWCPayRequest', {
+         "appId": "wxf55fd43245661de1",     //公众号名称，由商户传入
+         "timeStamp": "{{ date().timestamp }}",         //时间戳，自1970年以来的秒数
+         "nonceStr": "e61463f8efa94090b1f366cccfbbb444", //随机串
+         "package": "prepay_id=u802345jgfjsdfgsdg888",
+         "signType": "MD5",         //微信签名方式：
+         "paySign": "70EA570631E4BB79628FBCA90534C63FF7FADD89" //微信签名
+         },
+         function(res){
+         if(res.err_msg == "get_brand_wcpay_request：ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+         }
+         );
+         }
+         if (typeof WeixinJSBridge == "undefined"){
+         if( document.addEventListener ){
+         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+         }else if (document.attachEvent){
+         document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+         document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+         }
+         }else{
+         onBridgeReady();
+         }*/
+    </script>
+    <style>
+        .no-more {
+            display: block;
+            margin: 0 20px;
+            padding: 20px 0;
+            font-size: 28px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            color: #666;
+            background: #E5E5E5;
+            clear: both;
+        }
+    </style>
+    <input type="hidden" id="current-page" value="0"/>
+    <input type="hidden" id="no-more" value=""/>
+    {% include 'menu.html.twig' %}
+{% endblock %}

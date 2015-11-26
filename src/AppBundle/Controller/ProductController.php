@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Constants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,4 +81,29 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             'category' => $cookies->has('random_category')?intval($cookies->get('random_category')):-1
         ));
     }
+
+    /**
+     * @param integer $id
+     * @param Request $request
+     * @Route("/product/list/user/{id}", name="user_product_list")
+     * @return Response
+     */
+    public function indexAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $user = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['id'=>$id]);
+        $user = $this->getUser();
+        $avatar = $user->getAvatar();
+        $nickname = $user->getNickName();
+        $products = $em->getRepository('AppBundle:Product')->getUserProducts($user, 0, Constants::PRODUCT_PER_PAGE);
+        return $this->render('product/user_product_list.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+            'avatar' => $avatar,
+            'nickname' => $nickname,
+            'products' => $products,
+            'third_user' => $user,
+            'mobile'   => $this->getUser()->getMobile()
+        ));
+    }
+
 }

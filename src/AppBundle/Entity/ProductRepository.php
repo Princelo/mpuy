@@ -73,6 +73,22 @@ class ProductRepository extends EntityRepository
             ->getResult();
     }
 
+    public function getUserProducts($user, $offset = 0, $count = 5)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Product', 'p')
+            ->where('p.user = :user')
+            ->andWhere('p.isActive = true')
+            ->orderby('p.id', 'DESC')
+            ->setFirstResult($offset)
+            ->setMaxResults($count)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getProductsExpired($time)
     {
         return $this->getEntityManager()
