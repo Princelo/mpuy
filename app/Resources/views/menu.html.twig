@@ -43,7 +43,8 @@
     <a href="{{ path('profile') }}" id="bar-profile" style="position:relative;">
         <img src="{{ asset('bundles/app/images/profile.png') }}" />
         <i style="font-style:normal;
-         font-weight:bold; color:#fff; background: #f00; width: 8px; height:8px; display:none; position:absolute; right: -4px; top: -4px;
+         font-weight:bold; color:#fff; background: #f00; width: 18px; height:18px; display:none; position:absolute; right: -9px; top: -9px; border-radius: 9px;
+                font-size: 12px;
          {% if self.messageUnreadCount > 0 %} display:block; {% endif %}
          ">
             {{ self.messageUnreadCount }}

@@ -29,7 +29,7 @@
                 </div>
                 <div class="img-list">
                     <div class="my-gallery" itemscope itemtype="">
-                        {% for img in images %}
+                        {% for img in p.images %}
                         <figure itemprop="associatedMedia" itemscope itemtype="">
                             <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action({{ loop.index - 1 }})">
                                 <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />

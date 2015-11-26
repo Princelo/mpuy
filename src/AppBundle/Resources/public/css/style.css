@@ -1,4 +1,5 @@
 body,ul,img,p {padding: 0; margin:0;}
+body {padding-bottom: 100px;}
 li {list-style: none !important;}
 
 .product-list li {width: 48%; margin:1%; float:left;}
