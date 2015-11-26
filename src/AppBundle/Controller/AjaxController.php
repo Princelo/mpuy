@@ -264,7 +264,7 @@ class AjaxController extends Controller
         }
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $mobile = $request->query->get('mobile');
+        $mobile = $request->request->get('mobile');
         exit($mobile);
         $isExists = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['mobile'=>$mobile])->isEmpty();
         if ($isExists) {
