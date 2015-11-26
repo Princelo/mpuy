@@ -22,11 +22,8 @@ class DefaultController extends Controller implements WechatTokenGetterInterface
         $em = $this->getDoctrine()->getEntityManager();
         $products = $em->getRepository('AppBundle:Product')->getHomeProducts($user, 0, Constants::PRODUCT_PER_PAGE);
         return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'avatar' => $avatar,
-            'nickname' => $nickname,
             'products' => $products,
-            'mobile'   => $user->getMobile()
+            'self' => $user
         ));
     }
 }

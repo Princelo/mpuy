@@ -72,13 +72,16 @@ class UserController extends Controller implements WechatTokenGetterInterface
     /**
      * @param $user_id
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse|Response
      * @Route("/profile/{user_id}", name="profile_third")
      */
     public function profileThirdAction($user_id, Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user_id);
+        if ($this->getUser()->getId() == $user_id) {
+            return $this->redirectToRoute('profile');
+        }
         $products = $em->getRepository('AppBundle:Product')
             ->findBy(
                 ['user' => $user, 'isActive'=>true],

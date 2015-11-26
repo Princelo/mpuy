@@ -50,7 +50,7 @@
     </div>
     <div class="user-home-control">
         <a href="javascript:void(0);" class="i-submit actived">我发布的</a>
-        <a class="i-search" href="{{ path('product_random') }}"></a>
+        <a class="i-search" bhref="{{ path('product_random') }}" onclick="window.location.href='{{ path('product_random') }}'"></a>
         <a href="javascript:void(0);" class="i-like">我喜欢的</a>
         <script>
             $('.i-submit').live('click', function () {
@@ -78,7 +78,7 @@
             });
         </script>
     </div>
-    <div class="product-list">
+    <div class="product-list" style="margin-top:50px;">
         <ul>
             {% for p in products %}
             <li onclick="window.location.href='{{ path('product_view', {'product_id': p.id}) }}'">

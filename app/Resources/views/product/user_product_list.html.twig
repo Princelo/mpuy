@@ -4,13 +4,13 @@
     <link rel="stylesheet" href="{{ asset('bundles/app/css/home/home.css') }}" />
     <div class="home-header">
         <div class="home-header-bg">
-            <div class="username">{{ nickname }}</div>
+            <div class="username">{{ third_user.nickname }}</div>
         </div>
         <div class="tips-block">
-            <div class="tips">展示{{ nickname }}的拍品</div>
+            <div class="tips">展示{{ third_user.nickname }}的拍品</div>
         </div>
         <div class="avatar">
-            <a href="{{ path('profile') }}"><img src="{{ avatar }}" /></a>
+            <a href="{{ path('profile') }}"><img src="{{ third_user.avatar }}" /></a>
         </div>
     </div>
     <div class="goods-list">
@@ -137,7 +137,7 @@
                 success: function(response) {
                     if (response.state == 'success') {
                         $('#likes_count'+pid).html(parseInt($('#likes_count'+pid).html())+1);
-                        $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ avatar }}' /></a>");
+                        $('#likes'+pid).html($('#likes'+pid).html()+"<a href='{{ path('profile') }}'><img src='{{ self.avatar }}' /></a>");
                     }
                 }
             });

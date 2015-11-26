@@ -39,14 +39,11 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             $em->flush();
         }
         return $this->render('product/product_view.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'p' => $product,
-            'images' => $images,
-            'avatar' => $avatar,
-            'nickname' => $nickname,
+            'third_user' => $product->getUser(),
+            'self' => $user,
             'isOwn' => $isOwn,
             'is_expired' => $now >= $product->getExpireTime(),
-            'mobile' => $user->getMobile(),
         ));
     }
 
@@ -88,7 +85,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
      * @Route("/product/list/user/{id}", name="user_product_list")
      * @return Response
      */
-    public function indexAction($id, Request $request)
+    public function userProductListAction($id, Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
         $user = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['id'=>$id]);
@@ -96,12 +93,9 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $nickname = $user->getNickName();
         $products = $em->getRepository('AppBundle:Product')->getUserProducts($user, 0, Constants::PRODUCT_PER_PAGE);
         return $this->render('product/user_product_list.html.twig', array(
-            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            'avatar' => $avatar,
-            'nickname' => $nickname,
             'products' => $products,
             'third_user' => $user,
-            'mobile'   => $this->getUser()->getMobile()
+            'self'   => $this->getUser()
         ));
     }
 

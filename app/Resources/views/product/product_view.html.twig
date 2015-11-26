@@ -4,13 +4,17 @@
     <link rel="stylesheet" href="{{ asset('bundles/app/css/home/home.css') }}" />
     <div class="home-header">
         <div class="home-header-bg">
-            <div class="username">{{ nickname }}</div>
+            <div class="username">{{ third_user.nickname }}</div>
         </div>
         <div class="tips-block">
-            <div class="tips">{% if isOwn == true %}我的{% else %}{{ p.name }} {% endif %}商品详情</div>
+            <div class="tips">{% if isOwn == true %}我的{% else %}{{ p.name }} {% endif %}商品详情{% endif %}</div>
         </div>
         <div class="avatar">
-            <a href="{{ path('profile') }}"><img src="{{ avatar }}" /></a>
+            {% if isOwn == true %}
+            <a href="{{ path('profile') }}"><img src="{{ self.avatar }}" /></a>
+            {% else %}
+            <a href="{{ path('profile_third', {'user_id': third_user.id}) }}"><img src="{{ third_user.avatar }}" /></a>
+            {% endif %}
         </div>
     </div>
     <div class="goods-list">
