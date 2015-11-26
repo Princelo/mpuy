@@ -46,9 +46,9 @@
 <script src="{{ asset('bundles/app/js/headroom.js') }}"></script>
 <script>
     // grab an element
-    var myElement = document.querySelector("footer");
+    //var myElement = document.querySelector("footer");
     // construct an instance of Headroom, passing the element
-    var headroom = new Headroom(myElement, {
+    /*var headroom = new Headroom(myElement, {
         "offset": 300,
         "tolerance": 15,
         "classes": {
@@ -56,9 +56,9 @@
             "pinned": "slideUp",
             "unpinned": "slideDown"
         }
-    });
+    });*/
     // initialise
-    headroom.init();
+    //headroom.init();
     $('footer').animate({bottom: '+=50'});
     var chooseImage = function () {
         $('.fade-panel').show();
