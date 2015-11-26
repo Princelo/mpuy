@@ -26,6 +26,7 @@ class DefaultController extends Controller implements WechatTokenGetterInterface
             'avatar' => $avatar,
             'nickname' => $nickname,
             'products' => $products,
+            'mobile'   => $user->getMobile()
         ));
     }
 }

@@ -265,8 +265,7 @@ class AjaxController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $mobile = $request->request->get('mobile');
-        exit($mobile);
-        $isExists = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['mobile'=>$mobile])->isEmpty();
+        $isExists = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['mobile'=>$mobile]) !== null;
         if ($isExists) {
             return new JsonResponse([
                 'state' => 'error',
