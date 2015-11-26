@@ -273,6 +273,8 @@ class AjaxController extends Controller
             ]);
         } else {
             $user->setMobile($mobile);
+            $em->persist($user);
+            $em->flush();
             return new JsonResponse([
                 'state' => 'success',
             ]);

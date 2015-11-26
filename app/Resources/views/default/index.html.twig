@@ -72,7 +72,7 @@
                 <div class="action-block">
                     {% if p.expireTime|date('U') > "now"|date('U') %}
                         <a class="update" href="javascript:void(0);" onclick="update_bid_list({{ p.id }})">更新</a>
-                        <a class="bid-btn" onclick="bid_send({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
+                        <a class="bid-btn" onclick="bid_send_with_check({{ p.id }})" id="bid_send{{ p.id }}">出价</a>
                     {% else %}
                         <a class="bid-btn" onclick="">已经结束</a>
                     {% endif %}
@@ -121,6 +121,8 @@
             </style>
         {% endif %}
     </div>
+    <div class="fade-panel" style="display:none;">
+    </div>
 {% endblock %}
 {% block stylesheets %}
 {% endblock %}
@@ -160,6 +162,48 @@
             clock{{ p.id }}.innerHTML = countdown(targetDate{{ p.id }}).toString();
         }, 1000);
         {% endfor %}
+        var bid_send_with_check = function(product_id)
+        {
+            $.ajax({
+                url: '{{ path('ajax_check_mobile') }}',
+                type: 'post',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        bid_send(product_id);
+                        $('.fade-panel').hide();
+                    } else if(response.state == 'error' && response.desc == 'mobile_null') {
+                        alert('您尚未设定手机号码, 请先设定您的手机号码');
+                        var result = prompt("请输入您要设定的手机号码");
+                        var telReg = !!result.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+                        if(telReg == false){
+                            alert('请输入正确手机号');
+                            $('.fade-panel').hide();
+                            return false;
+                        }
+                        $.ajax({
+                            'type': 'post',
+                            url: '{{ path('ajax_set_mobile') }}',
+                            data: {'mobile': result},
+                            success: function (response) {
+                                alert(response);
+                                if (response.state == 'success') {
+                                    bid_send(product_id);
+                                    $('.fade-panel').hide();
+                                } else if (response.desc == 'mobile_unique') {
+                                    alert('手机号码已存在!');
+                                    $('.fade-panel').hide();
+                                    return false;
+                                } else {
+                                    alert('未知错误, 请重试');
+                                    $('.fade-panel').hide();
+                                    return false;
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
         var bid_send = function (product_id) {
             var result = prompt("请输入金额");
             function isInt(n){

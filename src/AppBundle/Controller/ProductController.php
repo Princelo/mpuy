@@ -44,7 +44,8 @@ class ProductController extends Controller implements WechatTokenGetterInterface
             'avatar' => $avatar,
             'nickname' => $nickname,
             'isOwn' => $isOwn,
-            'is_expired' => $now >= $product->getExpireTime()
+            'is_expired' => $now >= $product->getExpireTime(),
+            'mobile' => $user->getMobile(),
         ));
     }
 
