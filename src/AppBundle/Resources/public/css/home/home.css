@@ -41,6 +41,10 @@
 .goods-list .goods-details .details {font-size: 14px; color: #505050;}
 .my-gallery figure{width: 75px; float:left; margin: 2px; height: 75px;}
 .my-gallery figure img {width: 75px; height: 75px;}
+.my-gallery figure{width: 65px; float:left; margin: 2px; height: 65px;}
+.my-gallery figure img {width: 65px; height: 65px;}
+.goods-list .goods-details { width: 210px;}
+.goods-list .likes { width: 185px;}
 @media (max-device-width: 768px) {
     .my-gallery figure{width: 80px; float:left; margin: 2px; height: 80px;}
     .my-gallery figure img {width: 80px; height: 80px;}

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/home/home.css') }}" />
+    <style> body {background: #44505e;} </style>
+    <div style="width: 75%; height: 250px; background:#364451; margin: 0 auto;margin-top: 40px; padding: 10px;">
+        <img src="{{ '/attachments/wechat_img/'~p.imgCover.id }}" style="width: 100%; height: 100%;" />
+    </div>
+    <div style="width:75%; height: 40px; background:#364451; margin: 0 auto;padding: 10px; padding-top:0; position:relative;">
+        <h1 style="margin:0; color:#fff; font-size:18px; font-weight:bold;">{{ p.name }}</h1>
+        <label style="color:#fff; text-align:right; width: 100%;" >
+            当前竞拍价：<span style="color:#f60; font-weight:bold;">{% if p.topPayment null %}0元{% else %}{{ p.topPayment.volume }}元{% endif %}</span>
+        </label>
+        <div style="position: absolute; right: 12px; bottom: 12px;">
+            <a href="{{ path('product_random') }}" style="color:#fff; text-decoration:none; background: #f60; border-radius: 5px; width: 100px; height: 24px;line-height:24px; text-align:center; display:block;">
+                搜索下一个 »
+            </a>
+        </div>
+    </div>
+    <style type="text/css">
+        .search-ul li:first-child {margin: 0;}
+        .search-ul li {float:left; width: 15%; margin-left: 2%; height:50px;}
+        .search-ul li a{text-align:center; display:block; line-height: 50px;}
+        .search-hr-left {height: 2px; width: 28%; border-bottom: 1px solid #fff; background: #1a2634; float:left; margin-left:2%; margin-top:8px;}
+        .search-hr-right {height: 2px; width: 28%; border-bottom: 1px solid #fff; background: #1a2634; float:right; margin-right:2%;margin-top:8px;}
+        .search-hr label{width: 40%; text-align:center; float:left; height: 24px;}
+        .search-hr {height: 24px;}
+        .search-ul .active {background: #f60;}
+    </style>
+    <div style="position:fixed; bottom:0; height:75px; width: 100%; background: #44505e;">
+        <div class="search-hr">
+            <div class="search-hr-left"></div>
+            <label>选择你感兴趣的品类</label>
+            <div class="search-hr-right"></div>
+        </div>
+        <ul class="search-ul">
+            <li><a href="javascript:void(0);" id="category-0" {% if category == 0 %}class="active"{% endif %}>分类一</a></li>
+            <li><a href="javascript:void(0);" id="category-1" {% if category == 1 %}class="active"{% endif %}>分类二</a></li>
+            <li><a href="javascript:void(0);" id="category-2" {% if category == 2 %}class="active"{% endif %}>分类三</a></li>
+            <li><a href="javascript:void(0);" id="category-3" {% if category == 3 %}class="active"{% endif %}>分类四</a></li>
+            <li><a href="javascript:void(0);" id="category-4" {% if category == 4 %}class="active"{% endif %}>分类五</a></li>
+            <li><a href="javascript:void(0);" id="category-5" {% if category == 5 %}class="active"{% endif %}>分类六</a></li>
+        </ul>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var cookieThenPath = function(i) {
+            cookieSet(i);
+            pathGo();
+        }
+        var cookieSet = function(i) {
+            addcookie('random_category', i, 1);
+        }
+        var pathGo = function() {
+            window.location.href = '{{ path('product_random') }}';
+        }
+    </script>
+{% endblock %}

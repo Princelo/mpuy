@@ -27,6 +27,16 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         $user = $em->getRepository('AcmeAccountBundle:User')->find($user);
         $isOwn = $product->getUser() == $user;
         $now = new \DateTime();
+        $owner = $product->getUser();
+        if (!$isOwn && !$user->isFollowing($owner)) {
+            $owner->setFansCount($owner->getFansCount() + 1);
+            $owner->addFansUser($user);
+            $user->setFollowCount($user->getFollowCount() + 1);
+            $user->addFollowedUser($owner);
+            $em->persist($owner);
+            $em->persist($user);
+            $em->flush();
+        }
         return $this->render('product/product_view.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
             'p' => $product,
@@ -46,46 +56,27 @@ class ProductController extends Controller implements WechatTokenGetterInterface
     public function randomProductAction(Request $request)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $randomCategory = rand(0, 5);
+        $cookies = $request->cookies;
+        if ($cookies->has('random_category'))
+            $randomCategory = $cookies->get('random_category');
+        else
+            $randomCategory = rand(0, 5);
         $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
         // There may be no products belong to $randomCategory
         // Make sure that $randomProduct is not null by checking at most 100 times
         for ($i = 0; $i < 100; $i ++) {
-            if (null == $randomProduct) {
+            if (null == $randomProduct && $cookies->has('random_category')) {
                 $randomCategory = rand(0, 5);
-                $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
             } else {
                 break;
             }
         }
+        $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
         if (null == $randomProduct)
             return new Response('没有未过期商品');
-        $images = $em->getRepository('AppBundle:Image')->findBy(['product' => $randomProduct]);
-        $user = $this->getUser();
-        $avatar = $user->getAvatar();
-        $nickname = $user->getNickName();
-        $userId = $this->getUser()->getId();
-        $user = $em->getRepository('AcmeAccountBundle:User')->find($userId);
-        $owner = $randomProduct->getUser();
-        $ownerId = $owner->getId();
-        $isOwn = ( $ownerId == $userId );
-        if (!$isOwn && !$user->isFollowing($owner)) {
-            $owner->setFansCount($owner->getFansCount() + 1);
-            $owner->addFansUser($user);
-            $user->setFollowCount($user->getFollowCount() + 1);
-            $user->addFollowedUser($owner);
-            $em->persist($owner);
-            $em->persist($user);
-            $em->flush();
-        }
-        $now = new \DateTime();
-        return $this->render('product/product_view.html.twig', array(
+        return $this->render('product/random_product.html.twig', array(
             'p' => $randomProduct,
-            'images' => $images,
-            'avatar' => $avatar,
-            'nickname' => $nickname,
-            'isOwn' => $isOwn,
-            'is_expired' => $now >= $randomProduct->getExpireTime()
+            'category' => $cookies->has('random_category')?intval($cookies->get('random_category')):-1
         ));
     }
 }
