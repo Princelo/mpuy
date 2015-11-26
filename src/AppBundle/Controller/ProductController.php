@@ -66,7 +66,7 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         // There may be no products belong to $randomCategory
         // Make sure that $randomProduct is not null by checking at most 100 times
         for ($i = 0; $i < 100; $i ++) {
-            if (null == $randomProduct && $cookies->has('random_category')) {
+            if (null == $randomProduct && !$cookies->has('random_category')) {
                 $randomCategory = rand(0, 5);
             } else {
                 break;
