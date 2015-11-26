@@ -252,4 +252,31 @@ class AjaxController extends Controller
         }
     }
 
+    /**
+     * @Route("/ajax/set_mobile", name="ajax_set_mobile")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxSetMobile(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $mobile = $request->query->get('mobile');
+        $isExists = $em->getRepository('AcmeAccountBundle:User')->findOneBy(['mobile'=>$mobile]) !== null;
+        if ($isExists) {
+            return new JsonResponse([
+                'state' => 'error',
+                'desc'  => 'mobile_unique'
+            ]);
+        } else {
+            $user->setMobile($mobile);
+            return new JsonResponse([
+                'state' => 'success',
+            ]);
+        }
+    }
+
 }
