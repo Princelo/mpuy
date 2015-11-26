@@ -228,5 +228,28 @@ class AjaxController extends Controller
             'per' => Constants::PRODUCT_PER_PAGE,
         ]);
     }
-    
+
+    /**
+     * @Route("/ajax/check_mobile", name="ajax_check_mobile")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxCheckMobile(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $user = $this->getUser();
+        if ($user->getMobile() == null) {
+            return new JsonResponse([
+                'state' => 'error',
+                'desc'  => 'mobile_null'
+            ]);
+        } else {
+            return new JsonResponse([
+                'state' => 'success',
+            ]);
+        }
+    }
+
 }

@@ -35,6 +35,8 @@
     #bar-profile {margin-left: 50px;}
     .headroom > a > img {width: 28px;}
 </style>
+<div class="fade-panel" style="display:none;">
+</div>
 <link rel="stylesheet" href="{{ asset('bundles/app/css/menu.css') }}" />
 <!-- /Menu-->
 <footer id="soulnavbar" class="headroom header--fixed">
@@ -46,15 +48,68 @@
 <script src="{{ asset('bundles/app/js/headroom.js') }}"></script>
 <script>
     var chooseImage = function () {
-        wx.chooseImage({
-            count: 9, // 默认9
-            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                //for (var i = 0; i < localIds.length; i++) {
-                    uploadImage(localIds, 1);
-                //}
+        $('.fade-panel').show();
+        checkMobile();
+    }
+
+    var checkMobile = function()
+    {
+        $.ajax({
+            url: '{{ path('ajax_check_mobile') }}',
+            type: 'post',
+            success: function(response) {
+                if (response.state == 'success') {
+                    wx.chooseImage({
+                        count: 9, // 默认9
+                        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                        success: function (res) {
+                            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                            //for (var i = 0; i < localIds.length; i++) {
+                            uploadImage(localIds, 1);
+                            //}
+                        }
+                    });
+                    $('.fade-panel').hide();
+                } else if(response.state == 'error' && response.desc == 'mobile_null') {
+                    alert('您尚未设定手机号码, 请先设定您的手机号码');
+                    var result = prompt("请输入您要设定的手机号码");
+                    var telReg = !!result.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+                    if(telReg == false){
+                        alert('请输入正确手机号');
+                        $('.fade-panel').hide();
+                        return false;
+                    }
+                    $.ajax({
+                        'type': 'post',
+                        url: '{{ path('ajax_set_mobile') }}',
+                        data: {'mobile': result},
+                        success: function (response) {
+                            if (response.state == 'success') {
+                                wx.chooseImage({
+                                    count: 9, // 默认9
+                                    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                                    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                                    success: function (res) {
+                                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                                        //for (var i = 0; i < localIds.length; i++) {
+                                        uploadImage(localIds, 1);
+                                        //}
+                                    }
+                                });
+                                $('.fade-panel').hide();
+                            } else if (response.desc == 'mobile_unique') {
+                                alert('手机号码已存在!');
+                                $('.fade-panel').hide();
+                                return false;
+                            } else {
+                                alert('未知错误, 请重试');
+                                $('.fade-panel').hide();
+                                return false;
+                            }
+                        }
+                    });
+                }
             }
         });
     }
