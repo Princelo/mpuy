@@ -129,7 +129,7 @@
             });
         }
         var photoswipe_action = function (i) {
-            var images = [{% for img in images %}
+            var images = [{% for img in p.images %}
                     'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
