@@ -68,11 +68,11 @@ class ProductController extends Controller implements WechatTokenGetterInterface
         for ($i = 0; $i < 100; $i ++) {
             if (null == $randomProduct && !$cookies->has('random_category')) {
                 $randomCategory = rand(0, 5);
+                $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
             } else {
                 break;
             }
         }
-        $randomProduct = $em->getRepository('AppBundle:Product')->getRandomProduct($randomCategory);
         if (null == $randomProduct)
             return new Response('没有未过期商品');
         return $this->render('product/random_product.html.twig', array(
