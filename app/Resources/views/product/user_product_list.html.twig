@@ -311,7 +311,7 @@
                     processing = true;
                     $.ajax({
                         type: 'get',
-                        url: '{{ path('ajax_get_user_products', {'id': {{ third_user.id }} }) }}',
+                        url: '{{ path('ajax_get_user_products', {'id':  third_user.id  }) }}',
                         data: {
                             'page': parseInt($('#current-page').val() + 1)
                         },
