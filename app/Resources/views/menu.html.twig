@@ -85,6 +85,7 @@
                         url: '{{ path('ajax_set_mobile') }}',
                         data: {'mobile': result},
                         success: function (response) {
+                            alert(response);
                             if (response.state == 'success') {
                                 wx.chooseImage({
                                     count: 9, // 默认9
