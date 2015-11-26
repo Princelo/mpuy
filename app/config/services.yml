@@ -39,3 +39,7 @@ services:
         #arguments: [ "@acme_demo.mailer.user" ]
         tags:
             -  { name: doctrine.entity_listener, event: postPersist }
+    app_bundle.entity_listener.message:
+        class: AppBundle\Entity\Listener\MessageListener
+        tags:
+            -  { name: doctrine.entity_listener, event: postPersist }

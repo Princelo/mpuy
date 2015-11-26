@@ -40,7 +40,15 @@
 <footer id="soulnavbar" class="headroom header--fixed" style="bottom: -50px; !important;">
     <a href="{{ path('homepage') }}" id="bar-home"><img src="{{ asset('bundles/app/images/house.png') }}" /></a>
     <a href="javascript:void(0);" id="bar-publish" onclick="chooseImage()"><img src="{{ asset('bundles/app/images/camera.png') }}" /></a>
-    <a href="{{ path('profile') }}" id="bar-profile"><img src="{{ asset('bundles/app/images/profile.png') }}" /></a>
+    <a href="{{ path('profile') }}" id="bar-profile" style="position:relative;">
+        <img src="{{ asset('bundles/app/images/profile.png') }}" />
+        <i style="font-style:normal;
+         font-weight:bold; color:#fff; background: #f00; width: 8px; height:8px; display:none; position:absolute; right: -4px; top: -4px;
+         {% if self.messageUnreadCount > 0 %} display:block; {% endif %}
+         ">
+            {{ self.messageUnreadCount }}
+        </i>
+    </a>
 </footer>
 <!-- /Menu -->
 <script src="{{ asset('bundles/app/js/headroom.js') }}"></script>
