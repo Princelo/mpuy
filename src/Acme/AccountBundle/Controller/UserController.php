@@ -28,7 +28,7 @@ class UserController extends Controller implements WechatTokenGetterInterface
                 5);
         $likes = $em->getRepository('AppBundle:Product')->getLikedProducts($user, 5);
         $messagesUnread = $em->getRepository('AppBundle:Message')->findBy([
-            'user' => $user,
+            'receiveUser' => $user,
             'isRead' => false,
         ]);
 
