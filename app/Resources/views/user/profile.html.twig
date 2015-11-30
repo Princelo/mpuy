@@ -24,12 +24,28 @@
 <body>
 <div data-role="panel" id="mypanel"  data-position="left" data-display="push">
     <!-- panel content goes here -->
-    <a href="#my-header" data-rel="close">Close panel</a>
+    <a href="#my-header" data-rel="close" style="text-decoration: none; color: #8011ff">返回</a>
+    <ul>
+        {% for m in messages %}
+        <li>
+            <a href="">m.context</a>
+        </li>
+        {% endfor %}
+    </ul>
 </div><!-- /panel -->
 <div data-role="page">
 
     <div class="user-home-header">
-        <a href="#" class="panel-left-btn"></a>
+        <a href="#" class="panel-left-btn" style="position:relative">
+            我的信息
+            <i style="font-style:normal;
+                    font-weight:bold; color:#fff; background: #f00; width: 18px; height:18px; display:none; position:absolute; right: 3px; top: 3px; border-radius: 9px;
+                    font-size: 12px;
+            {% if self.messageUnreadCount > 0 %} display:block; {% endif %}
+                    ">
+                {{ self.messageUnreadCount }}
+            </i>
+        </a>
         <a href="javascript:void(0);" class="panel-right-btn"> </a>
         <span class="panel-right-btn-text" style="display: none;">
             钱包: {{ user.deposit }}元
