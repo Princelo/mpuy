@@ -41,9 +41,9 @@
             <i style="font-style:normal;
                     font-weight:bold; color:#fff; background: #f00; width: 18px; height:18px; display:none; position:absolute; right: 3px; top: 3px; border-radius: 9px;
                     font-size: 12px;
-            {% if self.messageUnreadCount > 0 %} display:block; {% endif %}
+            {% if user.messageUnreadCount > 0 %} display:block; {% endif %}
                     ">
-                {{ self.messageUnreadCount }}
+                {{ user.messageUnreadCount }}
             </i>
         </a>
         <a href="javascript:void(0);" class="panel-right-btn"> </a>
