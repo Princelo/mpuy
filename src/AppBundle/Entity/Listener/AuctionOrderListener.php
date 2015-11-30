@@ -60,6 +60,7 @@ class AuctionOrderListener
                 'object_name'  => $buyer->getNickname(),
                 'order_id' => $orderId
             ], 'forBuyer');
+            $this->sendSiteMessage($order, $em);
         }
     }
 
@@ -78,6 +79,24 @@ class AuctionOrderListener
         ]);
         $em = $this->getDoctrine()->getManager();
         $em->persist($job);
+        $em->flush();
+    }
+
+    public function sendSiteMessage($order, $em)
+    {
+        $messageForPayer = new Message();
+        $messageForReceiver = new Message();
+        $messageForPayer->setContext('您竞拍成功了'.$order->getProduct()->getName().'商品, 拍价为'.$order->getProduct()->getTopPayment()->getVolume().'元');
+        $messageForPayer->setIsLinkOrder(true);
+        $messageForPayer->setLinkOrder($order);
+        $messageForPayer->setReceiveUser($order->getProduct()->getTopPayment()->getPayUser());
+        $em->persist($messageForPayer);
+
+        $messageForReceiver->setContext($order->getProduct()->getTopPayment()->getPayUser()->getNickName().'成功竞拍了您的'.$order->getProduct()->getName().'商品, 拍价为'.$order->getProduct()->getTopPayment()->getVolume().'元');
+        $messageForReceiver->setIsLinkOrder(true);
+        $messageForReceiver->setLinkOrder($order);
+        $messageForReceiver->setReceiveUser($order->getProduct()->getUser());
+        $em->persist($messageForReceiver);
         $em->flush();
     }
 }

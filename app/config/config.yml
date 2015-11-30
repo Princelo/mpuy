@@ -95,6 +95,8 @@ snc_redis:
             type: predis
             alias: default
             dsn: redis://localhost
+            options:
+              prefix: "mpuy"
         doctrine:
             type: predis
             alias: doctrine

@@ -45,6 +45,13 @@ class Message
     /**
      * @var boolean
      *
+     * @ORM\Column(name="is_link_order", type="boolean")
+     */
+    private $isLinkOrder;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="is_read", type="boolean")
      */
     private $isRead;
@@ -62,6 +69,13 @@ class Message
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $linkProduct;
+
+    /**
+     * @var AuctionOrder
+     * @ORM\ManyToOne(targetEntity="AuctionOrder", inversedBy="messages")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     */
+    protected $linkOrder;
 
     /**
      * Get id

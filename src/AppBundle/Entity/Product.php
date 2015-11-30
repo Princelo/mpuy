@@ -161,7 +161,7 @@ class Product
     protected $payments;
 
     /**
-     * @ORM\OneToMany(targetEntity="Payment", mappedBy="linkProduct")
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="linkProduct")
      */
     protected $messages;
 

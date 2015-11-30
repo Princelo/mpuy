@@ -17,4 +17,19 @@ class MessageController extends Controller implements WechatTokenGetterInterface
         $user = $this->getUser();
     }
 
+    /**
+     * @Route("/message/details/{id}", name="message_details")
+     */
+    public function messageDetailsAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $message = $em->getRepository('AppBundle:Message')->find($id);
+        $message->setIsRead(true);
+        $em->persist($message);
+        $em->flush();
+        return $this->render('message/details.html.twig', array(
+            'message' => $message,
+        ));
+    }
+
 }

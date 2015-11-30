@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="telephone=no" name="format-detection">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{{ asset('bundles/app/css/style.css') }}" />
+    <style>
+        .order-list > ul > li {padding-left: 2%; padding-right: 2%; padding-top: 8px; padding-bottom: 8px; border-top: 1px solid #e6e6e6; border-bottom:1px solid #e6e6e6; width:96%; height: 120px; float:left; position:relative;}
+        .order-list > ul > li > a > img {width:120px; height: 120px; float:left;}
+        .order-list .text {float:left; padding-left:12px; position:relative;height:120px; width: 50%;}
+        .order-list .text label {font-weight:bold; font-size:16px;}
+        .order-list .text p {font-size: 12px; position:absolute; bottom:4px;}
+        .order-list .tips {position: absolute; right: 12px; top: 2px; background: #087099; color:#fff; text-align:center; display:block; width: 100px; border-radius: 4px;}
+    </style>
+</head>
+<body>
+<div class="message-content">
+    {{ message.context }}
+    <div class="message-time">
+        {{ message.createTime }}
+    </div>
+</div>
+{% if message.isLinkOrder %}
+<div class="order-list">
+    <ul>
+        <li>
+            <a href="{{ path('order_view', {'id': message.linkOrder.id}) }}">
+                <img src="/attachments/wechat_img/{{ message.linkOrder.product.imgCover }}">
+                <div class="text">
+                    <label>{{ message.linkOrder.product.name }}</label>
+                    <p>
+                        {% if message.linkOrder.status == 0 || message.linkOrder.status==10 %}交易状态：买家未付款{% endif %}<br>
+                        {% if message.linkOrder.status == 11 %}交易状态：买家已付款{% endif %}<br>
+                        创建时间：10月15日 14:02
+                    </p>
+                </div>
+                <div class="tips">交易失败</div>
+            </a>
+        </li>
+    </ul>
+</div>
+{% endif %}
+{% if message.isLinkProduct %}
+    <div class="order-list">
+        <ul>
+            <li>
+                <a href="{{ path('product_view', {'id': message.linkProduct.id}) }}">
+                    <img src="/attachments/wechat_img/{{ message.linkProduct.imgCover }}">
+                    <div class="text">
+                        <label>{{ message.linkProduct.name }}</label>
+                        <p>
+                            {% if message.linkProduct.topPayment %}当前最高价：{{ message.linkProduct.topPayment.volume }}元{% endif %}<br>
+                        </p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endif %}
+</body>
+</html>

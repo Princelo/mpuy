@@ -101,6 +101,11 @@ class AuctionOrder
      **/
     protected $payment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="linkOrder")
+     */
+    protected $messages;
+
 
     /**
      * Get id
