@@ -28,7 +28,7 @@
     <ul>
         {% for m in messages %}
         <li>
-            <a href="{{ path('message_details', {'id': m.id}) }}">{{ m.context }}</a>
+            <a href="javascript:void(0);" onclick="window.location.href='{{ path('message_details', {'id': m.id}) }}'">{{ m.context }}</a>
         </li>
         {% endfor %}
     </ul>

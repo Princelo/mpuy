@@ -33,8 +33,16 @@
                 <div class="text">
                     <label>{{ message.linkOrder.product.name }}</label>
                     <p>
-                        {% if message.linkOrder.status == 0 || message.linkOrder.status==10 %}交易状态：买家未付款{% endif %}<br>
-                        {% if message.linkOrder.status == 11 %}交易状态：买家已付款{% endif %}<br>
+                        {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_CREATE') and
+                        message.linkOrder.payStatus==constant('AppBundle\\Entity\\Constants::ORDER_NONPAY') %}交易状态：买家未付款{% endif %}<br>
+                        {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_CREATE') and
+                        message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_PAID') %}交易状态：买家已付款{% endif %}<br>
+                        {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_CLOSED') and
+                        message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_NONPAY') %}交易状态：交易关闭(买家未付款){% endif %}<br>
+                        {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_CLOSED') and
+                        message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_PAID') %}交易状态：交易关闭(买家已付款){% endif %}<br>
+                        {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_SUCCESS') and
+                        message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_PAID') %}交易状态：交易成功{% endif %}<br>
                         创建时间：10月15日 14:02
                     </p>
                 </div>
