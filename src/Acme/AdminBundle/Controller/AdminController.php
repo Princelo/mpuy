@@ -34,7 +34,7 @@ class AdminController extends Controller
         if ($request->getMethod() == 'GET') {
             $where = $this->_getUserSearchStr($request->query->get('search'));
         }
-        $queryArticlelist = $em->getRepository('AppBundle:User')
+        $queryArticlelist = $em->getRepository('AcmeAccountBundle:User')
             ->getQueryUserList($where);
 
         $paginator  = $this->get('knp_paginator');
@@ -60,7 +60,7 @@ class AdminController extends Controller
         if ($request->getMethod() == 'GET') {
             $where = $this->_getUserSearchStr($request->query->get('search'));
         }
-        $queryArticlelist = $em->getRepository('AppBundle:User')
+        $queryArticlelist = $em->getRepository('AcmeAccountBundle:User')
             ->getQueryUserList($where);
 
         $paginator  = $this->get('knp_paginator');
