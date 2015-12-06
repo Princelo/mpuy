@@ -106,6 +106,18 @@ class AuctionOrder
      */
     protected $messages;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="closeOrders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $closedBy;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Acme\AccountBundle\Entity\User", inversedBy="finishOrders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $finishedBy;
+
 
     /**
      * Get id
@@ -491,5 +503,51 @@ class AuctionOrder
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * Set closedBy
+     *
+     * @param \Acme\AccountBundle\Entity\User $closedBy
+     * @return AuctionOrder
+     */
+    public function setClosedBy(\Acme\AccountBundle\Entity\User $closedBy = null)
+    {
+        $this->closedBy = $closedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get closedBy
+     *
+     * @return \Acme\AccountBundle\Entity\User 
+     */
+    public function getClosedBy()
+    {
+        return $this->closedBy;
+    }
+
+    /**
+     * Set finishedBy
+     *
+     * @param \Acme\AccountBundle\Entity\User $finishedBy
+     * @return AuctionOrder
+     */
+    public function setFinishedBy(\Acme\AccountBundle\Entity\User $finishedBy = null)
+    {
+        $this->finishedBy = $finishedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get finishedBy
+     *
+     * @return \Acme\AccountBundle\Entity\User 
+     */
+    public function getFinishedBy()
+    {
+        return $this->finishedBy;
     }
 }

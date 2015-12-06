@@ -16,6 +16,10 @@ services:
         arguments:
             - @fos_user.user_manager
             - @service_container
+    authentication_handler:
+        class: Acme\AdminBundle\Handler\AuthenticationHandler
+        calls:
+            - [ setContainer, [ @service_container ] ]
     app.tokens.action_listener:
         class: AppBundle\EventListener\WechatTokenGetter
         #arguments: ["%tokens%"]

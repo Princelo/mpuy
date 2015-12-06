@@ -64,6 +64,29 @@ class AuctionOrderListener
         }
     }
 
+    public function postUpdate(AuctionOrder $order, LifecycleEventArgs $eventArgs)
+    {
+        if ($eventArgs->getEntity() instanceof AuctionOrder) {
+            if ($order->getStatus() == -1) {
+                $productEvent = new ProductEvent();
+                $productEvent->setActionUser($eventArgs->getEntity()->getClosedBy());
+                $productEvent->setProduct($eventArgs->getEntity()->getProduct());
+                $productEvent->setType(-1);
+                $em = $eventArgs->getEntityManager();
+                $em->persist($productEvent);
+                $em->flush();
+            } elseif ($order->getStatus() == 0) {
+                $productEvent = new ProductEvent();
+                $productEvent->setActionUser($eventArgs->getEntity()->getFinishedBy());
+                $productEvent->setProduct($eventArgs->getEntity()->getProduct());
+                $productEvent->setType(0);
+                $em = $eventArgs->getEntityManager();
+                $em->persist($productEvent);
+                $em->flush();
+            }
+        }
+    }
+
     public function sendWechatMessageAsync($arr, $object)
     {
         $job = new Job('wechat_message_sender:command', [

@@ -306,4 +306,102 @@ class AjaxController extends Controller
         }
     }
 
+    /**
+     * @Route("/ajax/close_order_by_buyer", name="close_order_by_buyer")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxCloseOrderByBuyer(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $id = $request->request->get('id');
+        $order = $em->getRepository('AppBundle:AuctionOrder')->find($id);
+        if ($order->getBuyer()->getId() !== $user->getId()) {
+            return new JsonResponse([
+                'state' => 'error',
+                'message' => 'The Order Is Not Yours'
+            ]);
+        } else {
+            $order->setStatus(-1);
+            $order->setFailDesription('买家关闭交易');
+            $order->setClosedBy($this->getUser());
+            $em->persist($order);
+            $em->flush();
+            return new JsonResponse([
+                'state' => 'state',
+                'message' => '操作成功',
+                'status_str' => '交易关闭(买家关闭交易)'
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/ajax/close_order_by_seller", name="close_order_by_seller")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxCloseOrderBySeller(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $id = $request->request->get('id');
+        $order = $em->getRepository('AppBundle:AuctionOrder')->find($id);
+        if ($order->getSeller()->getId() !== $user->getId()) {
+            return new JsonResponse([
+                'state' => 'error',
+                'message' => 'The Order Is Not Yours'
+            ]);
+        } else {
+            $order->setStatus(-1);
+            $order->setFailDesription('卖家关闭交易');
+            $order->setClosedBy($this->getUser());
+            $em->persist($order);
+            $em->flush();
+            return new JsonResponse([
+                'state' => 'state',
+                'message' => '操作成功',
+                'status_str' => '交易关闭(卖家关闭交易)'
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/ajax/finish_order_by_seller", name="finish_order_by_seller")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function ajaxFinishOrderBySeller(Request $request)
+    {
+        if ( !$request->isXmlHttpRequest() ) {
+            exit();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $id = $request->request->get('id');
+        $order = $em->getRepository('AppBundle:AuctionOrder')->find($id);
+        if ($order->getSeller()->getId() !== $user->getId()) {
+            return new JsonResponse([
+                'state' => 'error',
+                'message' => 'The Order Is Not Yours'
+            ]);
+        } else {
+            $order->setStatus(0);
+            $order->setFinishedBy($this->getUser());
+            $em->persist($order);
+            $em->flush();
+            return new JsonResponse([
+                'state' => 'state',
+                'message' => '操作成功',
+                'status_str' => '交易成功'
+            ]);
+        }
+    }
+
 }

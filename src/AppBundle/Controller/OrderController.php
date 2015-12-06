@@ -115,10 +115,12 @@ class OrderController extends Controller implements WechatTokenGetterInterface
             );
         }
         $events = $em->getRepository('ProductEvent')->getEvents($order->getProduct(), $order);
+        $isSeller = $order->getSeller()->getId() === $user;
         return $this->render('order/details.html.twig', array(
             'title' => '订单详情',
             'order' => $order,
             'events' => $events,
+            'is_seller' => $isSeller,
         ));
     }
 

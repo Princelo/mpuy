@@ -258,6 +258,18 @@ class User extends BaseUser
     protected $payments;
 
     /**
+     * @var \AppBundle\Entity\AuctionOrder
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\AuctionOrder", mappedBy="closedBy")
+     */
+    protected $closeOrders;
+
+    /**
+     * @var \AppBundle\Entity\AuctionOrder
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\AuctionOrder", mappedBy="finishedBy")
+     */
+    protected $finishOrders;
+
+    /**
      * @var \AppBundle\Entity\Payment
      * @ORM\OneToMany(targetEntity="\AppBundle\Entity\Payment", mappedBy="receiveUser")
      */
@@ -1417,5 +1429,104 @@ class User extends BaseUser
     public function getReceivePayments()
     {
         return $this->receivePayments;
+    }
+
+    /**
+     * Add events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     * @return User
+     */
+    public function addEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove events
+     *
+     * @param \AppBundle\Entity\ProductEvent $events
+     */
+    public function removeEvent(\AppBundle\Entity\ProductEvent $events)
+    {
+        $this->events->removeElement($events);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Add closeOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $closeOrders
+     * @return User
+     */
+    public function addCloseOrder(\AppBundle\Entity\AuctionOrder $closeOrders)
+    {
+        $this->closeOrders[] = $closeOrders;
+
+        return $this;
+    }
+
+    /**
+     * Remove closeOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $closeOrders
+     */
+    public function removeCloseOrder(\AppBundle\Entity\AuctionOrder $closeOrders)
+    {
+        $this->closeOrders->removeElement($closeOrders);
+    }
+
+    /**
+     * Get closeOrders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCloseOrders()
+    {
+        return $this->closeOrders;
+    }
+
+    /**
+     * Add finishOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $finishOrders
+     * @return User
+     */
+    public function addFinishOrder(\AppBundle\Entity\AuctionOrder $finishOrders)
+    {
+        $this->finishOrders[] = $finishOrders;
+
+        return $this;
+    }
+
+    /**
+     * Remove finishOrders
+     *
+     * @param \AppBundle\Entity\AuctionOrder $finishOrders
+     */
+    public function removeFinishOrder(\AppBundle\Entity\AuctionOrder $finishOrders)
+    {
+        $this->finishOrders->removeElement($finishOrders);
+    }
+
+    /**
+     * Get finishOrders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFinishOrders()
+    {
+        return $this->finishOrders;
     }
 }

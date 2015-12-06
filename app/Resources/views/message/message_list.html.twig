@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<ul>
+    {% for m in messages %}
+        <li>
+            {% if m.isRead != true %}<span>[新]</span>{% endif %}<a href="javascript:void(0);" onclick="window.location.href='{{ path('message_details', {'id': m.id}) }}'">{{ m.context }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

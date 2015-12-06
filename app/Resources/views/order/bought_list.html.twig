@@ -42,9 +42,12 @@
                 <div class="text">
                     <label>{{ o.product.name }}</label>
                     <p>
-                        交易状态：{{ statusStr }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
+                        交易状态：<span id="order-status-str{{ o.id }}">{{ statusStr }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}</span><br />
                         创建时间：{{ o.createTime|date('m月d日 H:i') }}
                     </p>
+                    <div class="order-close">
+                        <a href="javascript:void(0);" onclick="close_order({{ o.id }})">关闭交易</a>
+                    </div>
                 </div>
                 <div class="tips">
                     {{ stateStr }}
@@ -54,5 +57,25 @@
         {% endfor %}
     </ul>
 </div>
+<script>
+    var close_order = function(oid) {
+        if ( confirm('交易关闭不可恢復,你是否确认关闭交易?') ) {
+            $.ajax({
+                type: 'post',
+                data: {'id' : oid},
+                url: '{{ path('close_order_by_buyer') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        alert('关闭交易成功!');
+                        $('.order-close').hide();
+                        $('#order-status-str'+oid).html(response.status_str);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>

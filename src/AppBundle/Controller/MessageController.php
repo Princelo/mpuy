@@ -35,4 +35,16 @@ class MessageController extends Controller implements WechatTokenGetterInterface
         ));
     }
 
+    /**
+     * @Route("/message/list", name="message_list")
+     */
+    public function messageListAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $messages = $em->getRepository('AppBundle:Message')->getMessages($this->getUser());
+        return $this->render('message/message_list.html.twig', array(
+            'message' => $messages,
+        ));
+    }
+
 }

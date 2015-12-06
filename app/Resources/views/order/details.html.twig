@@ -74,16 +74,35 @@
     <ul>
         <li>
             <a href="{{ path('product_view', {'product_id': o.product.id}) }}">
+                {% if o.status == 0 %} {% set statusStr = '交易成功' %}
+                {% elseif o.status == 1 %} {% set statusStr = '未付款' %}
+                {% elseif o.status == 2 %} {% set statusStr = '待发货' %}
+                {% elseif o.status == 3 %} {% set statusStr = '未收货' %}
+                {% elseif o.status == 4 %} {% set statusStr = '流拍' %}
+                {% elseif o.status == -1 %} {% set statusStr = '交易失败' %}
+                {% endif %}
                 {% set imgSrc = '/web/attachments/wechat_img/' ~ o.product.imgCover.id %}
                 <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                 <div class="text">
                     <label>{{ o.product.name }}</label>
                     <p>
-                        交易状态：{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}<br />
+                        交易状态：<span id="order-status-str">{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }} {% if o.status == -1 %}（{{ o.failDescription }}）{% endif %}</span><br />
                         创建时间：{{ o.createTime|date('m月d日 H:i') }}
                     </p>
+                    {% if is_seller %}
+                        <div class="order-close byseller">
+                            <a href="javascript:void(0);" onclick="close_order_by_seller({{ o.id }})">关闭交易</a>
+                        </div>
+                        <div class="order-finish">
+                            <a href="javascript:void(0);" onclick="finish_order({{ o.id }})">完成交易</a>
+                        </div>
+                    {% else %}
+                        <div class="order-close bybuyer">
+                            <a href="javascript:void(0);" onclick="close_order_by_buyer({{ o.id }})">关闭交易</a>
+                        </div>
+                    {% endif %}
                 </div>
-                <div class="tips">{{ constants('AppBundle\Entity\Constatns\ORDER_STATUS')[o.status] }}</div>
+                <div class="tips">{{ statusStr }}</div>
             </a>
         </li>
     </ul>
@@ -91,5 +110,61 @@
 <p class="order-info">
     订单编号：{{ o.orderSn }}
 </p>
+<script>
+    var close_order_by_buyer = function(oid) {
+        if ( confirm('交易关闭不可恢復,你是否确认关闭交易?') ) {
+            $.ajax({
+                type: 'post',
+                data: {'id' : oid},
+                url: '{{ path('close_order_by_buyer') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        alert('关闭交易成功!');
+                        $('.order-close').hide();
+                        $('#order-status-str'+oid).html(response.status_str);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        }
+    }
+    var close_order_by_seller = function(oid) {
+        if ( confirm('交易关闭不可恢復,你是否确认关闭交易?') ) {
+            $.ajax({
+                type: 'post',
+                data: {'id' : oid},
+                url: '{{ path('close_order_by_seller') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        alert('关闭交易成功!');
+                        $('.order-close').hide();
+                        $('#order-status-str'+oid).html(response.status_str);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        }
+    }
+    var finish_order = function(oid) {
+        if ( confirm('完成交易不可恢復,你是否确认标记交易完成?') ) {
+            $.ajax({
+                type: 'post',
+                data: {'id' : oid},
+                url: '{{ path('finish_order_by_seller') }}',
+                success: function(response) {
+                    if (response.state == 'success') {
+                        alert(response.message);
+                        $('.order-close').hide();
+                        $('#order-status-str'+oid).html(response.status_str);
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            });
+        }
+    }
+</script>
 </body>
 </html>
