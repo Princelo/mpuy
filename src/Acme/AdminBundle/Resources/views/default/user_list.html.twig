@@ -71,8 +71,8 @@
                                 <td>{{ u.followCount }}人</td>
                                 <td>{{ u.boughtCount }}</td>
                                 <td>{{ u.soldCount }}</td>
-                                <td>{{ u.createTime }}</td>
-                                <td>{{ u.lastLogin }}</td>
+                                <td>{{ u.createTime|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ u.lastLogin|date('Y-m-d H:i:s') }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
