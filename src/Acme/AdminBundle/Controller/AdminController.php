@@ -20,7 +20,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        return $this->redirect($this->generateUrl('admin_user_list'));
+        return $this->redirect($this->generateUrl('admin_user_list', ['page'=>1]));
     }
 
     /**
