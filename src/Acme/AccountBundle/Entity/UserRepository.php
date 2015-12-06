@@ -111,7 +111,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $query = $this->getEntityManager()
             ->createQuery(
                 "
-                SELECT u,
+                SELECT u
                  FROM AcmeAccountBundle:User u
                 WHERE
                 {$strWhere}
