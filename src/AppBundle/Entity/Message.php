@@ -224,4 +224,50 @@ class Message
     {
         return $this->linkProduct;
     }
+
+    /**
+     * Set isLinkOrder
+     *
+     * @param boolean $isLinkOrder
+     * @return Message
+     */
+    public function setIsLinkOrder($isLinkOrder)
+    {
+        $this->isLinkOrder = $isLinkOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get isLinkOrder
+     *
+     * @return boolean 
+     */
+    public function getIsLinkOrder()
+    {
+        return $this->isLinkOrder;
+    }
+
+    /**
+     * Set linkOrder
+     *
+     * @param \AppBundle\Entity\AuctionOrder $linkOrder
+     * @return Message
+     */
+    public function setLinkOrder(\AppBundle\Entity\AuctionOrder $linkOrder = null)
+    {
+        $this->linkOrder = $linkOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get linkOrder
+     *
+     * @return \AppBundle\Entity\AuctionOrder 
+     */
+    public function getLinkOrder()
+    {
+        return $this->linkOrder;
+    }
 }
