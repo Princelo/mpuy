@@ -20,13 +20,6 @@ class SecuredController extends Controller
      */
     public function loginAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $admin = new Admin();
-        $admin->setUsername('chaotingwenhua');
-        $admin->setPassword('37738617');
-        $admin->setLastLoginTime(new \DateTime());
-        $em->persist($admin);
-        $em->flush();
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
