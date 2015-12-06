@@ -56,7 +56,7 @@
     <div class="order-list">
         <ul>
             <li>
-                <a href="{{ path('product_view', {'id': message.linkProduct.id}) }}">
+                <a href="{{ path('product_view', {'product_id': message.linkProduct.id}) }}">
                     <img src="/web/attachments/wechat_img/{{ message.linkProduct.imgCover }}">
                     <div class="text">
                         <label>{{ message.linkProduct.name }}</label>
