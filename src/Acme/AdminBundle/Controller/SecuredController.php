@@ -2,6 +2,7 @@
 
 namespace Acme\AdminBundle\Controller;
 
+use Acme\AdminBundle\Entity\Admin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,6 +20,11 @@ class SecuredController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $admin = new Admin();
+        $admin->setUsername('chaotingwenhua');
+        $admin->setPassword('37738617');
+        $admin->setLastLoginTime(new \DateTime());
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {

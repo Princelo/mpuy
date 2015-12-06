@@ -5,7 +5,6 @@ namespace Acme\AdminBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Acme\BackendBundle\Entity\Constant;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -143,26 +142,6 @@ class Admin implements AdvancedUserInterface, \Serializable
 
         return $this;
     }
-
-
-    /**
-     * Set intStatus
-     *
-     * @param integer $intStatus
-     * @return Member
-     */
-    public function setIntStatus($intStatus)
-    {
-        $this->intStatus = $intStatus;
-
-        return $this;
-    }
-
-
-    public function createAt(){
-        $this->setTimeCreateTime( new \DateTime());
-    }
-
 
 
     public function isAccountNonExpired(){
