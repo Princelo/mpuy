@@ -94,7 +94,7 @@ class WechatTokenGetter
         $controller = $event->getController();
         if (!$controller[0]->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $redirectUri = $event->getRequest()->getSchemeAndHttpHost();
-            $redirectUri .= '/wechat_login';
+            $redirectUri .= '/web/wechat_login';
             $appId = Constants::APP_ID;
             $loginUri = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appId.'&redirect_uri='.$redirectUri.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
             $event->setController(function() use ($loginUri) {
