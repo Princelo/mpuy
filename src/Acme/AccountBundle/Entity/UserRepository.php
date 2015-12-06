@@ -113,7 +113,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
                 "
                 SELECT u
                  FROM AcmeAccountBundle:User u
-                WHERE
+                WHERE 1 = 1
                 {$strWhere}
                 ORDER BY u.id DESC
             "
