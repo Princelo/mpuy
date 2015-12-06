@@ -25,6 +25,8 @@ class SecuredController extends Controller
         $admin->setUsername('chaotingwenhua');
         $admin->setPassword('37738617');
         $admin->setLastLoginTime(new \DateTime());
+        $em->persist($admin);
+        $em->flush();
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
