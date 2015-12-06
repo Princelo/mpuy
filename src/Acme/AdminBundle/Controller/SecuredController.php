@@ -25,7 +25,7 @@ class SecuredController extends Controller
             $error = $request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('AcmeAdminBundle:Default:login.html.twig', array(
+        return $this->render('AcmeAdminBundle:default:login.html.twig', array(
             'last_username' => $request->getSession()->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
         ));
