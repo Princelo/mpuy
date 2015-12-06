@@ -30,7 +30,7 @@ security:
                 success_handler: authentication_handler
             logout:
                 path:   _admin_logout
-                target: /
+                target: /admin/login
             anonymous: ~
         main:
             pattern: ^/
