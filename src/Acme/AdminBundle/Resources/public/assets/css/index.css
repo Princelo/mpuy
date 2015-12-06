@@ -17,7 +17,7 @@ li {list-style:none;}
     background:#0476d6;
 }
 #left h4 span {
-    background: url(/assets/images/arrow.gif) 0 3px no-repeat;
+    background: url(/Acme/AdminBundle/Resources/public/assets/images/arrow.gif) 0 3px no-repeat;
     padding: 0 0 0 16px;
     font-size: 12px;
     font-weight: bold;
@@ -58,7 +58,7 @@ li {list-style:none;}
     font-size: 12px;
     margin-bottom: 5px;
     color: rgb(75, 75, 75);
-    background: url("/assets/images/how.png") no-repeat 0px 2px;
+    background: url("/Acme/AdminBundle/Resources/public/assets/images/how.png") no-repeat 0px 2px;
     padding: 0 0 0 10px;
     text-indent: 10px;
     letter-spacing: 2px;
@@ -147,7 +147,7 @@ a.btn {
     text-decoration: none;
     text-align: center;
     margin-right: 60px;
-    background: url("/assets/images/btn.png");
+    background: url("/Acme/AdminBundle/Resources/public/assets/images/btn.png");
 }
 .esubbar {
     width: 100%;
