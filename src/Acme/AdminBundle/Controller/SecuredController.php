@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\BackendBundle\Controller;
+namespace Acme\AdminBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
