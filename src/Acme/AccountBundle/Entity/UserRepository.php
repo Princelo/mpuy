@@ -105,4 +105,19 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setMaxResults($limit)
             ->getResult();
     }
+
+    public function getQueryUserList($strWhere = "")
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT u,
+                 FROM AcmeAccountBundle:User u
+                WHERE
+                {$strWhere}
+                ORDER BY u.id DESC
+            "
+            );
+        return $query;
+    }
 }
