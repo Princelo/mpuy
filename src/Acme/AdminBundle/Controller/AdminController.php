@@ -152,4 +152,14 @@ class AdminController extends Controller
                 'page' => $page,
             ));
     }
+
+    public function _getUserSearchStr($search = null)
+    {
+        $where = "";
+        if($search != null)
+            $where .= " AND u.nickname LIKE '%{$search}%'";
+        //if($intCategory != null)
+        //    $strWhere .= " AND a.intCategory = {$intCategory}";
+        return $where;
+    }
 }
