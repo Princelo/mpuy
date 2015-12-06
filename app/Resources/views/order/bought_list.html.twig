@@ -37,7 +37,7 @@
         {% endif %}
         <li>
             <a href="{{ path('order_details', {'order_id': o.id}) }}">
-                {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                {% set imgSrc = '/web/attachments/wechat_img/' ~ p.imgCover.id %}
                 <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                 <div class="text">
                     <label>{{ o.product.name }}</label>

@@ -99,7 +99,7 @@
             {% for p in products %}
             <li onclick="window.location.href='{{ path('product_view', {'product_id': p.id}) }}'">
                 <div class="img">
-                    {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                    {% set imgSrc = '/web/attachments/wechat_img/' ~ p.imgCover.id %}
                     <img src="{{ imgSrc | imagine_filter('thumb400') }}" />
                     <span>{{ p.name }}</span>
                 </div>
@@ -115,7 +115,7 @@
             {% for p in likes %}
                 <li onclick="window.location.href='{{ path('product_view', {'product_id': p.id}) }}'">
                     <div class="img">
-                        {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                        {% set imgSrc = '/web/attachments/wechat_img/' ~ p.imgCover.id %}
                         <img src="{{ imgSrc | imagine_filter('thumb400') }}" />
                         <span>{{ p.name }}</span>
                     </div>

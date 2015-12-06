@@ -74,7 +74,7 @@
     <ul>
         <li>
             <a href="{{ path('product_view', {'product_id': o.product.id}) }}">
-                {% set imgSrc = '/attachments/wechat_img/' ~ o.product.imgCover.id %}
+                {% set imgSrc = '/web/attachments/wechat_img/' ~ o.product.imgCover.id %}
                 <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                 <div class="text">
                     <label>{{ o.product.name }}</label>

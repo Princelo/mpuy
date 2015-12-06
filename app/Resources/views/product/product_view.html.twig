@@ -32,7 +32,7 @@
                         {% for img in p.images %}
                         <figure itemprop="associatedMedia" itemscope itemtype="">
                             <a href="#" itemprop="contentUrl" data-size="600x400" onclick="return photoswipe_action({{ loop.index - 1 }})">
-                                <img src="/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
+                                <img src="/web/attachments/wechat_img/{{ img.id }}" itemprop="thumbnail" alt="" />
                             </a>
                             <!--<figcaption itemprop="caption description">Image caption</figcaption>-->
                         </figure>
@@ -130,7 +130,7 @@
         }
         var photoswipe_action = function (i) {
             var images = [{% for img in p.images %}
-                    'http://ct-life.cn/attachments/wechat_img/{{ img.id }}',
+                    'http://ct-life.cn/web/attachments/wechat_img/{{ img.id }}',
                 {% endfor %}];
             wx.previewImage({
                 current: images[i], // 当前显示图片的http链接
