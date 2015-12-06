@@ -14,6 +14,6 @@ class AuthenticationHandler extends ContainerAware implements AuthenticationSucc
         $token->getUser()->setLastLoginTime(new \DateTime());
         $this->container->get('doctrine')->getEntityManager()->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('admin_index'));
+        return new RedirectResponse($this->container->get('router')->generate('_admin_index'));
     }
 }
