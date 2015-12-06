@@ -43,7 +43,7 @@
                         message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_PAID') %}交易状态：交易关闭(买家已付款){% endif %}<br>
                         {% if message.linkOrder.status == constant('AppBundle\\Entity\\Constants::ORDER_SUCCESS') and
                         message.linkOrder.payStatus == constant('AppBundle\\Entity\\Constants::ORDER_PAID') %}交易状态：交易成功{% endif %}<br>
-                        创建时间：10月15日 14:02
+                        创建时间：{{ message.createTime|date('m月d日 H:i') }}
                     </p>
                 </div>
                 <div class="tips">交易失败</div>
