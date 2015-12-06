@@ -45,7 +45,7 @@ class Message
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_link_order", type="boolean")
+     * @ORM\Column(name="is_link_order", type="boolean", nullable=true)
      */
     private $isLinkOrder;
 
