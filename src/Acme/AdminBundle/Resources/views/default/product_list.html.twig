@@ -79,7 +79,7 @@
                                 <td><img src="{{ p.user.avatar }}" style="width: 50px; height:50px;" /> {{ p.user.nickname }}</td>
                                 <td>
                                     {% if p.topPayment  %}
-                                        <img src="{{ p.topPayment.user.avatar }}" style="width: 50px; height:50px;" /> {{ p.topPayment.user.nickname }} <br>
+                                        <img src="{{ p.topPayment.payUser.avatar }}" style="width: 50px; height:50px;" /> {{ p.topPayment.payUser.nickname }} <br>
                                         {{ p.topPayment.volume }} {{ p.topPayment.createTime|date('Y-m-d H:i:s') }}
                                     {% endif %}
                                 </td>
