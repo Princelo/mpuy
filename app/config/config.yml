@@ -120,6 +120,10 @@ liip_imagine:
 
     filter_sets:
         cache: ~
+        thumb80:
+            quality: 90
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
         thumb100:
             quality: 90
             filters:

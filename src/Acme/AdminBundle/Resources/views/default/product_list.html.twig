@@ -92,7 +92,8 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0);" onclick="photoswipe_action{{ p.id }}(0)">
-                                        <img src="/web/attachments/wechat_img/{{ p.imgCover.id }}" />
+                                        {% set imgSrc = '/web/attachments/wechat_img/' ~ p.imgCover.id %}
+                                        <img src="{{ imgSrc | imagine_filter('thumb80') }}" />
                                     </a>
                                 </td>
                             </tr>
