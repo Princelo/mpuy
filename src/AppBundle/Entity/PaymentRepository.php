@@ -41,4 +41,19 @@ class PaymentRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getQueryPaymentList($where)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT p
+                 FROM AppBundle:Payment p
+                WHERE 1 = 1
+                {$where}
+                ORDER BY p.id DESC
+            "
+            );
+        return $query;
+    }
 }
