@@ -49,8 +49,8 @@ class ProductEventRepository extends EntityRepository
                  FROM AppBundle:ProductEvent e
                 WHERE 1 = 1
                     and e.order is not null
-                    and e.order <> ''
-                    and (e.type = '-1' or e.type = '0' or e.type = '2')
+                    and e.order != ''
+                    and (e.type = -1 or e.type = 0 or e.type = 2)
                     {$where}
                 ORDER BY e.id DESC
             "
