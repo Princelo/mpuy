@@ -44,4 +44,19 @@ class AuctionOrderRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getQueryOrderList($where)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT o
+                 FROM AppBundle:AuctionOrder o
+                WHERE 1 = 1
+                {$where}
+                ORDER BY o.id DESC
+            "
+            );
+        return $query;
+    }
 }

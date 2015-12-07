@@ -83,11 +83,8 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $where = "";
-        if ($request->getMethod() == 'GET') {
-            $where = $this->_getUserSearchStr($request->query->get('search'));
-        }
-        $queryArticlelist = $em->getRepository('AppBundle:User')
-            ->getQueryUserList($where);
+        $queryArticlelist = $em->getRepository('AppBundle:AuctionOrder')
+            ->getQueryOrderList($where);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -95,7 +92,7 @@ class AdminController extends Controller
             $request->query->get('page', $page)/*page number*/,
             20/*limit per page*/
         );
-        return $this->render('AcmeAdminBundle:default:user_list.html.twig',
+        return $this->render('AcmeAdminBundle:default:order_list.html.twig',
             array('pagination' => $pagination,
                 'page' => $page,
             ));
