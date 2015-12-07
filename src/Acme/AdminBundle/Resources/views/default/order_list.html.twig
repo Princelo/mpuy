@@ -73,8 +73,8 @@
                             {% for o in pagination %}
                             <tr>
                                 <td>
-                                    <a href="javascript:void(0);" onclick="photoswipe_action{{ p.id }}(0)">
-                                        {% set imgSrc = '/attachments/wechat_img/' ~ p.imgCover.id %}
+                                    <a href="javascript:void(0);" onclick="photoswipe_action{{ o.product.id }}(0)">
+                                        {% set imgSrc = '/attachments/wechat_img/' ~ o.product.imgCover.id %}
                                         <img src="{{ imgSrc | imagine_filter('thumb80') }}" />
                                     </a>
                                     {{ o.product.name }} {{ o.product.intro[:24]~'...' }}
