@@ -108,7 +108,7 @@
                             // build items array
                             var items = [];
                             {% for i in p.images %}
-                                items[{{ loop.index0 }}] = {src: 'http://ct-life.cn/web/attachments/wechat_img/{{ i.id }}'};
+                                items[{{ loop.index0 }}] = {src: 'http://ct-life.cn/web/attachments/wechat_img/{{ i.id }}', w: 600, h:400};
                             {% endfor %}
                             // define options (if needed)
                             var options = {
