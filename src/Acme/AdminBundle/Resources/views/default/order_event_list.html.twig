@@ -16,7 +16,7 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">订单列表</h1>
+            <h1 class="page-header">订单日志</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -65,28 +65,30 @@
                                 <th>拍品主</th>
                                 <th>拍家</th>
                                 <th>成交价</th>
-                                <th>竞拍完成</th>
-                                <th>交易状态</th>
+                                <th>事件描述</th>
+                                <th>时间</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for o in pagination %}
+                            {% for e in pagination %}
                             <tr>
                                 <td>
-                                    <a href="javascript:void(0);" onclick="photoswipe_action{{ o.product.id }}(0)">
-                                        {% set imgSrc = '/attachments/wechat_img/' ~ o.product.imgCover.id %}
+                                    <a href="javascript:void(0);" onclick="photoswipe_action{{ e.product.id }}(0)">
+                                        {% set imgSrc = '/attachments/wechat_img/' ~ e.product.imgCover.id %}
                                         <img src="{{ imgSrc | imagine_filter('thumb80') }}" />
                                     </a>
-                                    {{ o.product.name }} {{ o.product.intro[:24]~'...' }}
+                                    {{ e.product.name }} {{ e.product.intro[:24]~'...' }}
                                 </td>
-                                <td><img src="{{ o.seller.avatar }}" style="width: 50px; height:50px;" /> {{ o.seller.nickname }}</td>
-                                <td><img src="{{ o.buyer.avatar }}" style="width: 50px; height:50px;" /> {{ o.buyer.nickname }}</td>
-                                <td>{{ o.payment.volume }}元</td>
-                                <td>{{ o.product.expireTime|date('Y-m-d H:i') }}</td>
+                                <td><img src="{{ e.product.user.avatar }}" style="width: 50px; height:50px;" /> {{ e.product.user.nickname }}</td>
+                                <td><img src="{{ e.order.buyer.avatar }}" style="width: 50px; height:50px;" /> {{ e.order.buyer.nickname }}</td>
+                                <td>{{ e.order.payment.volume }}元</td>
                                 <td>
-                                {% if o.status != -1 and o.status != 0 %}正在进行{% endif %}
-                                {% if o.status == -1 %}交易失败({{ o.failDescription }}){% endif %}
-                                {% if o.status == 0 %}交易完成{% endif %}
+                                {% if e.type == 2 %}竞拍完成{% endif %}
+                                {% if e.type == -1 %}交易失败({{ e.order.failDescription }}){% endif %}
+                                {% if e.type == 0 %}交易成功{% endif %}
+                                </td>
+                                <td>
+                                    {{ e.createTime|date('Y-m-d H:i:s') }}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -178,14 +180,14 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    {% for o in pagination %}
+    {% for e in pagination %}
         <script>
-            var photoswipe_action{{ o.product.id }} = function(i) {
+            var photoswipe_action{{ e.product.id }} = function(i) {
                 var pswpElement = document.querySelectorAll('.pswp')[0];
 
                 // build items array
                 var items = [];
-                {% for i in o.product.images %}
+                {% for i in e.product.images %}
                 items[{{ loop.index0 }}] = {src: 'http://ct-life.cn/web/attachments/wechat_img/{{ i.id }}', w: 600, h:400};
                 {% endfor %}
                 // define options (if needed)

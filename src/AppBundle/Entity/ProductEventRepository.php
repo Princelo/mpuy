@@ -39,4 +39,21 @@ class ProductEventRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getQueryEventList($where)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT e
+                 FROM AppBundle:ProductEvent e
+                WHERE 1 = 1
+                    and e.isLinkOrder = true
+                    and (e.type = -1 or e.type = 0 or e.type = 2)
+                    {$where}
+                ORDER BY e.id DESC
+            "
+            );
+        return $query;
+    }
 }
