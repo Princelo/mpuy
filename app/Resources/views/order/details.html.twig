@@ -81,7 +81,7 @@
                 {% elseif o.status == 4 %} {% set statusStr = '流拍' %}
                 {% elseif o.status == -1 %} {% set statusStr = '交易失败' %}
                 {% endif %}
-                {% set imgSrc = '/web/attachments/wechat_img/' ~ o.product.imgCover.id %}
+                {% set imgSrc = '/attachments/wechat_img/' ~ o.product.imgCover.id %}
                 <img src="{{ imgSrc | imagine_filter('thumb120') }}" />
                 <div class="text">
                     <label>{{ o.product.name }}</label>
