@@ -81,7 +81,7 @@
                                 </td>
                                 <td><img src="{{ o.seller.avatar }}" style="width: 50px; height:50px;" /> {{ o.seller.nickname }}</td>
                                 <td><img src="{{ o.buyer.avatar }}" style="width: 50px; height:50px;" /> {{ o.buyer.nickname }}</td>
-                                <td>{{ o.topPayment.volume }}元</td>
+                                <td>{{ o.payment.volume }}元</td>
                                 <td>{{ o.product.expireTime|date('Y-m-d H:i') }}</td>
                                 <td>
                                 {% if o.status != -1 and o.status != 0 %}正在进行{% endif %}
