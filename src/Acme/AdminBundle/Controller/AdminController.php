@@ -58,18 +58,18 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $where = "";
         if ($request->getMethod() == 'GET') {
-            $where = $this->_getUserSearchStr($request->query->get('search'));
+            $where = $this->_getProductSearchStr($request->query->get('search'));
         }
-        $queryArticlelist = $em->getRepository('AcmeAccountBundle:User')
-            ->getQueryUserList($where);
+        $querylist = $em->getRepository('AppBundle:Product')
+            ->getQueryProductList($where);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $queryArticlelist,
+            $querylist,
             $request->query->get('page', $page)/*page number*/,
             20/*limit per page*/
         );
-        return $this->render('AcmeAdminBundle:default:user_list.html.twig',
+        return $this->render('AcmeAdminBundle:default:product_list.html.twig',
             array('pagination' => $pagination,
                 'page' => $page,
             ));
@@ -158,6 +158,16 @@ class AdminController extends Controller
         $where = "";
         if($search != null)
             $where .= " AND u.nickname LIKE '%{$search}%'";
+        //if($intCategory != null)
+        //    $strWhere .= " AND a.intCategory = {$intCategory}";
+        return $where;
+    }
+
+    public function _getProductSearchStr($search = null)
+    {
+        $where = "";
+        if($search != null)
+            $where .= " AND ( p.name LIKE '%{$search}%' OR p.intro LIKE '%{$search}%' )";
         //if($intCategory != null)
         //    $strWhere .= " AND a.intCategory = {$intCategory}";
         return $where;

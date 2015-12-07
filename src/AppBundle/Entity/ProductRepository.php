@@ -102,4 +102,20 @@ class ProductRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getQueryProductList($where)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                "
+                SELECT p
+                 FROM AppBundle:Product p
+                WHERE 1 = 1
+                {$where}
+                ORDER BY p.id DESC
+            "
+            );
+        return $query;
+    }
+
 }
